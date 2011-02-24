@@ -1,0 +1,10 @@
+void createOrders(String prescription, String labWork, String followUp, String otherinstr)
+{
+	ArrayList<String> orders = new ArrayList<String>();
+	orders.add(prescription);
+	orders.add(labWork);
+	orders.add(followUp);
+	orders.add(otherinstr);
+	
+	doctorUpdate(orders);
+}
