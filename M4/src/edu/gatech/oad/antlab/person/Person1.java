@@ -31,7 +31,8 @@ public class Person1 {
 	 */
 	private String calc(String input) {
 	  //Person 1 put your implementation here
-	  return null;
+	  String mod = input.substring(2,(input.length()-1))+ input.substring(0,1); //put in by shade adds the two substrings together
+	  return mod;
 	}
 	
 	/**
