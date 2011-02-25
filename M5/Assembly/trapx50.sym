@@ -1,9 +1,0 @@
-// Symbol Table
-// Scope level 0:
-//	Symbol Name       Page Address
-//	----------------  ------------
-//	B                 2709
-//	A                 2708
-//	NUM               2707
-//	START             2701
-//	NEWTASK           2701

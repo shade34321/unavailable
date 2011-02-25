@@ -1,8 +1,0 @@
-// Symbol Table
-// Scope level 0:
-//	Symbol Name       Page Address
-//	----------------  ------------
-//	OUTPUT            3009
-//	OPB               3008
-//	OPA               3007
-//	AGAIN             3003
