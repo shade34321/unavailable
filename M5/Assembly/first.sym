@@ -1,0 +1,10 @@
+// Symbol Table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	Address3          3013
+//	Address2          3012
+//	Address1          3011
+//	Address0          3010
+//	B                 300F
+//	A                 300E
