@@ -32,7 +32,7 @@ public class Person1 {
 	 */
 	private String calc(String input) {
 	  //Person 1 put your implementation here
-	  String mod = input.substring(2,(input.length()-1))+ input.substring(0,1); //put in by shade adds the two substrings together
+	  String mod = input.substring(2,input.length())+ input.substring(0,2); //put in by shade adds the two substrings together
 	  return mod;
 	}
 	
