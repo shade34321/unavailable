@@ -1,2 +1,3 @@
 Qian "Kevin" Zhou
-GTID: 902440505
+GT name: qzhou38
+email: qkzhou@gatech.edu
