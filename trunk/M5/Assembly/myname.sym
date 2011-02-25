@@ -1,0 +1,7 @@
+// Symbol Table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	Address           3017
+//	NAME              3007
+//	LOOP              3002

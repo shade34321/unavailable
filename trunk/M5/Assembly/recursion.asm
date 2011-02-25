@@ -1,0 +1,28 @@
+.orig x3000
+	AND R0, R0, 0
+	ADD R0, R0, 4
+	LD R6, STKINIT
+	JSR FACT
+	ST R0, ANSWER
+	HALT
+ANSWER .fill 0
+STKINIT .fill x6000
+
+FACT	ADD R6, R6, #-3 ; Creates space for stack frame
+	STR R7, R6, 0
+	STR R0, R6, 1
+	STR R1, R6, 2
+	ADD R0, R0, 0
+	BRn ERROR
+	BRp RECURSE
+	ADD R0, R0, 1
+	ADD R6, R6, 2
+	RET
+RECURSE	ADD R0, R0, #-1
+	JSR FACT
+	LDR R1, R6, 1
+	JSR MULT
+	LDR R7, R6, 0
+	LDR R1, R6, #2
+	ADD R6, R6, 3
+	RET
