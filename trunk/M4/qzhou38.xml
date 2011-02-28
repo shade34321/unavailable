@@ -1,0 +1,59 @@
+<project name="qzhou38" default="all">
+
+	<target name="init" depends="prepare" description="initializes stuff">
+		<property name="appName" value="antLab"/>
+		<property name="src" location="C:\Users\Kevin\Documents\cs2340\unavailable\M4\src"/>
+		<property name="lib" location="C:\Users\Kevin\Documents\cs2340\unavailable\M4\lib"/>
+		<property name="build" location="C:\Users\Kevin\Documents\cs2340\unavailable\M4\build"/>
+	</target>
+
+	<target name="prepare" description="make directories etc">
+		<tstamp/>
+		<mkdir dir="C:\Users\Kevin\Documents\cs2340\unavailable\M4\build"/>
+		<mkdir dir="C:\Users\Kevin\Documents\cs2340\unavailable\M4\apidoc"/>
+	</target>
+	
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${build}" classpath="${lib}/resources.jar"/>
+	</target>
+	
+	<target name="javadoc" depends="compile" description="creates javadoc files">
+		<javadoc sourcepath="${src}" access="public" destdir="unavailable\M4\apidoc" packagenames="edu.gatech.oad.antlab">
+			<fileset dir="${src}">
+				<include name="**/*.java"/>
+			</fileset>
+		</javadoc>
+	</target>
+	
+	<target name="jar" depends="compile" description="bundles compiled files into jar">
+		<jar destfile="unavailable\M4\AntLabRun.jar">
+			<fileset dir="unavailable\M4\build"/>
+				<manifest>
+					<attribute name="Main-Class" value="edu.gatech.oad.antlab.pkg1.AntLabMain"/>
+				<attribute name="Class-Path" value="lib\resources.jar"/>
+				</manifest>
+		</jar>
+	</target>
+	
+	<target name="run" depends="jar, javadoc">
+		<java jar="unavailable\M4\AntLabRun.jar" fork="true">
+			<classpath>
+				<pathelement location="${build}"/>
+				<pathelement location="${jdk_lib}/j2me.jar"/>
+				<pathelement location="java.class.path"/>
+			</classpath>
+		</java>
+		<echo message="team name: unavailable"/>
+	</target>
+	
+	<target name="all" depends="run"/>
+	
+	<target name="clean">
+		<delete dir="${build}"/>
+		<delete file="unavailable\AntLabRun.jar"/>
+	</target>
+	
+</project>
+	
+	
+	
