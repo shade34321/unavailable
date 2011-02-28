@@ -1,2 +1,0 @@
-shade alabsa
-salabsa3	
