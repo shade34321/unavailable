@@ -1,0 +1,70 @@
+<project name="MichaelSambol" default="all" basedir="C:\Users\Michael\Documents\School\College\Sophomore Year\CS 2340\SVN\M4">
+    
+	<target name="init" description="initialize properties ">
+		<!-- Set up all the properties -->
+		<property name="src" location=".\src"/>
+		<property name="build" location=".\build"/>
+		<property name="lib"  location=".\lib"/>
+		<property name="apidoc"  location=".\apidoc"/>
+		<property name="M4"  location=".\"/>
+	</target>
+
+	<target name="prepare" depends="init" description="create required directories ">
+		<!-- Create the time stamp -->
+		<tstamp/>
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir=".\build"/>
+		<mkdir dir=".\apidoc"/>
+	</target>
+
+	<target name="compile" depends="prepare" description="compile the source " >
+			<!-- Compile the java code from ${src} into ${build} -->
+			<javac srcdir="${src}" destdir="${build}" classpath="${lib}/resources.jar"/>
+	</target>
+  
+	<target name="javadoc" depends="compile" description="javadoc " >
+		<!-- Javadoc all of the java files -->
+		<javadoc sourcepath="${src}" access="public" destdir="${apidoc}" >
+			<fileset dir="${src}">
+				<include name="**\*.java">
+				</include>
+			</fileset>
+			<bottom>
+				<![CDATA[<i>Copyright &#169; 2011 Team UNAVAILABLE CS2340.  All Rights Reserved.</i>]]>
+			</bottom>
+		</javadoc>
+	</target>
+	
+	<target name="jar" depends="javadoc" description="create a jar file ">
+		<!-- Creates a jar file from the class files -->
+		<jar destfile=".\AntLabRun.jar" >
+		<fileset dir=".\build"/>
+			<manifest>
+				<attribute name="Main-Class" value="edu.gatech.oad.antlab.pkg1.AntLabMain"/>
+				<attribute name="Class-Path" value="lib\resources.jar"/>				
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="run" depends="jar" description="runs the java code ">
+		<!-- Runs the java code -->
+		<java jar=".\AntLabRun.jar" fork="true">
+			<classpath>
+				<pathelement location="${build}"/>
+				<pathelement location="${jdk_lib}/j2me.jar"/>
+				<pathelement location="java.class.path"/>
+			</classpath>
+		</java>
+	</target>	
+    
+	<target name="all" depends="run" description="does everything ">
+	</target> 
+
+	<target name="clean" description="clean up " >
+		<!-- Delete the build and apidoc directory trees -->
+		<delete dir=".\build"/>
+		<delete dir=".\apidoc"/>
+		<delete file=".\AntLabRun.jar"/>
+	</target>
+	
+</project>
