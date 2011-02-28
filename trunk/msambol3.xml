@@ -1,0 +1,38 @@
+<project name="Michael Sambol" default="doWork">
+	
+	<target name="doWork">
+		
+		<fileset dir="${build.dir}" includes="**/*.java" excludes="**/*Test*"/>
+
+		<javac destdir="${build.dir}">
+           <src path="${src.dir}"/>
+           <classpath>
+              <pathelement path="${build.dir}"/>
+              <pathelement path="${library.dir}"/>
+           </classpath>
+       </javac>
+		
+		<javadoc sourcepath="${src.dir}" access="public" destdir="${apidoc.dir}" packagenames="edu.gatech.oad.antdemo">
+			<excludepackage name="edu.gt.cs2335.lab2.test.*"/>
+			<fileset dir="${src.dir}">
+				<include name="**/*.java">
+			</fileset>
+		</javadoc>
+		
+		<jar destfile="lab2.jar" >
+			<include name="edu/gtech/cs2340/**/*.class"/>
+			<manifest>
+				<attribute name="Main-Class" value="edu.gatech.cs2340.lab2.LabMain"/>
+			</manifest>
+		</jar>
+		
+		<java classname="edu.gatech.oad.antdemo.javaTest">
+			<classpath>
+				<pathelement location="${build.dir}"/>
+				<pathelement location="${jar.dir}/jsdk2.jar"/>
+			</classpath>
+		</java>
+		
+	</target>
+	
+</project>
