@@ -1,0 +1,62 @@
+<project name="Unavailable" default="all">
+	<target name="init">
+		<property name="appName" value="IDK What The Hell I'm Doing"/>
+		<property name="src" location="/home/shade/workspace/CS2340/unavailable/M4/src" />
+		<property name="build" location="/home/shade/workspace/CS2340/unavailable/M4/build" />
+		<property name="apidoc" location="/home/shade/workspace/CS2340/unavailable/M4/apidoc" />
+		<property name="lib" location="/home/shade/workspace/CS2340/unavailable/M4/lib" />
+		<property name="M4" location="/home/shade/workspace/CS2340/unavailable/M4" />
+	</target>
+	<target name="prepare" depends="init">
+		<!--Create the time stamp -->
+		<tstamp/>
+		<mkdir dir="${M4}/build" />
+		<mkdir dir="${M4}/apidoc" />
+	</target>
+	<target name="compile" depends="prepare" description="compiles the source">
+		<javac srcdir="${src}" destdir="${build}" includeantruntime="no" classpath="${lib}/resources.jar" />
+	
+		<!--<javac destdir="${build}" includeantruntime="no">
+           		<src path="${src}"/>
+	           	<classpath>
+        			<pathelement path="${lib}/resource.jar" />
+          	 	</classpath>
+       		</javac>-->
+	</target>
+	<target name="javadoc" depends="compile">
+		<javadoc sourcepath="${src}" access="public" destdir="${apidoc}" packagenames="edu.gatech.oad.antdemo">
+      			<excludepackage name="edu.gt.cs2335.lab2.test.*"/>
+      				<fileset dir="${src}">
+        	 			<include name="**/*.java" />
+      				</fileset>
+      				<bottom>
+        	  			<![CDATA[<i>Copyright &#169; 2011 Team Unavailable CS2340.  All Rights Reserved.</i>]]>
+     				 </bottom>
+  		</javadoc>
+	</target>
+	<target name="jar" depends="compile" description="creates the jar file">
+		<jar destfile="${M4}/lab2.jar" >
+		<fileset dir="${build}" />
+       			<manifest>
+            			<attribute name="Main-Class" value="edu.gatech.oad.antlab.pkg1.AntLabMain"/>
+				<attribute name="Class-Path" value="lib/resources.jar"/>
+       			</manifest>
+   		</jar>
+	</target>
+	<target name="run" depends="jar, javadoc" description="runs the shit">
+		<java jar="${M4}/lab2.jar" fork="true">
+    			<classpath>
+      			  <pathelement location="${build}"/>
+       			  <pathelement location="${jdk_lib}/j2me.jar"/>
+       			  <pathelement location="java.class.path"/>
+    			</classpath>
+ 		 </java>
+	</target>
+	<target name="clean" description="clean up" >
+    		<!-- Delete the ${build} and ${doc} directory trees -->
+    		<delete dir="/home/shade/workspace/CS2340/unavailable/M4/build"/>
+    		<delete dir="/home/shade/workspace/CS2340/unavailable/M4/apidoc"/>
+		<delete file="/home/shade/workspace/CS2340/unavailable/M4/lab2.jar" />
+	</target>
+	<target name="all" depends="run" description="omnipresence" />
+</project>
