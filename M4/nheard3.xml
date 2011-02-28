@@ -1,0 +1,57 @@
+<project name = "Ant builder" default = "all">
+	<target name="init" depends = "prepare" description="Sets up all properties" >	
+		<property name ="src" location="SVN/unavailable/M4/src"/>
+		<property name ="M4" location="SVN/unavailable/M4"/>
+		<property name ="lib" location="SVN/unavailable/M4/lib"/>
+		<property name ="build" location="SVN/unavailable/M4/build"/>			
+		<property name ="apidoc" location="SVN/unavailable/M4/apidoc"/>	
+	</target>
+	
+	<target name="prepare" description="Creates directories" >	
+		<mkdir dir ="SVN/unavailable/M4/build"/>
+		<mkdir dir ="SVN/unavailable/M4/apidoc"/>
+	</target>
+
+	<target name="compile" depends = "init" description="Compiles the .java files" >	
+		<javac srcdir="${src}" destdir="${build}" includeantruntime = "no" classpath="${lib}/resources.jar"/>
+	</target>
+
+	<target name = "jar" depends = "compile" description = "Creates .jar files and stores them in build.">
+		<jar destfile="SVN/unavailable/M4/AntLabRun.jar" >
+       		<fileset dir="SVN/unavailable/M4/build" />
+       			<manifest>
+            			<attribute name="Main-Class" value="edu.gatech.oad.antlab.pkg1.AntLabMain"/>
+				<attribute name="Class-Path" value="lib/resources.jar"/>
+       			</manifest>
+    		</jar>
+	</target>
+
+	<target name = "javadoc" depends = "compile" description = "Creates javadoc and stores them in apidoc.">
+		<javadoc sourcepath="${src}" access="public" destdir="${apidoc}">
+      		<excludepackage name="lib"/>
+      		<fileset dir="${src}">
+         		<include name="**/*.java"/>
+      		</fileset>
+      		<bottom>
+         	 	<![CDATA[<i>Copyright &#169; 2011 Team 3 :unavailable CS2340.  All Rights Reserved.</i>]]>
+      		</bottom>
+  	</javadoc>
+	</target>
+
+	<target name = "run" depends = "jar, javadoc" description = "Runs the .jar files">
+		<java jar="SVN/unavailable/M4/AntLabRun.jar" fork ="true">
+     		<classpath>
+        		<pathelement location="${build}"/>
+       			<pathelement location="${jdk_lib}/j2me.jar"/>
+       			<pathelement location="java.class.path"/>
+     		</classpath>
+  		</java>
+	</target>
+
+	<target name = "all" depends = "run" description = "Runs all methods but clean." />
+	<target name = "clean" description = "Clears all of the files created by ant.">
+		<delete dir = "SVN/unavailable/M4/build" />
+		<delete dir = "SVN/unavailable/M4/apidoc" />
+		<delete file = "SVN/unavailable/M4/AntLabRun.jar" />
+	</target>
+</project>
