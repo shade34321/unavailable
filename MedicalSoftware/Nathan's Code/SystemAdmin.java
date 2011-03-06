@@ -2,12 +2,16 @@ package MedicalSoftware;
 
 import java.util.ArrayList;
 
+/*
+ * SystemAdmin class designed to allow systemAdmin to control certain things in the medical software system.
+ * @author Nathanial Heard
+ */
 public class SystemAdmin {
 	private String input;
 	private AVL<String, Info> information;
 	private AVL<String, Report> report;
 	private AVL<String, Patient> patient;
-	private AVL<String, Nurse> nurse;
+	private AVL<String, nurse> nurse;
 	private AVL<String, Doctor> doctor;
 	private AVL<String, SystemAdmin> systemAdmin;
 	private Info info;
@@ -16,7 +20,7 @@ public class SystemAdmin {
 	SystemAdmin(String user) {
 		this.info = (Info) ((SystemAdmin) Search(user, 0)).getInfo();
 		this.patient = new AVL<String, Patient>();
-		this.nurse = new AVL<String, Nurse>();
+		this.nurse = new AVL<String, nurse>();
 		this.doctor = new AVL<String, Doctor>();
 		this.systemAdmin = new AVL<String, SystemAdmin>();
 		this.report = new AVL<String, Report>();
@@ -24,7 +28,7 @@ public class SystemAdmin {
 	}
 	
 	// Constructor used for when AVL trees are passed in to be able to search the system and access system admin's information
-	SystemAdmin(String user, AVL<String, Info> i, AVL<String, Report> r, AVL<String, Patient> p, AVL<String, Nurse> n, AVL<String, Doctor> d, AVL<String, SystemAdmin> sa) {
+	SystemAdmin(String user, AVL<String, Info> i, AVL<String, Report> r, AVL<String, Patient> p, AVL<String, nurse> n, AVL<String, Doctor> d, AVL<String, SystemAdmin> sa) {
 		this.report = r;
 		this.information = i;
 		this.patient = p;
