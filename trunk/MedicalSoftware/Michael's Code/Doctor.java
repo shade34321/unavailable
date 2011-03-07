@@ -8,10 +8,10 @@
 public class Doctor{
 
 	private String info;
-	// ArrayList: patients
+	ArrayList<Patient> patients;
 	private boolean suspended;
 	private String input;
-	// ArrayList: nurses
+	ArrayList<Nurse> nurses;
 	
 	public void getInfo(String name){
 		System.out.println(info(name))
