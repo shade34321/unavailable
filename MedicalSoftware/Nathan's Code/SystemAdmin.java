@@ -35,7 +35,7 @@ public class SystemAdmin {
 		this.nurse = n;
 		this.doctor = d;
 		this.systemAdmin = sa;
-		this.info = this.info = (Info) ((SystemAdmin) Search(user, 0)).getInfo();
+		this.info = (Info) ((SystemAdmin) Search(user, 0)).getInfo();
 	}
 	
 	public void setSusp(String user, int type, Boolean status) {

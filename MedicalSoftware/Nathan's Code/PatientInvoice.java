@@ -66,14 +66,10 @@ public class PatientInvoice {
 	public void setTotal(Boolean pay) {
 		this.paid = pay;
 	}
-	
-	// Update method to update the system
-	public void update() {
-		
-	}
-	
+
 	// Method to allow payment
 	public Boolean pay() {
+		
 		return false;
 	}
 }
