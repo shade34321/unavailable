@@ -11,7 +11,7 @@ public class SystemAdmin {
 	private AVL<String, Info> information;
 	private AVL<String, Report> report;
 	private AVL<String, Patient> patient;
-	private AVL<String, nurse> nurse;
+	private AVL<String, Nurse> Nurse;
 	private AVL<String, Doctor> doctor;
 	private AVL<String, SystemAdmin> systemAdmin;
 	private Info info;
@@ -20,7 +20,7 @@ public class SystemAdmin {
 	SystemAdmin(String user) {
 		this.info = (Info) ((SystemAdmin) Search(user, 0)).getInfo();
 		this.patient = new AVL<String, Patient>();
-		this.nurse = new AVL<String, nurse>();
+		this.Nurse = new AVL<String, Nurse>();
 		this.doctor = new AVL<String, Doctor>();
 		this.systemAdmin = new AVL<String, SystemAdmin>();
 		this.report = new AVL<String, Report>();
@@ -28,11 +28,11 @@ public class SystemAdmin {
 	}
 	
 	// Constructor used for when AVL trees are passed in to be able to search the system and access system admin's information
-	SystemAdmin(String user, AVL<String, Info> i, AVL<String, Report> r, AVL<String, Patient> p, AVL<String, nurse> n, AVL<String, Doctor> d, AVL<String, SystemAdmin> sa) {
+	SystemAdmin(String user, AVL<String, Info> i, AVL<String, Report> r, AVL<String, Patient> p, AVL<String, Nurse> n, AVL<String, Doctor> d, AVL<String, SystemAdmin> sa) {
 		this.report = r;
 		this.information = i;
 		this.patient = p;
-		this.nurse = n;
+		this.Nurse = n;
 		this.doctor = d;
 		this.systemAdmin = sa;
 		this.info = (Info) ((SystemAdmin) Search(user, 0)).getInfo();
@@ -48,7 +48,7 @@ public class SystemAdmin {
 			doctor.find(user).getInfo().setSusp(status);
 		}else if (type == 2) {
 			// Nurse
-			nurse.find(user).getInfo().setSusp(status);
+			Nurse.find(user).getInfo().setSusp(status);
 		}else if (type == 3) {
 			//Patient
 			patient.find(user).getInfo().setSusp(status);
@@ -66,7 +66,7 @@ public class SystemAdmin {
 			status = doctor.find(user).getInfo().getSusp();
 		}else if (type == 2) {
 			// Nurse
-			status = nurse.find(user).getInfo().getSusp();
+			status = Nurse.find(user).getInfo().getSusp();
 		}else if (type == 3) {
 			//Patient
 			status = patient.find(user).getInfo().getSusp();
@@ -88,7 +88,7 @@ public class SystemAdmin {
 			doctor.remove(user);
 		}else if (type == 2) {
 			// Nurse
-			nurse.remove(user);
+			Nurse.remove(user);
 		}else if (type == 3) {
 			//Patient
 			patient.remove(user);
@@ -117,7 +117,7 @@ public class SystemAdmin {
 			ret = doctor.find(user);
 		}else if (type == 2) {
 			// Nurse
-			ret = nurse.find(user);
+			ret = Nurse.find(user);
 		}else if (type == 3) {
 			//Patient
 			ret = patient.find(user);
