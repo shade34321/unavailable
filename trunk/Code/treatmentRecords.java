@@ -6,7 +6,7 @@
 * Written: 3/6/2011
 */
 
-public class treatmentRecords {
+public class TreatmentRecords {
 
 	private String date;
 	private String time;
