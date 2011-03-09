@@ -24,9 +24,19 @@ public class DoctorsOrders
 		return prescription;
 	}
 	
+	public void setPrescription(String presc)
+	{
+		prescription = presc;
+	}
+	
 	public String getLabWork()
 	{
 		return labWork;
+	}
+	
+	public void setLabWork(String lw)
+	{
+		labWork = lw;
 	}
 	
 	public String getFollowUpIns()
@@ -34,9 +44,19 @@ public class DoctorsOrders
 		return followUpIns;
 	}
 	
+	public void setFollowUpIns(String followup)
+	{
+		followUpIns = followup;
+	}
+	
 	public String getOtherIns()
 	{
 		return otherIns;
+	}
+	
+	public void setOtherIns(String other)
+	{
+		otherIns = other;
 	}
 
 }
