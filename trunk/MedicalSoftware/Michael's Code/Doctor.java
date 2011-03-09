@@ -13,6 +13,10 @@ public class Doctor{
 	private String input;
 	ArrayList<Nurse> nurses;
 	
+	public Doctor(){
+		
+	}
+	
 	public void getInfo(String name){
 		System.out.println(info(name))
 	}
@@ -26,16 +30,16 @@ public class Doctor{
 	}
 	
 	// TODO
-	public void viewRecords(){
+	public TreatmentRecords viewRecords(){
 		
 	}
 	
 	// TODO
-	public void viewReports(){
+	public Reports viewReports(){
 	}
 	
 	// TODO
-	public void viewAppt(){
+	public Appt viewAppt(){
 	}
 	
 	// TODO
@@ -43,12 +47,12 @@ public class Doctor{
 	
 	}
 	
-	public void createPatient(String arg0, String arg1){
-		Patient pat = new Patient(arg0, arg1);
+	public Patient createPatient(String arg0, String arg1){
+		return (new Patient(arg0, arg1));
 	}
 	
-	public void createAppt(String arg0){
-		Appointment appt = new Apppointment(arg0);
+	public Apptointment createAppt(String arg0){
+		return (new Apppointment(arg0));
 	}
 	
 	// TODO
