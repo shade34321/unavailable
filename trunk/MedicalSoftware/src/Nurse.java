@@ -1,65 +1,95 @@
 package MedicalSoftware;
 
-import java.util.ArrayList;
-
+/**
+ * A class created to access Nurse information create appointments and other such Nurse functions 
+ * @author Shade 
+ *
+ */
 
 public class Nurse{
 	private AVL<String, Info> information;
 	private AVL<String, Report> report;
 	private AVL<String, Patient> patient;
 	private AVL<String, Nurse> nurse;
-	private AVL<String, Record> record;
-	private info information;	
-	private Boolean suspended;
+	private AVL<String, Doctor> doctor;
+	private AVL<String, TreatmentRecords> record;
+	private Info info;
 	private String input;
 	
-	
-	public nurse(String user){
-		this.information = new AVL<String, Info>();
-		this.report = new AVL<String, Report>();
-		this.patient = new AVL<String, Patient>();
-		this.nurse = new AVL<String, Nurse>();
-		this.record = new AVL<String, Record>();
-		this.info = (Info) ((nurse) Search(user, 2)).getInfo();		
+	// Constructor
+	Nurse(String user, AVL<String, Info> information, AVL<String, Report> report, AVL<String, Nurse> nurse, AVL<String, Doctor> doctor, AVL<String, Patient> patient, AVL<String, TreatmentRecords> record){
+		this.information = information;
+		this.report = report;
+		this.patient = patient;
+		this.nurse = nurse;
+		this.doctor = doctor;
+		this.record = record;
+		this.info = nurse.find(user).getInfo();		
 	}
 	
-	private Record viewRecords(String name){
-		return this.record.find(name).getRecord();
-		//update GUI
+	Nurse (Info info, AVL<String, Patient> p, AVL<String, Nurse> n, AVL<String, Doctor> d, AVL<String, Info> i, AVL<String, Report> r) {		
+		this.patient = p;
+		this.nurse = n;
+		this.doctor = d;
+		this.information = i;
+		this.report = r;
+		this.info = info;
 	}
 	
-	private Report viewReports(String name){
+	private Report getReport(String name){
 		return this.report.find(name).getReport();
 		//update GUI
 	}
 	
-	private String viewAppt(int date, String name){
-		return this.patient.find(name).getAppt(); 
-		//update GUI
+	// Patient deleting and creating
+	public void deletePatient(String name){
+		patient.remove(name);
+	}
+	
+	public Patient viewPatient(String name){
+		return patient.find(name);
+	}
+	
+	public void createPatient(String name, String userName, String email, String address, String state, String country, int SSN, int zip, int birthday) {
+		Info form = new Info(name, userName, email, address, state, country, SSN, zip, birthday, 3, false);
+		Patient p = new Patient(form, this.patient, this.doctor);
+		patient.insert(name, p);
 	}
 
-	@Override
+	// Suspension getter and setter
 	public Boolean getSusp(String name) {
-		// TODO Auto-generated method stub
-		return suspended;
+		return info.getSusp();
 	}
 
-	@Override
 	public void setSusp(String name, Boolean susp) {
-		suspended = susp;
+		info.setSusp(susp);
 	}
 
-	private info getInfo(String name){
-		
+	// Info getter, setter, and find method
+	public Info getInfo() {
+		return this.info;
 	}
 	
-	private void createAppt(int date, int time, String doc, String reason){
-		appointment appt = new appointment(date, time, doc, reason);
-		appt.create();
+	public void setInfo(Info info) {
+		this.info = info;
 	}
 	
-	private void cancelAppt(int date, int time, String doc, String reason){
-		appointment appt = new appointment(date, time, doc, reason)
-		appt.cancel();
+	public Info findInfo(String user) {
+		return this.information.find(user);
+	}
+	
+	// Appointment find method for patient, create method for patient, and cancel appointment for patient
+	private void createAppt(String user, int date, int time, String doc, String reason){
+		Appointment appt = findAppt(user);
+		appt.create(date, time, user, doc, reason);
+	}
+	
+	private void cancelAppt(String user, String doc, int date, int time){
+		Appointment appt = findAppt(user);
+		appt.cancel(date, time, user, doc);
+	}	
+
+	private Appointment findAppt(String user) {
+		return patient.find(user).getAppt();
 	}
 }
