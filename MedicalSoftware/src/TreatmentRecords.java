@@ -12,7 +12,7 @@ public class TreatmentRecords {
 
 	private String date;
 	private String time;
-	private doctorsOrders orders;
+	private DoctorsOrders orders;
 	private String symptoms;
 	private String bloodPressure;
 	private int pulse;
@@ -36,11 +36,11 @@ public class TreatmentRecords {
 		this.time = tme;
 	}
 	
-	public doctorsOrders getOrders(){
+	public DoctorsOrders getOrders(){
 		return this.orders;
 	}
 	
-	public void setOrders(doctorsOrders order){
+	public void setOrders(DoctorsOrders order){
 		this.orders = order;
 	}
 	

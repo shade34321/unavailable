@@ -1,3 +1,4 @@
+package MedicalSoftware;
 
 public class Appt implements Comparable<Appt> {
 	private int date;
@@ -5,7 +6,7 @@ public class Appt implements Comparable<Appt> {
 	private String doctor;
 	private String reason;
 	private String name;
-	
+
 	public Appt(int date, int time, String name, String doctor, String reason) {
 		this.date = date;
 		this.time = time;
@@ -13,7 +14,7 @@ public class Appt implements Comparable<Appt> {
 		this.doctor = doctor;
 		this.reason = reason;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -25,31 +26,31 @@ public class Appt implements Comparable<Appt> {
 	public int getDate() {
 		return date;
 	}
-	
+
 	public void setDate(int date) {
 		this.date = date;
 	}
-	
+
 	public int getTime() {
 		return time;
 	}
-	
+
 	public void setTime(int time) {
 		this.time = time;
 	}
-	
+
 	public String getDoctor() {
 		return doctor;
 	}
-	
+
 	public void setDoctor(String doctor) {
 		this.doctor = doctor;
 	}
-	
+
 	public String getReason() {
 		return reason;
 	}
-	
+
 	public void setReason(String reason) {
 		this.reason = reason;
 	}

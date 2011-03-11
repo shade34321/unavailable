@@ -20,8 +20,7 @@ public class MedicalMain {
 	// Main method to run
 	public static void main(String[] args) throws IOException {
 		setup();
-		Login lg = new Login();
-		lg.run(admin, docotr, nurse, patient);
+		Login lg = new Login(admin, doc, nurse, patient);
 	}
 	
 	// Loads the AVL trees with user information of all types
@@ -40,7 +39,7 @@ public class MedicalMain {
 			System.out.println("Error no such file found!");
 		}
 		
-		// Loads Docotr information into tree
+		// Loads Doctor information into tree
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Nathanial\\Documents\\CS-2340\\Doctor.txt"));
 			while ((name = br.readLine()) != null) {
@@ -70,7 +69,7 @@ public class MedicalMain {
 			while ((name = br.readLine()) != null) {
 				info = new Info(name, br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine(), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), false);
 				person.setInfo(info);
-				patient.insert(name, patient);
+				patient.insert(name, person);
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Error no such file found!");

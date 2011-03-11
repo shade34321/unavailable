@@ -12,7 +12,7 @@ public class Login {
 	
 	Login() {
 		this.admin = new AVL<String, SystemAdmin>();
-		this.doc = new AVL<String, Doctor>();
+		this.doctor = new AVL<String, Doctor>();
 		this.patient = new AVL<String, Patient>();
 		this.nurse = new AVL<String, Nurse>();
 	}

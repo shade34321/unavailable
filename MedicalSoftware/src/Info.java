@@ -9,6 +9,20 @@ public class Info {
 	private int SSN, birthday, zip, type;
 	private Boolean suspention;
 	
+	Info(int type) {
+		this.name = null;
+		this.userName = null;
+		this.email = null;
+		this.address = null;
+		this.state = null;
+		this.country = null;
+		this.SSN = 0;
+		this.birthday = 0;
+		this.zip = 0;
+		this.type = type;
+		this.suspention = false;
+	}
+	
 	// Creating user information and then storing them in the class
 	Info (String name, String userName, String email, String address, String state, String country, int SSN, int zip, int birthday, int type, Boolean susp) {
 		this.name = name;

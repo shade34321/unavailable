@@ -1,3 +1,5 @@
+package MedicalSoftware;
+
 
 public interface User {
 	/**
