@@ -1,3 +1,5 @@
+package MedicalSoftware;
+
 /**
 * This class creates a new Treatment Record.
 * A new Treatment Record needs to be created for each Doctors Orders.
