@@ -8,87 +8,30 @@ package MedicalSoftware;
 * Written: 3/6/2011
 */
 
+import java.util.ArrayList;
+
 public class TreatmentRecords {
 
-	private String date;
-	private String time;
-	private DoctorsOrders orders;
-	private String symptoms;
-	private String bloodPressure;
-	private int pulse;
-	private int temperature;
-	private int height;
-	private int weight;
-	
-	public String getDate(){
-		return this.date;
+	private ArrayList<TRecords> records;
+
+	TreatmentRecords() {
+		records = new ArrayList<TRecords>();
 	}
-	
-	public void setString(String dte){
-		this.date = dte;
+
+	public void create(String name, int date, int time, DoctorsOrders orders, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight) {
+		TRecords tr = new TRecords(name, date, time, orders, symptoms, bloodPressure, pulse, temp, height, weight);
+		records.add(tr);
+
 	}
-	
-	public String getTime(){
-		return this.time;
-	}
-	
-	public void setTime(String tme){
-		this.time = tme;
-	}
-	
-	public DoctorsOrders getOrders(){
-		return this.orders;
-	}
-	
-	public void setOrders(DoctorsOrders order){
-		this.orders = order;
-	}
-	
-	public String getSymptoms(){
-		return this.symptoms;
-	}
-	
-	public void setSymptoms(String symp){
-		this.symptoms = symp;
-	}
-	
-	public String getBloodPressure(){
-		return this.bloodPressure;
-	}
-	
-	public void setBloodPressure(String blood){
-		this.bloodPressure = blood;
-	}
-	
-	public int getPulse(){
-		return pulse;
-	}
-	
-	public void setPulse(int pse){
-		this.pulse = pse;
-	}
-	
-	public int getTemperature(){
-		return temperature;
-	}
-	
-	public void setTemperature(int temp){
-		temperature = temp;
-	}
-	
-	public int getHeight(){
-		return height;
-	}
-	
-	public void setHeight(int hght){
-		height = hght;
-	}
-	
-	public int getWeight(){
-		return weight;
-	}
-	
-	public void setWeight(int wght){
-		weight = wght;
+
+	public void cancel(int date, int time) {
+		int size = records.size();
+		for (int i = 0; i < size; i++) {
+				if (records.get(i).getDate() == date) {
+					if (records.get(i).getTime() == time) {
+							records.remove(i);
+				}
+			}
+		}
 	}
 }

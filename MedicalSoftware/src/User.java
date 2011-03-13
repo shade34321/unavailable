@@ -19,15 +19,9 @@ public interface User {
 	
 	public Boolean getSusp(String name);
 	
-	/**
-	 * allows user to view the record
-	 * Takes in name and switches view to allow the user to view the record
-	 * @param String
-	 */
-	public void viewRecords(String name);
+	public Info getInfo();
 	
-	/**
-	 * 
-	 */
+	public void setInfo(Info info);
 	
+	public Info findInfo(String user);
 }

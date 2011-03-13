@@ -9,6 +9,7 @@ package MedicalSoftware;
 public class Patient {
 	private Info info;
 	private Appointment appt;
+	private DoctorsOrders orders;
 	private TreatmentRecords record;
 	private PatientInvoice invoice;
 	private AVL<String, Patient> patient;
@@ -16,13 +17,6 @@ public class Patient {
 
 
 	// Constructors
-	Patient() {
-		this.info = new Info(3);
-		this.patient = new AVL<String, Patient>();
-		this.doctor = new AVL<String, Doctor>();
-		appt = new Appointment();
-	}
-
 	Patient(Info info, AVL<String, Patient> p, AVL<String, Doctor> d) {		
 		this.patient = p;
 		this.doctor = d;
@@ -30,6 +24,7 @@ public class Patient {
 		this.appt = new Appointment();
 		this.record = new TreatmentRecords();
 		this.invoice = new PatientInvoice();
+		this.orders = new DoctorsOrders();
 	}
 	
 	Patient(String user, AVL<String, Patient> p, AVL<String, Doctor> d) {		
@@ -39,10 +34,11 @@ public class Patient {
 		this.appt = patient.find(user).getAppt();
 		this.record = patient.find(user).getTreatmentRecords();
 		this.invoice = patient.find(user).getPatientInvoice();
+		this.orders = patient.find(user).getOrders();
 	}
 
 	// Patient Invoice getter and setter
-	private PatientInvoice getPatientInvoice() {
+	public PatientInvoice getPatientInvoice() {
 		return this.invoice;
 	}
 	
@@ -86,5 +82,14 @@ public class Patient {
 		Doctor ret = doctor.find(user);
 
 		return ret;
+	}
+
+	// DoctorsOrders getter and setter
+	public void setOrders(DoctorsOrders orders) {
+		this.orders = orders;
+	}
+
+	public DoctorsOrders getOrders() {
+		return orders;
 	}
 }
