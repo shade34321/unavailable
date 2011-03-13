@@ -30,14 +30,4 @@ public class Appointment {
 			}
 		}
 	}
-
-	// TODO
-	private void update() {
-		// update calendar
-	}
-
-	private void view() {
-		// update GUI
-	}
-
 }

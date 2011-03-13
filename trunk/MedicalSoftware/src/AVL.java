@@ -7,7 +7,7 @@ public class AVL<K extends Comparable<K>, V> {
 		root = null;
 	}
 
-	@SuppressWarnings({ "unchecked" })
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public AVL(K key, V value) {
 		root = new BSTNode(key, value);
 	}
