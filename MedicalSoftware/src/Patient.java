@@ -6,6 +6,13 @@ package MedicalSoftware;
  *
  */
 
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Filter;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
+
 public class Patient {
 	private Info info;
 	private Appointment appt;
