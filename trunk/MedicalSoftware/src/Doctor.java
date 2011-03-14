@@ -1,8 +1,6 @@
 package MedicalSoftware;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Filter;
 import java.util.logging.Level;
