@@ -93,29 +93,35 @@ public class Patient {
 
 	// Appointment methods
 	public void createAppt(int date, int time, String doctor, String reason) {
+		myLogger.log(Level.INFO, "Creating appointment");
 		appt = new Appointment();
 	}
 	
 	public Appointment getAppt() {
+		myLogger.log(Level.INFO, "Getting appointment: " + info);
 		return appt;
 	}
 
 	public void setAppt(Appointment appt) {
 		this.appt = appt;
+		myLogger.log(Level.INFO, "Setting appointment");
 	}
 	
 	// TreatmentRecords getter and setter
 	public TreatmentRecords getTreatmentRecords() {
+		myLogger.log(Level.INFO, "Getting treatment records");
 		return this.record;
 	}
 
 	public void setTreatmentRecords(TreatmentRecords record) {
 		this.record = record;
+		myLogger.log(Level.INFO, "Setting treatment records");
 	}
 	
 	// Searches system for doctors
 	public Doctor Search(String user) {
 		Doctor ret = doctor.find(user);
+		myLogger.log(Level.INFO, "Searching for: " + user);
 
 		return ret;
 	}
@@ -123,9 +129,11 @@ public class Patient {
 	// DoctorsOrders getter and setter
 	public void setOrders(DoctorsOrders orders) {
 		this.orders = orders;
+		myLogger.log(Level.INFO, "Setting orders");
 	}
 
 	public DoctorsOrders getOrders() {
+		myLogger.log(Level.INFO, "Getting doctors orders");
 		return orders;
 	}
 }
