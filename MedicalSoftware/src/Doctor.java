@@ -84,6 +84,7 @@ public class Doctor{
 	
 	public Patient getPatient(String name){
 		myLogger.log(Level.CONFIG, "Returning Patient: " + name);
+		
 		return patient.find(name);
 	}
 	
@@ -91,17 +92,20 @@ public class Doctor{
 	public void createOrder(String user, int date, int time, String prescrip, String labW, String followUp, String other){
 		DoctorsOrders order = patient.find(user).getOrders();
 		order.create(user, date, time, prescrip, labW, followUp, other);
+		
 		myLogger.log(Level.FINE, "Creating Doctors Orders");
 	}
 	
 	public void cancelDoctorOrder(int date, int time, String name, String prescrip){
 		DoctorsOrders order = patient.find(name).getOrders();
 		order.cancel(date, time, name, prescrip);
+		
 		myLogger.log(Level.FINEST, "Canceling Doctors Orders");
 	}
 	
 	public DoctorsOrders getOrders(String name){
 		myLogger.log(Level.CONFIG, "Returning Doctors Orders: " + name);
+		
 		return patient.find(name).getOrders();
 	}
 	
@@ -109,14 +113,20 @@ public class Doctor{
 	public void createInvoice(String name, String doc, int total, int due, Boolean paid){
 		PatientInvoice invoice = patient.find(name).getPatientInvoice();
 		invoice.create(name, doc, total, due, paid);
+		
+		myLogger.log(Level.FINE, "Creating an invoice for: " + name);
 	}
 	
 	public void cancelInvoice(String name, int due){
 		PatientInvoice invoice = patient.find(name).getPatientInvoice();
 		invoice.cancel(due, name);
+		
+		myLogger.log(Level.FINEST, "Canceling invoice for: " + name);
 	}
 	
 	public PatientInvoice getInvoice(String name){
+		myLogger.log(Level.FINER, "Getting invoice for: " + name);
+		
 		return patient.find(name).getPatientInvoice();
 	}
 	
@@ -124,51 +134,74 @@ public class Doctor{
 	public void createTreatmentRecords(String name, int date, int time, DoctorsOrders orders, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight){
 		TreatmentRecords record = patient.find(name).getTreatmentRecords();
 		record.create(name, date, time, orders, symptoms, bloodPressure, pulse, temp, height, weight);
+		
+		myLogger.log(Level.CONFIG, "Creating a treatment record for: " + name);
 	}
 	
 	public void removeTreatmentRecord(String name, int date, int time){
 		TreatmentRecords tr = patient.find(name).getTreatmentRecords();
 		tr.cancel(date, time);
+		
+		myLogger.log(Level.FINE, "Removing treatment for: " + name);
 	}
 	
 	public TreatmentRecords getTreatmentRecords(String name){
-			return patient.find(name).getTreatmentRecords();
+		
+		myLogger.log(Level.FINER, "Getting treatment record for: " + name);
+	
+		return patient.find(name).getTreatmentRecords();
 	}
 	
 	// Appointment find method for patient, create method for patient, and cancel appointment for patient
 	public void createAppt(String user, int date, int time, String doc, String reason){
 		Appointment appt = findAppt(user);
 		appt.create(date, time, user, doc, reason);
+		
+		myLogger.log(Level.CONFIG, "Creating appointment for: " + user);
 	}
 	
 	public void cancelAppt(String user, String doc, int date, int time){
 		Appointment appt = findAppt(user);
 		appt.cancel(date, time, user, doc);
+		
+		myLogger.log(Level.FINE, "Canceling appointment for: " + user);
 	}	
 
 	public Appointment findAppt(String user) {
+		myLogger.log(Level.FINEST, "Finding appointment for: " + user);
+		
 		return patient.find(user).getAppt();
 	}
 	
 	// Suspension getter and setter
-	public Boolean getSusp(String name) {
+	public Boolean getSusp(String name) {	
+		myLogger.log(Level.FINE, "Getting suspensions for: " + name);
+		
 		return info.getSusp();
 	}
 
 	public void setSusp(String name, Boolean susp) {
+		myLogger.log(Level.FINE, "Setting suspensions for: " + name);
+		
 		info.setSusp(susp);
 	}
 	
 	// Info getter, setter, and find method to 
 	public Info getInfo() {
+		myLogger.log(Level.FINE, "Getting info");
+		
 		return this.info;
 	}
 	
 	public void setInfo(Info info) {
 		this.info = info;
+		
+		myLogger.log(Level.FINE, "Getting info: " + info);
 	}
 	
 	public Info findInfo(String user) {
+		myLogger.log(Level.FINE, "Looking up info for: " + user);
+		
 		return this.information.find(user);
 	}
 	
@@ -185,6 +218,9 @@ public class Doctor{
 			//Patient
 			ret = patient.find(user);
 		}
+		
+		myLogger.log(Level.FINE, "Searching for: " + user);
+		
 		return ret;
 	}
 }

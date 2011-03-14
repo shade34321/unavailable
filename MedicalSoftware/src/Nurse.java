@@ -105,14 +105,17 @@ public class Nurse{
 	public void createInvoice(String name, String doc, int total, int due, Boolean paid){
 		PatientInvoice invoice = patient.find(name).getPatientInvoice();
 		invoice.create(name, doc, total, due, paid);
+		myLogger.log(Level.CONFIG, "Creating invoice for: " + name);
 	}
 	
 	public void cancelInvoice(String name, int due){
 		PatientInvoice invoice = patient.find(name).getPatientInvoice();
 		invoice.cancel(due, name);
+		myLogger.log(Level.INFO, "Canceling invoice for: " + name);
 	}
 	
 	public PatientInvoice getInvoice(String name){
+		myLogger.log(Level.INFO, "Getting invoice for: " + name);
 		return patient.find(name).getPatientInvoice();
 	}
 	
@@ -120,14 +123,17 @@ public class Nurse{
 	public void createTreatmentRecords(String name, int date, int time, DoctorsOrders orders, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight){
 		TreatmentRecords record = patient.find(name).getTreatmentRecords();
 		record.create(name, date, time, orders, symptoms, bloodPressure, pulse, temp, height, weight);
+		myLogger.log(Level.INFO, "Creating treatment record for: " + name);
 	}
 	
 	public void removeTreatmentRecord(String name, int date, int time){
 		TreatmentRecords tr = patient.find(name).getTreatmentRecords();
 		tr.cancel(date, time);
+		myLogger.log(Level.INFO, "Removing treatment record for: " + name);
 	}
 	
 	public TreatmentRecords getTreatmentRecords(String name){
+		myLogger.log(Level.INFO, "Getting treatment record for: " + name);
 			return patient.find(name).getTreatmentRecords();
 	}
 	
@@ -135,36 +141,44 @@ public class Nurse{
 	public void createAppt(String user, int date, int time, String doc, String reason){
 		Appointment appt = findAppt(user);
 		appt.create(date, time, user, doc, reason);
+		myLogger.log(Level.INFO, "Creating appointment for: " + user);
 	}
 	
 	public void cancelAppt(String user, String doc, int date, int time){
 		Appointment appt = findAppt(user);
 		appt.cancel(date, time, user, doc);
+		myLogger.log(Level.INFO, "Canceling appointment for: " + user);
 	}	
 
 	public Appointment findAppt(String user) {
+		myLogger.log(Level.INFO, "Getting appointment for: " + user);
 		return patient.find(user).getAppt();
 	}
 	
 	// Suspension getter and setter
 	public Boolean getSusp(String name) {
+		myLogger.log(Level.INFO, "Getting suspensions for: " + name);
 		return info.getSusp();
 	}
 
 	public void setSusp(String name, Boolean susp) {
 		info.setSusp(susp);
+		myLogger.log(Level.INFO, "Setting suspensions for: " + name);
 	}
 	
 	// Info getter, setter, and find method to 
 	public Info getInfo() {
+		myLogger.log(Level.INFO, "Getting info");
 		return this.info;
 	}
 	
 	public void setInfo(Info info) {
 		this.info = info;
+		myLogger.log(Level.INFO, "Setting info: " + info);
 	}
 	
 	public Info findInfo(String user) {
+		myLogger.log(Level.INFO, "Getting info for: " + user);
 		return this.information.find(user);
 	}
 }
