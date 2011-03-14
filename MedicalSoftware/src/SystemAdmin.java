@@ -182,21 +182,6 @@ public class SystemAdmin {
 		return ret;
 	}
 	
-	// Creating, canceling, and finding DoctorOrders
-	public void createOrder(String user, int date, int time, String prescrip, String labW, String followUp, String other){
-		DoctorsOrders order = patient.find(user).getOrders();
-		order.create(user, date, time, prescrip, labW, followUp, other);
-	}
-	
-	public void cancelDoctorOrder(int date, int time, String name, String prescrip){
-		DoctorsOrders order = patient.find(name).getOrders();
-		order.cancel(date, time, name, prescrip);
-	}
-	
-	public DoctorsOrders getOrders(String name){
-		return patient.find(name).getOrders();
-	}
-	
 	// PatientInvoice creating, canceling, and finding methods
 	public void createInvoice(String name, String doc, int total, int due, Boolean paid){
 		PatientInvoice invoice = patient.find(name).getPatientInvoice();
