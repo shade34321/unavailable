@@ -13,6 +13,29 @@ public class Nurse{
 	private AVL<String, Doctor> doctor;
 	private Info info;
 	
+	private static Logger myLogger = Logger.getLogger("Nurse");
+    
+    static {       
+        FileHandler fh = null;
+        try {
+            fh = new FileHandler("Nurse.log");
+        } catch (SecurityException e) {
+            myLogger.log(Level.SEVERE, "Security Exception creating the logger file handler", e);
+            e.printStackTrace();
+        } catch (IOException e) {
+            myLogger.log(Level.SEVERE, "IO Exception creating the logger file handler", e);
+            e.printStackTrace();
+        }
+		
+		 fh.setFilter( new Filter() {
+            public boolean isLoggable(LogRecord record) {
+                return true;
+            }
+        });
+        myLogger.addHandler(fh);
+        myLogger.setLevel(Level.ALL);
+    }
+	
 	// Constructor
 	Nurse(String user, AVL<String, Info> information, AVL<String, Nurse> nurse, AVL<String, Doctor> doctor, AVL<String, Patient> patient){
 		this.information = information;
@@ -20,6 +43,8 @@ public class Nurse{
 		this.nurse = nurse;
 		this.doctor = doctor;
 		this.info = nurse.find(user).getInfo();		
+		
+		myLogger.log(Level.INFO, "Creating new Nurse: " + user);
 	}
 	
 	Nurse (Info info, AVL<String, Patient> p, AVL<String, Nurse> n, AVL<String, Doctor> d, AVL<String, Info> i) {		
@@ -28,6 +53,8 @@ public class Nurse{
 		this.doctor = d;
 		this.information = i;
 		this.info = info;
+		
+		myLogger.log(Level.INFO, "Creating new Nurse: " + info);
 	}
 	
 	// Patient deleting and creating
@@ -35,13 +62,17 @@ public class Nurse{
 		Info form = new Info(name, userName, email, address, state, country, SSN, zip, birthday, 3, false);
 		Patient p = new Patient(form, this.patient, this.doctor);
 		patient.insert(name, p);
+		
+		myLogger.log(Level.FINE, "Creating Patient: " + name);
 	}
 	
 	public void deletePatient(String name){
 		patient.remove(name);
+		myLogger.log(Level.FINEST, "Removing patient: " + name);
 	}
 	
 	public Patient getPatient(String name){
+		myLogger.log(Level.CONFIG, "Returning Patient: " + name);
 		return patient.find(name);
 	}
 	
@@ -49,14 +80,17 @@ public class Nurse{
 	public void createOrder(String user, int date, int time, String prescrip, String labW, String followUp, String other){
 		DoctorsOrders order = patient.find(user).getOrders();
 		order.create(user, date, time, prescrip, labW, followUp, other);
+		myLogger.log(Level.FINE, "Creating Doctors Orders");
 	}
 	
 	public void cancelDoctorOrder(int date, int time, String name, String prescrip){
 		DoctorsOrders order = patient.find(name).getOrders();
 		order.cancel(date, time, name, prescrip);
+		myLogger.log(Level.FINEST, "Canceling Doctors Orders");
 	}
 	
 	public DoctorsOrders getOrders(String name){
+		myLogger.log(Level.CONFIG, "Returning Doctors Orders: " + name);
 		return patient.find(name).getOrders();
 	}
 	

@@ -12,6 +12,29 @@ public class SystemAdmin {
 	private AVL<String, Doctor> doctor;
 	private AVL<String, SystemAdmin> systemAdmin;
 	private Info info;
+	
+	private static Logger myLogger = Logger.getLogger("SystemAdmin");
+    
+    static {       
+        FileHandler fh = null;
+        try {
+            fh = new FileHandler("SystemAdmin.log");
+        } catch (SecurityException e) {
+            myLogger.log(Level.SEVERE, "Security Exception creating the logger file handler", e);
+            e.printStackTrace();
+        } catch (IOException e) {
+            myLogger.log(Level.SEVERE, "IO Exception creating the logger file handler", e);
+            e.printStackTrace();
+        }
+		
+		 fh.setFilter( new Filter() {
+            public boolean isLoggable(LogRecord record) {
+                return true;
+            }
+        });
+        myLogger.addHandler(fh);
+        myLogger.setLevel(Level.ALL);
+    }
 
 	// Constructor for creating a new admin
 	SystemAdmin (Info info, AVL<String, Patient> p, AVL<String, Nurse> n, AVL<String, Doctor> d, AVL<String, SystemAdmin> sa, AVL<String, Info> i) {		
@@ -21,6 +44,7 @@ public class SystemAdmin {
 		this.systemAdmin = sa;
 		this.information = i;
 		this.info = info;
+		myLogger.log(Level.INFO, "Creating new System Admin: " + info);
 	}
 	
 	// Constructor used for when AVL trees are passed in to be able to search the system and access system admin's information
@@ -31,10 +55,12 @@ public class SystemAdmin {
 		this.doctor = d;
 		this.systemAdmin = sa;
 		this.info = (Info) ((SystemAdmin) Search(user, 0)).getInfo();
+		myLogger.log(Level.INFO, "Creating new System Admin: " + user);
 	}
 	
 	// Suspension getter and setter
 	public void setSusp(String user, int type, Boolean status) {
+		myLogger.log(Level.CONFIG, "Setting suspension for: " + user);
 		if (type ==0) {
 			// System Admin
 			systemAdmin.find(user).getInfo().setSusp(status);
@@ -52,6 +78,7 @@ public class SystemAdmin {
 	}
 	
 	public boolean getSusp(String user, int type) {
+		myLogger.log(Level.CONFIG, "Getting suspension for: " + user);
 		boolean status = false;
 		if (type ==0) {
 			// System Admin
@@ -72,6 +99,7 @@ public class SystemAdmin {
 	
 	// Creating and deleting users class
 	public void createUser(String name, String userName, String email, String address, String state, String country, int SSN, int zip, int birthday, int type) {
+		myLogger.log(Level.FINER, "Creating new user: " + user);
 		Info form = new Info(name, userName, email, address, state, country, SSN, zip, birthday, type, false);
 		if (type ==0) {
 			// System Admin
@@ -94,6 +122,7 @@ public class SystemAdmin {
 	}
 	
 	public void deleteUser(String user, int type) {
+		myLogger.log(Level.FINEST, "Deleting user: " + user);
 		if (type ==0) {
 			// System Admin
 			systemAdmin.remove(user);
