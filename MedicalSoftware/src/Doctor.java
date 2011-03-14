@@ -1,5 +1,14 @@
 package MedicalSoftware;
 
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.Filter;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
+
 /**
 * This class contains the methods that a doctor will use when on the medical system.
 * 
@@ -15,6 +24,29 @@ public class Doctor{
 	private AVL<String, Nurse> nurse;
 	private AVL<String, Doctor> doctor;
 	
+	private static Logger myLogger = Logger.getLogger("Doctor");
+    
+    static {       
+        FileHandler fh = null;
+        try {
+            fh = new FileHandler("Doctor.log");
+        } catch (SecurityException e) {
+            myLogger.log(Level.SEVERE, "Security Exception creating the logger file handler", e);
+            e.printStackTrace();
+        } catch (IOException e) {
+            myLogger.log(Level.SEVERE, "IO Exception creating the logger file handler", e);
+            e.printStackTrace();
+        }
+		
+		 fh.setFilter( new Filter() {
+            public boolean isLoggable(LogRecord record) {
+                return true;
+            }
+        });
+        myLogger.addHandler(fh);
+        myLogger.setLevel(Level.ALL);
+    }
+	
 	// Constructors
 	Doctor(String user, AVL<String, Info> i, AVL<String, Patient> p, AVL<String, Nurse> n, AVL<String, Doctor> d) {
 
@@ -23,6 +55,8 @@ public class Doctor{
 		this.nurse = n;
 		this.doctor = d;
 		this.info = (Info) ((Doctor) Search(user, 1)).getInfo();
+		
+        myLogger.log(Level.INFO, "Creating new Doctor: " + user);
 	}
 	
 	Doctor (Info info, AVL<String, Patient> p, AVL<String, Nurse> n, AVL<String, Doctor> d, AVL<String, Info> i) {		
@@ -31,6 +65,8 @@ public class Doctor{
 		this.doctor = d;
 		this.information = i;
 		this.info = info;
+		
+        myLogger.log(Level.INFO, "Creating new Doctor: " + info);
 	}
 	
 	// Patient deleting and creating
@@ -38,13 +74,18 @@ public class Doctor{
 		Info form = new Info(name, userName, email, address, state, country, SSN, zip, birthday, 3, false);
 		Patient p = new Patient(form, this.patient, this.doctor);
 		patient.insert(name, p);
+		
+		myLogger.log(Level.FINE, "Creating Patient: " + name);
 	}
 	
 	public void deletePatient(String name){
 		patient.remove(name);
+		
+		myLogger.log(Level.FINEST, "Removing patient: " + name);
 	}
 	
 	public Patient getPatient(String name){
+		myLogger.log(Level.CONFIG, "Returning Patient: " + name);
 		return patient.find(name);
 	}
 	
@@ -52,14 +93,17 @@ public class Doctor{
 	public void createOrder(String user, int date, int time, String prescrip, String labW, String followUp, String other){
 		DoctorsOrders order = patient.find(user).getOrders();
 		order.create(user, date, time, prescrip, labW, followUp, other);
+		myLogger.log(Level.FINE, "Creating Doctors Orders");
 	}
 	
 	public void cancelDoctorOrder(int date, int time, String name, String prescrip){
 		DoctorsOrders order = patient.find(name).getOrders();
 		order.cancel(date, time, name, prescrip);
+		myLogger.log(Level.FINEST, "Canceling Doctors Orders");
 	}
 	
 	public DoctorsOrders getOrders(String name){
+		myLogger.log(Level.CONFIG, "Returning Doctors Orders: " + name);
 		return patient.find(name).getOrders();
 	}
 	

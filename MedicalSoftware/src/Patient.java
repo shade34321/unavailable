@@ -14,6 +14,29 @@ public class Patient {
 	private PatientInvoice invoice;
 	private AVL<String, Patient> patient;
 	private AVL<String, Doctor> doctor;
+	
+	private static Logger myLogger = Logger.getLogger("Patient");
+    
+    static {       
+        FileHandler fh = null;
+        try {
+            fh = new FileHandler("Patient.log");
+        } catch (SecurityException e) {
+            myLogger.log(Level.SEVERE, "Security Exception creating the logger file handler", e);
+            e.printStackTrace();
+        } catch (IOException e) {
+            myLogger.log(Level.SEVERE, "IO Exception creating the logger file handler", e);
+            e.printStackTrace();
+        }
+		
+		 fh.setFilter( new Filter() {
+            public boolean isLoggable(LogRecord record) {
+                return true;
+            }
+        });
+        myLogger.addHandler(fh);
+        myLogger.setLevel(Level.ALL);
+    }
 
 
 	// Constructors
@@ -25,6 +48,7 @@ public class Patient {
 		this.record = new TreatmentRecords();
 		this.invoice = new PatientInvoice();
 		this.orders = new DoctorsOrders();
+		myLogger.log(Level.INFO, "Creating new Patient: " + info);
 	}
 	
 	Patient(String user, AVL<String, Patient> p, AVL<String, Doctor> d) {		
@@ -35,24 +59,29 @@ public class Patient {
 		this.record = patient.find(user).getTreatmentRecords();
 		this.invoice = patient.find(user).getPatientInvoice();
 		this.orders = patient.find(user).getOrders();
+		myLogger.log(Level.INFO, "Creating new Patient: " + user);
 	}
 
 	// Patient Invoice getter and setter
 	public PatientInvoice getPatientInvoice() {
+		myLogger.log(Level.CONFIG, "Getting Patient Invoice");
 		return this.invoice;
 	}
 	
 	public void setPatientInvoice(PatientInvoice invoice) {
 		this.invoice = invoice;
+		myLogger.log(Level.FINE, "Setting Patient Invoice: " + invoice);
 	}
 
 	// Info getter and setter
 	public Info getInfo() {
+		myLogger.log(Level.CONFIG, "Getting Patient Info");
 		return this.info;
 	}
 	
 	public void setInfo(Info info) {
 		this.info = info;
+		myLogger.log(Level.FINE, "Setting Patient Info: "+ info);
 	}
 
 	// Appointment methods
