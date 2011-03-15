@@ -105,9 +105,9 @@ public class SystemAdmin {
 	}
 	
 	// Creating and deleting users class
-	public void createUser(String name, String userName, String email, String address, String state, String country, int SSN, int zip, int birthday, int type) {
-		myLogger.log(Level.FINER, "Creating new user: " + user);
-		Info form = new Info(name, userName, email, address, state, country, SSN, zip, birthday, type, false);
+	public void createUser(String name, String password, String userName, String email, String address, String state, String country, int SSN, int zip, int birthday, int type) {
+		myLogger.log(Level.FINER, "Creating new user: " + name);
+		Info form = new Info(name, password, userName, email, address, state, country, SSN, zip, birthday, type, false);
 		if (type ==0) {
 			// System Admin
 			SystemAdmin sa = new SystemAdmin(form, this.patient, this.nurse, this.doctor, this.systemAdmin, this.information);

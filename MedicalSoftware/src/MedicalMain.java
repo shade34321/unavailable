@@ -31,7 +31,7 @@ public class MedicalMain {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Nathanial\\Documents\\CS-2340\\Admin.txt"));
 			while ((name = br.readLine()) != null) {
-				info = new Info(name, br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine(), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), false);
+				info = new Info(name, br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine(), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), false);
 				systemAdmin.setInfo(info);
 				admin.insert(name, systemAdmin);
 			}
@@ -43,7 +43,7 @@ public class MedicalMain {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Nathanial\\Documents\\CS-2340\\Doctor.txt"));
 			while ((name = br.readLine()) != null) {
-				info = new Info(name, br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine(), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), false);
+				info = new Info(name, br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine(), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), false);
 				doctor.setInfo(info);
 				doc.insert(name, doctor);
 			}
@@ -55,7 +55,7 @@ public class MedicalMain {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Nathanial\\Documents\\CS-2340\\Nurse.txt"));
 			while ((name = br.readLine()) != null) {
-				info = new Info(name, br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine(), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), false);
+				info = new Info(name, br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine(), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), false);
 				nur.setInfo(info);
 				nurse.insert(name, nur);
 			}
@@ -67,7 +67,7 @@ public class MedicalMain {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\Nathanial\\Documents\\CS-2340\\Patient.txt"));
 			while ((name = br.readLine()) != null) {
-				info = new Info(name, br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine(), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), false);
+				info = new Info(name, br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine(), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), false);
 				person.setInfo(info);
 				patient.insert(name, person);
 			}

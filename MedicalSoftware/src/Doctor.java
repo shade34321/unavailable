@@ -68,8 +68,8 @@ public class Doctor{
 	}
 	
 	// Patient deleting and creating
-	public void createPatient(String name, String userName, String email, String address, String state, String country, int SSN, int zip, int birthday) {
-		Info form = new Info(name, userName, email, address, state, country, SSN, zip, birthday, 3, false);
+	public void createPatient(String name, String password, String userName, String email, String address, String state, String country, int SSN, int zip, int birthday) {
+		Info form = new Info(name, password, userName, email, address, state, country, SSN, zip, birthday, 3, false);
 		Patient p = new Patient(form, this.patient, this.doctor);
 		patient.insert(name, p);
 		

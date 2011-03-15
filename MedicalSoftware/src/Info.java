@@ -5,7 +5,7 @@ package MedicalSoftware;
  */
 public class Info {
 	
-	private String name, email, userName, address, state, country;
+	private String name, email, password, userName, address, state, country;
 	private int SSN, birthday, zip, type;
 	private Boolean suspention;
 	
@@ -24,8 +24,9 @@ public class Info {
 	}
 	
 	// Creating user information and then storing them in the class
-	Info (String name, String userName, String email, String address, String state, String country, int SSN, int zip, int birthday, int type, Boolean susp) {
+	Info (String name, String password, String userName, String email, String address, String state, String country, int SSN, int zip, int birthday, int type, Boolean susp) {
 		this.name = name;
+		this.setPassword(password);
 		this.userName = userName;
 		this.email = email;
 		this.address = address;
@@ -125,5 +126,13 @@ public class Info {
 	
 	public void setSusp(Boolean susp) {
 		this.suspention = susp;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPassword() {
+		return password;
 	}
 }
