@@ -3,7 +3,9 @@ package MedicalSoftware;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class MedicalMain {
 	
@@ -21,6 +23,7 @@ public class MedicalMain {
 	public static void main(String[] args) throws IOException {
 		setup();
 		Login lg = new Login(admin, doc, nurse, patient);
+	
 	}
 	
 	// Loads the AVL trees with user information of all types
@@ -75,4 +78,44 @@ public class MedicalMain {
 			System.out.println("Error no such file found!");
 		}
 	}
+	
+	// Saves the AVL trees with user information of all types
+	private static void save() throws IOException {
+		String name;
+		
+		// Saves SystemAdmin information into tree
+		try {
+			FileWriter outFile = new FileWriter("Admin.txt");
+			PrintWriter out0 = new PrintWriter(outFile);
+			
+		} catch (FileNotFoundException e) {
+			System.out.println("Error no such file found!");
+		}
+		
+		// Loads Doctor information into tree
+		try {
+			FileWriter outFile = new FileWriter("Doctor.txt");
+			PrintWriter out1 = new PrintWriter(outFile);
+			
+		} catch (FileNotFoundException e) {
+			System.out.println("Error no such file found!");
+		}
+		
+		// Saves Nurse information into tree
+		try {
+			FileWriter outFile = new FileWriter("Nurse.txt");
+			PrintWriter out2 = new PrintWriter(outFile);
+		} catch (FileNotFoundException e) {
+			System.out.println("Error no such file found!");
+		}
+		
+		// Saves Patient information into tree
+		try {
+			FileWriter outFile = new FileWriter("Patient.txt");
+			PrintWriter out3 = new PrintWriter(outFile);
+		} catch (FileNotFoundException e) {
+			System.out.println("Error no such file found!");
+		}
+	}
+	
 }
