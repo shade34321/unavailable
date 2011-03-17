@@ -7,11 +7,11 @@ package MedicalSoftware;
  */
 
 import java.io.IOException;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
-import java.util.logging.Filter;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import java.util.logging.XMLFormatter;
 
 public class Patient{
 	private Info info;
@@ -24,25 +24,27 @@ public class Patient{
 	
 	private static Logger myLogger = Logger.getLogger("Patient");
     
-    static {       
-        FileHandler fh = null;
+    static {
+        
+        ConsoleHandler ch = new ConsoleHandler();
+        ch.setLevel(Level.ALL);
+        ch.setFormatter(new XMLFormatter());
+        myLogger.addHandler(ch);
+        myLogger.setLevel(Level.ALL);
+        myLogger.setUseParentHandlers(false);
+        
         try {
-            fh = new FileHandler("Patient.log");
+            FileHandler fh = new FileHandler("Patient.html");
+            fh.setFormatter(new MyHtmlFormatter());
+            myLogger.addHandler(fh);
         } catch (SecurityException e) {
-            myLogger.log(Level.SEVERE, "Security Exception creating the logger file handler", e);
+            myLogger.log(Level.SEVERE, "Security Exception creating a file handler", e);
             e.printStackTrace();
         } catch (IOException e) {
-            myLogger.log(Level.SEVERE, "IO Exception creating the logger file handler", e);
+            myLogger.log(Level.SEVERE, "IO Exception creating a file handler", e);
             e.printStackTrace();
-        }
-		
-		 fh.setFilter( new Filter() {
-            public boolean isLoggable(LogRecord record) {
-                return true;
-            }
-        });
-        myLogger.addHandler(fh);
-        myLogger.setLevel(Level.ALL);
+        } 
+        
     }
 
 
