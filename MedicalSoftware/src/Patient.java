@@ -47,9 +47,7 @@ public class Patient {
 
 
 	// Constructors
-	Patient(Info info, AVL<String, Patient> p, AVL<String, Doctor> d) {		
-		this.patient = p;
-		this.doctor = d;
+	Patient(Info info) {
 		this.info = info;
 		this.appt = new Appointment();
 		this.record = new TreatmentRecords();
@@ -135,5 +133,11 @@ public class Patient {
 	public DoctorsOrders getOrders() {
 		myLogger.log(Level.INFO, "Getting doctors orders");
 		return orders;
+	}
+
+	// Updating the AVL trees for searching
+	public void updateTree(AVL<String, Patient> patient, AVL<String, Doctor> doctor) {
+		this.patient = patient;
+		this.doctor = doctor;
 	}
 }

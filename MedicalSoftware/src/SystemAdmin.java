@@ -44,12 +44,7 @@ public class SystemAdmin {
     }
 
 	// Constructor for creating a new admin
-	SystemAdmin (Info info, AVL<String, Patient> p, AVL<String, Nurse> n, AVL<String, Doctor> d, AVL<String, SystemAdmin> sa, AVL<String, Info> i) {		
-		this.patient = p;
-		this.nurse = n;
-		this.doctor = d;
-		this.systemAdmin = sa;
-		this.information = i;
+	SystemAdmin (Info info) {		
 		this.info = info;
 		myLogger.log(Level.INFO, "Creating new System Admin: " + info);
 	}
@@ -110,21 +105,29 @@ public class SystemAdmin {
 		Info form = new Info(name, password, userName, email, address, state, country, SSN, zip, birthday, type, false);
 		if (type ==0) {
 			// System Admin
-			SystemAdmin sa = new SystemAdmin(form, this.patient, this.nurse, this.doctor, this.systemAdmin, this.information);
+			SystemAdmin sa = new SystemAdmin(form);
 			systemAdmin.insert(name, sa);
+			sa.updateTree(this.patient, this.nurse, this.doctor, this.systemAdmin, this.information);
+			
 		}
 		else if (type == 1) {
 			// Doctor
-			Doctor doc = new Doctor(form, this.patient, this.nurse, this.doctor, this.information);
+			Doctor doc = new Doctor(form);
 			doctor.insert(name, doc);
+			doc.updateTree(this.patient, this.nurse, this.doctor, this.information);
+			
 		}else if (type == 2) {
 			// Nurse
-			Nurse n = new Nurse(form, this.patient, this.nurse, this.doctor, this.information);
+			Nurse n = new Nurse(form);
 			nurse.insert(name, n);
+			n.updateTree(this.patient, this.nurse, this.doctor, this.information);
+			
 		}else if (type == 3) {
 			//Patient
-			Patient p = new Patient(form, this.patient, this.doctor);
+			Patient p = new Patient(form);
 			patient.insert(name, p);
+				p.updateTree(this.patient, this.doctor);
+			
 		}
 	}
 	
@@ -245,5 +248,14 @@ public class SystemAdmin {
 	public void setSusp(String name, Boolean susp) {
 		info.setSusp(susp);
 		myLogger.log(Level.INFO, "Setting suspensions for: " + name);
+	}
+	
+	// Update trees
+	public void updateTree(AVL<String, Patient> p, AVL<String, Nurse> n, AVL<String, Doctor> d, AVL<String, SystemAdmin> sa, AVL<String, Info> i) {		
+		this.patient = p;
+		this.nurse = n;
+		this.doctor = d;
+		this.systemAdmin = sa;
+		this.information = i;
 	}
 }

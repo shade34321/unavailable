@@ -57,11 +57,8 @@ public class Doctor{
         myLogger.log(Level.INFO, "Creating new Doctor: " + user);
 	}
 	
-	Doctor (Info info, AVL<String, Patient> p, AVL<String, Nurse> n, AVL<String, Doctor> d, AVL<String, Info> i) {		
-		this.patient = p;
-		this.nurse = n;
-		this.doctor = d;
-		this.information = i;
+	// Creating a new doctor constructor
+	Doctor (Info info) {
 		this.info = info;
 		
         myLogger.log(Level.INFO, "Creating new Doctor: " + info);
@@ -70,8 +67,9 @@ public class Doctor{
 	// Patient deleting and creating
 	public void createPatient(String name, String password, String userName, String email, String address, String state, String country, int SSN, int zip, int birthday) {
 		Info form = new Info(name, password, userName, email, address, state, country, SSN, zip, birthday, 3, false);
-		Patient p = new Patient(form, this.patient, this.doctor);
+		Patient p = new Patient(form);
 		patient.insert(name, p);
+		p.updateTree(this.patient, this.doctor);
 		
 		myLogger.log(Level.FINE, "Creating Patient: " + name);
 	}
@@ -222,5 +220,13 @@ public class Doctor{
 		myLogger.log(Level.FINE, "Searching for: " + user);
 		
 		return ret;
+	}
+	
+	// Update trees
+	public void updateTree(AVL<String, Patient> p, AVL<String, Nurse> n, AVL<String, Doctor> d, AVL<String, Info> i) {		
+		this.patient = p;
+		this.nurse = n;
+		this.doctor = d;
+		this.information = i;
 	}
 }
