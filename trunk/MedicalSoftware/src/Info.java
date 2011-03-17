@@ -7,7 +7,7 @@ public class Info {
 	
 	private String name, email, password, userName, address, state, country;
 	private int SSN, birthday, zip, type;
-	private Boolean suspention;
+	private boolean suspention;
 	
 	Info(int type) {
 		this.name = null;
@@ -24,7 +24,7 @@ public class Info {
 	}
 	
 	// Creating user information and then storing them in the class
-	Info (String name, String password, String userName, String email, String address, String state, String country, int SSN, int zip, int birthday, int type, Boolean susp) {
+	Info (String name, String password, String userName, String email, String address, String state, String country, int SSN, int zip, int birthday, int type, boolean susp) {
 		this.name = name;
 		this.setPassword(password);
 		this.userName = userName;
@@ -80,7 +80,7 @@ public class Info {
 		return this.type;
 	}
 	
-	public Boolean getSusp() {
+	public boolean getSusp() {
 		return this.suspention;
 	}
 	
@@ -124,7 +124,7 @@ public class Info {
 		this.type = type;
 	}
 	
-	public void setSusp(Boolean susp) {
+	public void setSusp(boolean susp) {
 		this.suspention = susp;
 	}
 
