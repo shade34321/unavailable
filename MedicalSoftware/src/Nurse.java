@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  *
  */
 
-public class Nurse{
+public class Nurse {
 	private AVL<String, Info> information;
 	private AVL<String, Patient> patient;
 	private AVL<String, Nurse> nurse;
@@ -55,6 +55,10 @@ public class Nurse{
 	}
 	
 	Nurse (Info info) {
+		this.information = new AVL<String, Info>();
+		this.patient = new AVL<String, Patient>();
+		this.nurse = new AVL<String, Nurse>();
+		this.doctor = new AVL<String, Doctor>();
 		this.info = info;
 		
 		myLogger.log(Level.INFO, "Creating new Nurse: " + info);
@@ -178,6 +182,11 @@ public class Nurse{
 	public Info findInfo(String user) {
 		myLogger.log(Level.INFO, "Getting info for: " + user);
 		return this.information.find(user);
+	}
+	
+	// Update
+	public void update() {
+		
 	}
 	
 	// Update trees

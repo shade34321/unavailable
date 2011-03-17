@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
-public class Patient {
+public class Patient{
 	private Info info;
 	private Appointment appt;
 	private DoctorsOrders orders;
@@ -49,6 +49,8 @@ public class Patient {
 	// Constructors
 	Patient(Info info) {
 		this.info = info;
+		this.patient = new AVL<String, Patient>();
+		this.doctor = new AVL<String, Doctor>();
 		this.appt = new Appointment();
 		this.record = new TreatmentRecords();
 		this.invoice = new PatientInvoice();
@@ -135,6 +137,11 @@ public class Patient {
 		return orders;
 	}
 
+	// Update
+	public void update() {
+		
+	}
+	
 	// Updating the AVL trees for searching
 	public void updateTree(AVL<String, Patient> patient, AVL<String, Doctor> doctor) {
 		this.patient = patient;

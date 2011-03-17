@@ -59,6 +59,10 @@ public class Doctor{
 	
 	// Creating a new doctor constructor
 	Doctor (Info info) {
+		this.information = new AVL<String, Info>();
+		this.patient = new AVL<String, Patient>();
+		this.nurse = new AVL<String, Nurse>();
+		this.doctor = new AVL<String, Doctor>();
 		this.info = info;
 		
         myLogger.log(Level.INFO, "Creating new Doctor: " + info);
@@ -68,14 +72,15 @@ public class Doctor{
 	public void createPatient(String name, String password, String userName, String email, String address, String state, String country, int SSN, int zip, int birthday) {
 		Info form = new Info(name, password, userName, email, address, state, country, SSN, zip, birthday, 3, false);
 		Patient p = new Patient(form);
-		patient.insert(name, p);
-		p.updateTree(this.patient, this.doctor);
+		this.patient.insert(name, p);
+	    p.updateTree(this.patient, this.doctor);
+	    
 		
 		myLogger.log(Level.FINE, "Creating Patient: " + name);
 	}
 	
 	public void deletePatient(String name){
-		patient.remove(name);
+		this.patient.remove(name);
 		
 		myLogger.log(Level.FINEST, "Removing patient: " + name);
 	}
@@ -220,6 +225,12 @@ public class Doctor{
 		myLogger.log(Level.FINE, "Searching for: " + user);
 		
 		return ret;
+	}
+	
+	// Update
+	public void update() {
+		
+		
 	}
 	
 	// Update trees

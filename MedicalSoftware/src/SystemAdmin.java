@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  * @author Nathanial Heard
  * 
  */
-public class SystemAdmin {
+public class SystemAdmin{
 	private AVL<String, Info> information;
 	private AVL<String, Patient> patient;
 	private AVL<String, Nurse> nurse;
@@ -44,7 +44,12 @@ public class SystemAdmin {
     }
 
 	// Constructor for creating a new admin
-	SystemAdmin (Info info) {		
+	SystemAdmin (Info info) {
+		this.information = new AVL<String, Info>();
+		this.patient = new AVL<String, Patient>();
+		this.nurse = new AVL<String, Nurse>();
+		this.doctor = new AVL<String, Doctor>();
+		this.systemAdmin = new AVL<String, SystemAdmin>();
 		this.info = info;
 		myLogger.log(Level.INFO, "Creating new System Admin: " + info);
 	}
@@ -248,6 +253,10 @@ public class SystemAdmin {
 	public void setSusp(String name, Boolean susp) {
 		info.setSusp(susp);
 		myLogger.log(Level.INFO, "Setting suspensions for: " + name);
+	}
+	
+	// Update
+	public void update() {
 	}
 	
 	// Update trees
