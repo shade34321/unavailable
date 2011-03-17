@@ -3,7 +3,7 @@ package MedicalSoftware;
 public class Invoice {
 	private String name, doctor;
 	private int dueDate, total;
-	private Boolean paid;
+	private boolean paid;
 	
 	// Basic constructor
 	Invoice() {
@@ -15,7 +15,7 @@ public class Invoice {
 	}
 	
 	// Advanced constructor for accepting variables
-	Invoice(String name, String doc, int total, int due, Boolean paid) {
+	Invoice(String name, String doc, int total, int due, boolean paid) {
 		this.name = name;
 		this.doctor = doc;
 		this.total = total;
@@ -32,7 +32,7 @@ public class Invoice {
 		this.name = name;
 	}
 	
-	public String getDocotr() {
+	public String getDoctor() {
 		return this.doctor;
 	}
 	
@@ -56,11 +56,11 @@ public class Invoice {
 		this.total = total;
 	}
 	
-	public Boolean getPaid() {
+	public boolean getPaid() {
 		return this.paid;
 	}
 	
-	public void setPaid(Boolean pay) {
+	public void setPaid(boolean pay) {
 		this.paid = pay;
 	}
 }

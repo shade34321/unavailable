@@ -16,6 +16,22 @@ public class Appointment {
 
 	}
 
+	public Appt find(int date, int time, String name, String doctor) {
+		int size = App.size();
+		for (int i = 0; i < size; i++) {
+			if (App.get(i).getName() == name) {
+				if (App.get(i).getDate() == date) {
+					if (App.get(i).getTime() == time) {
+						if (App.get(i).getDoctor() == doctor) {
+							return App.get(i);
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+	
 	public void cancel(int date, int time, String name, String doctor) {
 		int size = App.size();
 		for (int i = 0; i < size; i++) {

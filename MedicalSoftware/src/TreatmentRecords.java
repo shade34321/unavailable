@@ -18,11 +18,23 @@ public class TreatmentRecords {
 		records = new ArrayList<TRecords>();
 	}
 
-	public void create(String name, int date, int time, DoctorsOrders orders, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight) {
-		TRecords tr = new TRecords(name, date, time, orders, symptoms, bloodPressure, pulse, temp, height, weight);
+	public void create(String name, int date, int time, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight) {
+		TRecords tr = new TRecords(name, date, time, symptoms, bloodPressure, pulse, temp, height, weight);
 		records.add(tr);
 
 	}
+	
+	public TRecords find(int date, int time) {
+		int size = records.size();
+		for (int i = 0; i < size; i++) {
+				if (records.get(i).getDate() == date) {
+					if (records.get(i).getTime() == time) {
+							return records.get(i);
+				}
+			}
+		}
+	return null;
+}
 
 	public void cancel(int date, int time) {
 		int size = records.size();

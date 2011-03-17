@@ -17,6 +17,22 @@ public class DoctorsOrders {
 
 	}
 
+	public DOrders find(int date, int time, String name, String prescrip) {
+		int size = orders.size();
+		for (int i = 0; i < size; i++) {
+			if (orders.get(i).getName() == name) {
+				if (orders.get(i).getDate() == date) {
+					if (orders.get(i).getTime() == time) {
+						if (orders.get(i).getPrescription() == prescrip) {
+							return orders.get(i);
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+	
 	public void cancel(int date, int time, String name, String prescrip) {
 		int size = orders.size();
 		for (int i = 0; i < size; i++) {
