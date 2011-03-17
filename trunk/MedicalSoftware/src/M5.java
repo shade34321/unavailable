@@ -305,6 +305,112 @@ public class M5 extends TestCase {
 		assertEquals(false, nurTree.find("Nathan").getInfo().getSusp());
 		assertEquals(false, nurTree.find("Michael").getInfo().getSusp());
 		assertEquals(false, nurTree.find("Shade").getInfo().getSusp());
+		
+		// Testing create patient method
+		nurTree.find("Shade").createPatient("Bob", "password", "userName", "email", "address", "state", "country", 55588555, 33033, 90887);
+		assertEquals(nurTree.find("Shade").getPatient("Bob").getInfo().getPassword(), "password");
+		assertEquals(nurTree.find("Shade").getPatient("Bob").getInfo().getUserName(), "userName");
+		assertEquals(nurTree.find("Shade").getPatient("Bob").getInfo().getEmail(), "email");
+		assertEquals(nurTree.find("Shade").getPatient("Bob").getInfo().getAddress(), "address");
+		assertEquals(nurTree.find("Shade").getPatient("Bob").getInfo().getState(), "state");
+		assertEquals(nurTree.find("Shade").getPatient("Bob").getInfo().getCountry(), "country");
+		assertEquals(nurTree.find("Shade").getPatient("Bob").getInfo().getSSN(), 55588555);
+		assertEquals(nurTree.find("Shade").getPatient("Bob").getInfo().getZip(), 33033);
+		assertEquals(nurTree.find("Shade").getPatient("Bob").getInfo().getBirthday(), 90887);
+		
+		nurTree.find("Shade").createPatient("John", "password1", "userName1", "email1", "address1", "state1", "country1", 555885551, 330331, 908871);
+		assertEquals(nurTree.find("Shade").getPatient("John").getInfo().getPassword(), "password1");
+		assertEquals(nurTree.find("Shade").getPatient("John").getInfo().getUserName(), "userName1");
+		assertEquals(nurTree.find("Shade").getPatient("John").getInfo().getEmail(), "email1");
+		assertEquals(nurTree.find("Shade").getPatient("John").getInfo().getAddress(), "address1");
+		assertEquals(nurTree.find("Shade").getPatient("John").getInfo().getState(), "state1");
+		assertEquals(nurTree.find("Shade").getPatient("John").getInfo().getCountry(), "country1");
+		assertEquals(nurTree.find("Shade").getPatient("John").getInfo().getSSN(), 555885551);
+		assertEquals(nurTree.find("Shade").getPatient("John").getInfo().getZip(), 330331);
+		assertEquals(nurTree.find("Shade").getPatient("John").getInfo().getBirthday(), 908871);
+		
+		// Creating Appointments
+		nurTree.find("Shade").createAppt("Bob", 90811, 2, "Shade", "Stomach hurts and puking all of last night.");
+		assertEquals(nurTree.find("Shade").getPatient("Bob").getAppt().find(90811, 2, "Bob", "Shade").getDoctor(), "Shade");
+		assertEquals(nurTree.find("Shade").getPatient("Bob").getAppt().find(90811, 2, "Bob", "Shade").getName(), "Bob");
+		assertEquals(nurTree.find("Shade").getPatient("Bob").getAppt().find(90811, 2, "Bob", "Shade").getTime(), 2);
+		assertEquals(nurTree.find("Shade").getPatient("Bob").getAppt().find(90811, 2, "Bob", "Shade").getDate(), 90811);
+		assertEquals(nurTree.find("Shade").getPatient("Bob").getAppt().find(90811, 2, "Bob", "Shade").getReason(), "Stomach hurts and puking all of last night.");
+		
+		nurTree.find("Shade").createAppt("Bob", 91411, 5, "Shade", "Stomach still hurts.");
+		assertEquals(nurTree.find("Shade").getPatient("Bob").getAppt().find(91411, 5, "Bob", "Shade").getDoctor(), "Shade");
+		assertEquals(nurTree.find("Shade").getPatient("Bob").getAppt().find(91411, 5, "Bob", "Shade").getName(), "Bob");
+		assertEquals(nurTree.find("Shade").getPatient("Bob").getAppt().find(91411, 5, "Bob", "Shade").getTime(), 5);
+		assertEquals(nurTree.find("Shade").getPatient("Bob").getAppt().find(91411, 5, "Bob", "Shade").getDate(), 91411);
+		assertEquals(nurTree.find("Shade").getPatient("Bob").getAppt().find(91411, 5, "Bob", "Shade").getReason(), "Stomach still hurts.");
+		
+		// Creating doctors orders
+		nurTree.find("Shade").createOrder("Bob", 91411, 6, "Drugs", "lab", "Take for x number of days.", "");
+		assertEquals(nurTree.find("Shade").getOrders("Bob").find(91411, 6, "Bob", "Drugs").getDate(), 91411);
+		assertEquals(nurTree.find("Shade").getOrders("Bob").find(91411, 6, "Bob", "Drugs").getTime(), 6);
+		assertEquals(nurTree.find("Shade").getOrders("Bob").find(91411, 6, "Bob", "Drugs").getPrescription(), "Drugs");
+		assertEquals(nurTree.find("Shade").getOrders("Bob").find(91411, 6, "Bob", "Drugs").getLabWork(), "lab");
+		assertEquals(nurTree.find("Shade").getOrders("Bob").find(91411, 6, "Bob", "Drugs").getFollowUpIns(), "Take for x number of days.");
+		assertEquals(nurTree.find("Shade").getOrders("Bob").find(91411, 6, "Bob", "Drugs").getOtherIns(), "");
+		
+		nurTree.find("Shade").createOrder("Bob", 90811, 7, "Drugs2", "lab1", "Take for n number of days.", "other");
+		assertEquals(nurTree.find("Shade").getOrders("Bob").find(90811, 7, "Bob", "Drugs2").getDate(), 90811);
+		assertEquals(nurTree.find("Shade").getOrders("Bob").find(90811, 7, "Bob", "Drugs2").getTime(), 7);
+		assertEquals(nurTree.find("Shade").getOrders("Bob").find(90811, 7, "Bob", "Drugs2").getPrescription(), "Drugs2");
+		assertEquals(nurTree.find("Shade").getOrders("Bob").find(90811, 7, "Bob", "Drugs2").getLabWork(), "lab1");
+		assertEquals(nurTree.find("Shade").getOrders("Bob").find(90811, 7, "Bob", "Drugs2").getFollowUpIns(), "Take for n number of days.");
+		assertEquals(nurTree.find("Shade").getOrders("Bob").find(90811, 7, "Bob", "Drugs2").getOtherIns(), "other");
+		
+		nurTree.find("Shade").createOrder("John", 70811, 7, "Drugs2", "lab1", "Take for n number of days.", "other");
+		assertEquals(nurTree.find("Shade").getOrders("John").find(70811, 7, "John", "Drugs2").getDate(), 70811);
+		assertEquals(nurTree.find("Shade").getOrders("John").find(70811, 7, "John", "Drugs2").getTime(), 7);
+		assertEquals(nurTree.find("Shade").getOrders("John").find(70811, 7, "John", "Drugs2").getPrescription(), "Drugs2");
+		assertEquals(nurTree.find("Shade").getOrders("John").find(70811, 7, "John", "Drugs2").getLabWork(), "lab1");
+		assertEquals(nurTree.find("Shade").getOrders("John").find(70811, 7, "John", "Drugs2").getFollowUpIns(), "Take for n number of days.");
+		assertEquals(nurTree.find("Shade").getOrders("John").find(70811, 7, "John", "Drugs2").getOtherIns(), "other");
+		
+		// Creating treatment records
+		nurTree.find("Shade").createTreatmentRecords("Bob", 91411, 7, "Stomach hurts", 90, 75, 91, 6, 180);
+		assertEquals(nurTree.find("Shade").getTreatmentRecords("Bob").find(91411, 7).getDate(), 91411);
+		assertEquals(nurTree.find("Shade").getTreatmentRecords("Bob").find(91411, 7).getTime(), 7);
+		assertEquals(nurTree.find("Shade").getTreatmentRecords("Bob").find(91411, 7).getSymptoms(), "Stomach hurts");
+		assertEquals(nurTree.find("Shade").getTreatmentRecords("Bob").find(91411, 7).getBloodPressure(), 90);
+		assertEquals(nurTree.find("Shade").getTreatmentRecords("Bob").find(91411, 7).getPulse(), 75);
+		assertEquals(nurTree.find("Shade").getTreatmentRecords("Bob").find(91411, 7).getTemperature(), 91);
+		assertEquals(nurTree.find("Shade").getTreatmentRecords("Bob").find(91411, 7).getHeight(), 6);
+		assertEquals(nurTree.find("Shade").getTreatmentRecords("Bob").find(91411, 7).getWeight(), 180);
+
+		nurTree.find("Shade").createTreatmentRecords("John", 81411, 3, "Stomach hurts again", 90, 75, 91, 6, 180);
+		assertEquals(nurTree.find("Shade").getTreatmentRecords("John").find(81411, 3).getDate(), 81411);
+		assertEquals(nurTree.find("Shade").getTreatmentRecords("John").find(81411, 3).getTime(), 3);
+		assertEquals(nurTree.find("Shade").getTreatmentRecords("John").find(81411, 3).getSymptoms(), "Stomach hurts again");
+		assertEquals(nurTree.find("Shade").getTreatmentRecords("John").find(81411, 3).getBloodPressure(), 90);
+		assertEquals(nurTree.find("Shade").getTreatmentRecords("John").find(81411, 3).getPulse(), 75);
+		assertEquals(nurTree.find("Shade").getTreatmentRecords("John").find(81411, 3).getTemperature(), 91);
+		assertEquals(nurTree.find("Shade").getTreatmentRecords("John").find(81411, 3).getHeight(), 6);
+		assertEquals(nurTree.find("Shade").getTreatmentRecords("John").find(81411, 3).getWeight(), 180);
+		
+		// Creating patient invoice
+		nurTree.find("Shade").createInvoice("Bob", "Shade", 2300, 100711, false);
+		assertEquals(nurTree.find("Shade").getInvoice("Bob").find(100711, "Bob").getDueDate(), 100711);
+		assertEquals(nurTree.find("Shade").getInvoice("Bob").find(100711, "Bob").getDoctor(), "Shade");
+		assertEquals(nurTree.find("Shade").getInvoice("Bob").find(100711, "Bob").getTotal(), 2300);
+		assertEquals(nurTree.find("Shade").getInvoice("Bob").find(100711, "Bob").getPaid(), false);
+		
+		nurTree.find("Shade").createInvoice("John", "Shade", 2500, 112311, false);
+		assertEquals(nurTree.find("Shade").getInvoice("John").find(112311, "John").getDueDate(), 112311);
+		assertEquals(nurTree.find("Shade").getInvoice("John").find(112311, "John").getDoctor(), "Shade");
+		assertEquals(nurTree.find("Shade").getInvoice("John").find(112311, "John").getTotal(), 2500);
+		assertEquals(nurTree.find("Shade").getInvoice("John").find(112311, "John").getPaid(), false);
+		
+		// Deleting patients
+		nurTree.find("Shade").deletePatient("Bob");
+		assertEquals(nurTree.find("Shade").getPatient("Bob"), null);
+		
+		assertEquals(nurTree.find("Shade").getPatient("John").getInfo().getSSN(), 555885551);
+		
+		nurTree.find("Shade").deletePatient("John");
+		assertEquals(nurTree.find("Shade").getPatient("John"), null);
 	}
 	
 	public void testCreatePatient(){
@@ -386,6 +492,31 @@ public class M5 extends TestCase {
 		assertEquals(false, patientTree.find("Nathan").getInfo().getSusp());
 		assertEquals(false, patientTree.find("Michael").getInfo().getSusp());
 		assertEquals(false, patientTree.find("Shade").getInfo().getSusp());
+		
+		// Creating Appointments
+		patientTree.find("Shade").createAppt(90811, 2, "Shade", "Michael", "Stomach hurts and puking all of last night.");
+		assertEquals(patientTree.find("Shade").getAppt().find(90811, 2, "Shade", "Michael").getDoctor(), "Michael");
+		assertEquals(patientTree.find("Shade").getAppt().find(90811, 2, "Shade", "Michael").getName(), "Shade");
+		assertEquals(patientTree.find("Shade").getAppt().find(90811, 2, "Shade", "Michael").getTime(), 2);
+		assertEquals(patientTree.find("Shade").getAppt().find(90811, 2, "Shade", "Michael").getDate(), 90811);
+		assertEquals(patientTree.find("Shade").getAppt().find(90811, 2, "Shade", "Michael").getReason(), "Stomach hurts and puking all of last night.");
+		
+		patientTree.find("Shade").createAppt(91411, 5, "Shade", "Michael", "Stomach still hurts.");
+		assertEquals(patientTree.find("Shade").getAppt().find(91411, 5, "Shade", "Michael").getDoctor(), "Michael");
+		assertEquals(patientTree.find("Shade").getAppt().find(91411, 5, "Shade", "Michael").getName(), "Shade");
+		assertEquals(patientTree.find("Shade").getAppt().find(91411, 5, "Shade", "Michael").getTime(), 5);
+		assertEquals(patientTree.find("Shade").getAppt().find(91411, 5, "Shade", "Michael").getDate(), 91411);
+		assertEquals(patientTree.find("Shade").getAppt().find(91411, 5, "Shade", "Michael").getReason(), "Stomach still hurts.");
+	
+		// Searching for doctors
+		AVL<String,Doctor> docTree = new AVL<String,Doctor>();
+		AVL<String,Info> infoTree = new AVL<String,Info>();
+		Info mInfo = new Info("Michael", "mm", "msimbal", "msimbal@gmail.com", "999 anywhere", "GA", "USA", 55541555, 33033, 91391, 1, false);
+		Doctor doc0 = new Doctor(mInfo);
+		
+		docTree.insert("Michael", doc0);
+		assertEquals(p0.Search("Michael").getInfo().getName(), "Michael");
+		assertEquals(p0.Search("Todd"), null);
 	}
 	
 	public void testCreateAdmin(){
@@ -479,6 +610,55 @@ public class M5 extends TestCase {
 		assertEquals(false, adminTree.find("Nathan").getInfo().getSusp());
 		assertEquals(false, adminTree.find("Michael").getInfo().getSusp());
 		assertEquals(false, adminTree.find("Shade").getInfo().getSusp());
+		
+		// Creating Appointments
+		adminTree.find("Shade").createAppt("Bob", 90811, 2, "Shade", "Stomach hurts and puking all of last night.");
+		assertEquals(adminTree.find("Shade").getPatient("Bob").getAppt().find(90811, 2, "Bob", "Shade").getDoctor(), "Shade");
+		assertEquals(adminTree.find("Shade").getPatient("Bob").getAppt().find(90811, 2, "Bob", "Shade").getName(), "Bob");
+		assertEquals(adminTree.find("Shade").getPatient("Bob").getAppt().find(90811, 2, "Bob", "Shade").getTime(), 2);
+		assertEquals(adminTree.find("Shade").getPatient("Bob").getAppt().find(90811, 2, "Bob", "Shade").getDate(), 90811);
+		assertEquals(adminTree.find("Shade").getPatient("Bob").getAppt().find(90811, 2, "Bob", "Shade").getReason(), "Stomach hurts and puking all of last night.");
+		
+		adminTree.find("Shade").createAppt("Bob", 91411, 5, "Shade", "Stomach still hurts.");
+		assertEquals(adminTree.find("Shade").getPatient("Bob").getAppt().find(91411, 5, "Bob", "Shade").getDoctor(), "Shade");
+		assertEquals(adminTree.find("Shade").getPatient("Bob").getAppt().find(91411, 5, "Bob", "Shade").getName(), "Bob");
+		assertEquals(adminTree.find("Shade").getPatient("Bob").getAppt().find(91411, 5, "Bob", "Shade").getTime(), 5);
+		assertEquals(adminTree.find("Shade").getPatient("Bob").getAppt().find(91411, 5, "Bob", "Shade").getDate(), 91411);
+		assertEquals(adminTree.find("Shade").getPatient("Bob").getAppt().find(91411, 5, "Bob", "Shade").getReason(), "Stomach still hurts.");
+		
+		// Creating treatment records
+		adminTree.find("Shade").createTreatmentRecords("Bob", 91411, 7, "Stomach hurts", 90, 75, 91, 6, 180);
+		assertEquals(adminTree.find("Shade").getTreatmentRecords("Bob").find(91411, 7).getDate(), 91411);
+		assertEquals(adminTree.find("Shade").getTreatmentRecords("Bob").find(91411, 7).getTime(), 7);
+		assertEquals(adminTree.find("Shade").getTreatmentRecords("Bob").find(91411, 7).getSymptoms(), "Stomach hurts");
+		assertEquals(adminTree.find("Shade").getTreatmentRecords("Bob").find(91411, 7).getBloodPressure(), 90);
+		assertEquals(adminTree.find("Shade").getTreatmentRecords("Bob").find(91411, 7).getPulse(), 75);
+		assertEquals(adminTree.find("Shade").getTreatmentRecords("Bob").find(91411, 7).getTemperature(), 91);
+		assertEquals(adminTree.find("Shade").getTreatmentRecords("Bob").find(91411, 7).getHeight(), 6);
+		assertEquals(adminTree.find("Shade").getTreatmentRecords("Bob").find(91411, 7).getWeight(), 180);
+
+		adminTree.find("Shade").createTreatmentRecords("John", 81411, 3, "Stomach hurts again", 90, 75, 91, 6, 180);
+		assertEquals(adminTree.find("Shade").getTreatmentRecords("John").find(81411, 3).getDate(), 81411);
+		assertEquals(adminTree.find("Shade").getTreatmentRecords("John").find(81411, 3).getTime(), 3);
+		assertEquals(adminTree.find("Shade").getTreatmentRecords("John").find(81411, 3).getSymptoms(), "Stomach hurts again");
+		assertEquals(adminTree.find("Shade").getTreatmentRecords("John").find(81411, 3).getBloodPressure(), 90);
+		assertEquals(adminTree.find("Shade").getTreatmentRecords("John").find(81411, 3).getPulse(), 75);
+		assertEquals(adminTree.find("Shade").getTreatmentRecords("John").find(81411, 3).getTemperature(), 91);
+		assertEquals(adminTree.find("Shade").getTreatmentRecords("John").find(81411, 3).getHeight(), 6);
+		assertEquals(adminTree.find("Shade").getTreatmentRecords("John").find(81411, 3).getWeight(), 180);
+		
+		// Creating patient invoice
+		adminTree.find("Shade").createInvoice("Bob", "Shade", 2300, 100711, false);
+		assertEquals(adminTree.find("Shade").getInvoice("Bob").find(100711, "Bob").getDueDate(), 100711);
+		assertEquals(adminTree.find("Shade").getInvoice("Bob").find(100711, "Bob").getDoctor(), "Shade");
+		assertEquals(adminTree.find("Shade").getInvoice("Bob").find(100711, "Bob").getTotal(), 2300);
+		assertEquals(adminTree.find("Shade").getInvoice("Bob").find(100711, "Bob").getPaid(), false);
+		
+		adminTree.find("Shade").createInvoice("John", "Shade", 2500, 112311, false);
+		assertEquals(adminTree.find("Shade").getInvoice("John").find(112311, "John").getDueDate(), 112311);
+		assertEquals(adminTree.find("Shade").getInvoice("John").find(112311, "John").getDoctor(), "Shade");
+		assertEquals(adminTree.find("Shade").getInvoice("John").find(112311, "John").getTotal(), 2500);
+		assertEquals(adminTree.find("Shade").getInvoice("John").find(112311, "John").getPaid(), false);
 	}
 	
 	public void testLogin() {
