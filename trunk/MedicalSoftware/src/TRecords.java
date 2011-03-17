@@ -5,7 +5,6 @@ public class TRecords {
 	private String name;
 	private int date;
 	private int time;
-	private DoctorsOrders orders;
 	private String symptoms;
 	private int bloodPressure;
 	private int pulse;
@@ -13,11 +12,10 @@ public class TRecords {
 	private int height;
 	private int weight;
 	
-	TRecords(String name, int date, int time, DoctorsOrders orders, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight) {
+	TRecords(String name, int date, int time, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight) {
 		this.name = name;
 		this.date = date;
 		this.time = time;
-		this.orders = orders;
 		this.symptoms = symptoms;
 		this.bloodPressure = bloodPressure;
 		this.pulse = pulse;
@@ -42,14 +40,6 @@ public class TRecords {
 	
 	public void setTime(int tme){
 		this.time = tme;
-	}
-	
-	public DoctorsOrders getOrders(){
-		return this.orders;
-	}
-	
-	public void setOrders(DoctorsOrders order){
-		this.orders = order;
 	}
 	
 	public String getSymptoms(){

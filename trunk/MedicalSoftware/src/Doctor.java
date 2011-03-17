@@ -93,15 +93,13 @@ public class Doctor{
 	
 	// Creating, canceling, and finding DoctorOrders
 	public void createOrder(String user, int date, int time, String prescrip, String labW, String followUp, String other){
-		DoctorsOrders order = patient.find(user).getOrders();
-		order.create(user, date, time, prescrip, labW, followUp, other);
+		patient.find(user).addOrders(user, date, time, prescrip, labW, followUp, other);
 		
 		myLogger.log(Level.FINE, "Creating Doctors Orders");
 	}
 	
 	public void cancelDoctorOrder(int date, int time, String name, String prescrip){
-		DoctorsOrders order = patient.find(name).getOrders();
-		order.cancel(date, time, name, prescrip);
+		patient.find(name).deleteOrders(name, date, time, prescrip);
 		
 		myLogger.log(Level.FINEST, "Canceling Doctors Orders");
 	}
@@ -114,16 +112,12 @@ public class Doctor{
 	
 	// PatientInvoice creating, canceling, and finding methods
 	public void createInvoice(String name, String doc, int total, int due, Boolean paid){
-		PatientInvoice invoice = patient.find(name).getPatientInvoice();
-		invoice.create(name, doc, total, due, paid);
-		
+		patient.find(name).addInvoice(name, doc, total, due, paid);
 		myLogger.log(Level.FINE, "Creating an invoice for: " + name);
 	}
 	
 	public void cancelInvoice(String name, int due){
-		PatientInvoice invoice = patient.find(name).getPatientInvoice();
-		invoice.cancel(due, name);
-		
+		patient.find(name).deleteInvoice(due, name);
 		myLogger.log(Level.FINEST, "Canceling invoice for: " + name);
 	}
 	
@@ -134,39 +128,31 @@ public class Doctor{
 	}
 	
 	// TreatmentRecords find method
-	public void createTreatmentRecords(String name, int date, int time, DoctorsOrders orders, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight){
-		TreatmentRecords record = patient.find(name).getTreatmentRecords();
-		record.create(name, date, time, orders, symptoms, bloodPressure, pulse, temp, height, weight);
+	public void createTreatmentRecords(String name, int date, int time, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight){
+		patient.find(name).addRecords(name, date, time, symptoms, bloodPressure, pulse, temp, height, weight);
 		
 		myLogger.log(Level.CONFIG, "Creating a treatment record for: " + name);
 	}
 	
 	public void removeTreatmentRecord(String name, int date, int time){
-		TreatmentRecords tr = patient.find(name).getTreatmentRecords();
-		tr.cancel(date, time);
+		patient.find(name).deleteRecords(date, time);
 		
 		myLogger.log(Level.FINE, "Removing treatment for: " + name);
 	}
 	
 	public TreatmentRecords getTreatmentRecords(String name){
-		
 		myLogger.log(Level.FINER, "Getting treatment record for: " + name);
-	
 		return patient.find(name).getTreatmentRecords();
 	}
 	
 	// Appointment find method for patient, create method for patient, and cancel appointment for patient
 	public void createAppt(String user, int date, int time, String doc, String reason){
-		Appointment appt = findAppt(user);
-		appt.create(date, time, user, doc, reason);
-		
+		patient.find(user).createAppt(date, time, user, doc, reason);
 		myLogger.log(Level.CONFIG, "Creating appointment for: " + user);
 	}
 	
 	public void cancelAppt(String user, String doc, int date, int time){
-		Appointment appt = findAppt(user);
-		appt.cancel(date, time, user, doc);
-		
+		patient.find(user).cancelAppt(date, time, user, doc);
 		myLogger.log(Level.FINE, "Canceling appointment for: " + user);
 	}	
 

@@ -79,7 +79,15 @@ public class Patient{
 		this.invoice = invoice;
 		myLogger.log(Level.FINE, "Setting Patient Invoice: " + invoice);
 	}
+	
+	public void addInvoice(String name, String doc, int total, int due, Boolean paid) {
+		invoice.create(name, doc, total, due, paid);
+	}
 
+	public void deleteInvoice(int due, String name) {
+		invoice.cancel(due, name);
+	}
+	
 	// Info getter and setter
 	public Info getInfo() {
 		myLogger.log(Level.CONFIG, "Getting Patient Info");
@@ -92,9 +100,9 @@ public class Patient{
 	}
 
 	// Appointment methods
-	public void createAppt(int date, int time, String doctor, String reason) {
+	public void createAppt(int date, int time, String name, String doctor, String reason) {
 		myLogger.log(Level.INFO, "Creating appointment");
-		appt = new Appointment();
+		appt.create(date, time, name, doctor, reason);
 	}
 	
 	public Appointment getAppt() {
@@ -118,6 +126,14 @@ public class Patient{
 		myLogger.log(Level.INFO, "Setting treatment records");
 	}
 	
+	public void addRecords(String name, int date, int time, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight) {
+		record.create(name, date, time, symptoms, bloodPressure, pulse, temp, height, weight);
+	}
+	
+	public void deleteRecords(int date, int time) {
+		record.cancel(date, time);
+	}
+	
 	// Searches system for doctors
 	public Doctor Search(String user) {
 		Doctor ret = doctor.find(user);
@@ -137,6 +153,14 @@ public class Patient{
 		return orders;
 	}
 
+	public void addOrders(String user, int date, int time, String prescrip, String labW, String followUp, String other) {
+		orders.create(user, date, time, prescrip, labW, followUp, other);
+	}
+	
+	public void deleteOrders(String user, int date, int time, String prescrip) {
+		orders.cancel(date, time, user, prescrip);
+	}
+	
 	// Update
 	public void update() {
 		
@@ -146,5 +170,10 @@ public class Patient{
 	public void updateTree(AVL<String, Patient> patient, AVL<String, Doctor> doctor) {
 		this.patient = patient;
 		this.doctor = doctor;
+	}
+
+	public void cancelAppt(int date, int time, String user, String doc) {
+		appt.cancel(date, time, user, doc);
+		
 	}
 }

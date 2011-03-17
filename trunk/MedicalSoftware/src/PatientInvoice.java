@@ -18,6 +18,19 @@ public class PatientInvoice {
 		Invoice in = new Invoice(name, doc, total, due, paid);
 		invoice.add(in);
 	}
+	
+	// Search by name and due date
+	public Invoice find(int due, String name) {
+		int size = invoice.size();
+		for (int i = 0; i < size; i++) {
+			if (invoice.get(i).getName() == name) {
+				if (invoice.get(i).getDueDate() == due) {
+						return invoice.get(i);
+				}
+			}
+		}
+		return null;
+	}
 
 	// Search by name and due date
 	public void cancel(int due, String name) {
