@@ -1,11 +1,11 @@
 package MedicalSoftware;
 
 import java.io.IOException;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
-import java.util.logging.Filter;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import java.util.logging.XMLFormatter;
 
 /*
  * SystemAdmin class designed to allow systemAdmin to control certain things in the medical software system.
@@ -22,25 +22,27 @@ public class SystemAdmin{
 	
 	private static Logger myLogger = Logger.getLogger("SystemAdmin");
     
-    static {       
-        FileHandler fh = null;
+    static {
+        
+        ConsoleHandler ch = new ConsoleHandler();
+        ch.setLevel(Level.ALL);
+        ch.setFormatter(new XMLFormatter());
+        myLogger.addHandler(ch);
+        myLogger.setLevel(Level.ALL);
+        myLogger.setUseParentHandlers(false);
+        
         try {
-            fh = new FileHandler("SystemAdmin.log");
+            FileHandler fh = new FileHandler("SystemAdmin.html");
+            fh.setFormatter(new MyHtmlFormatter());
+            myLogger.addHandler(fh);
         } catch (SecurityException e) {
-            myLogger.log(Level.SEVERE, "Security Exception creating the logger file handler", e);
+            myLogger.log(Level.SEVERE, "Security Exception creating a file handler", e);
             e.printStackTrace();
         } catch (IOException e) {
-            myLogger.log(Level.SEVERE, "IO Exception creating the logger file handler", e);
+            myLogger.log(Level.SEVERE, "IO Exception creating a file handler", e);
             e.printStackTrace();
-        }
-		
-		 fh.setFilter( new Filter() {
-            public boolean isLoggable(LogRecord record) {
-                return true;
-            }
-        });
-        myLogger.addHandler(fh);
-        myLogger.setLevel(Level.ALL);
+        } 
+        
     }
 
 	// Constructor for creating a new admin
