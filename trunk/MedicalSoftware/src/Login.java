@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 
 public class Login {
 	private static int suspended = 0;
-	private static Info info;
+	private Info info;
 	private SystemAdmin systemAdmin;
 	private Doctor doc;
 	private Nurse nur;
