@@ -1,12 +1,11 @@
 package MedicalSoftware;
 
 import java.io.BufferedReader;
-import java.io.File;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class Login {
 	private static int suspended = 0;
@@ -48,23 +47,23 @@ public class Login {
 		}
 		if (type ==0) {
 			// System Admin
-			if (password == admin.find(userName).getInfo().getPassword()) {
+			if (password.equals(admin.find(userName).getInfo().getPassword())) {
 				status = 1;
 			}
 		}
 		else if (type == 1) {
 			// Doctor
-			if (password == doctor.find(userName).getInfo().getPassword()) {
+			if (password.equals(doctor.find(userName).getInfo().getPassword())) {
 				status = 1;
 			} 
 		}else if (type == 2) {
 			// Nurse
-			if (password == nurse.find(userName).getInfo().getPassword()) {
+			if (password.equals(nurse.find(userName).getInfo().getPassword())) {
 				status = 1;
 			} 
 		}else if (type == 3) {
 			//Patient
-			if (password == patient.find(userName).getInfo().getPassword()) {
+			if (password.equals(patient.find(userName).getInfo().getPassword())) {
 				status = 1;
 			}
 		}
@@ -110,9 +109,10 @@ public class Login {
 			BufferedReader br = new BufferedReader(new FileReader("Admin.txt"));
 			while ((name = br.readLine()) != null) {
 				info = new Info(name, br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine(), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), false);
-				systemAdmin.setInfo(info);
+				systemAdmin = new SystemAdmin(info);
 				admin.insert(name, systemAdmin);
 			}
+			br.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("Error no such file found!");
 		}
@@ -122,9 +122,10 @@ public class Login {
 			BufferedReader br = new BufferedReader(new FileReader("Doctor.txt"));
 			while ((name = br.readLine()) != null) {
 				info = new Info(name, br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine(), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), false);
-				doc.setInfo(info);
+				doc =  new Doctor(info);
 				doctor.insert(name, doc);
 			}
+			br.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("Error no such file found!");
 		}
@@ -134,9 +135,10 @@ public class Login {
 			BufferedReader br = new BufferedReader(new FileReader("Nurse.txt"));
 			while ((name = br.readLine()) != null) {
 				info = new Info(name, br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine(), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), false);
-				nur.setInfo(info);
+				nur =  new Nurse(info);
 				nurse.insert(name, nur);
 			}
+			br.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("Error no such file found!");
 		}
@@ -146,9 +148,10 @@ public class Login {
 			BufferedReader br = new BufferedReader(new FileReader("Patient.txt"));
 			while ((name = br.readLine()) != null) {
 				info = new Info(name, br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine(), br.readLine(), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()), false);
-				person.setInfo(info);
+				person = new Patient(info);
 				patient.insert(name, person);
 			}
+			br.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("Error no such file found!");
 		}
@@ -159,115 +162,159 @@ public class Login {
 		
 		// Saves SystemAdmin information into tree
 		try {
-			File adminFile = new File("Admin.txt");
-			adminFile.delete();
-			File adminNewFile = new File("Admin.txt");
-			adminNewFile.createNewFile();
 			BSTNode<String, SystemAdmin> name;
-			FileWriter outFile = new FileWriter("Admin.txt");
-			PrintWriter out0 = new PrintWriter(outFile);
+			BufferedWriter br = new BufferedWriter(new FileWriter("Admin.txt"));
 			while (admin.getRoot() != null) {
-			name = admin.getRoot();
-			admin.remove(name.getKey());
-			out0.println(admin.find(name.getKey()).getInfo().getName());
-			out0.println(admin.find(name.getKey()).getInfo().getPassword());
-			out0.println(admin.find(name.getKey()).getInfo().getUserName());
-			out0.println(admin.find(name.getKey()).getInfo().getEmail());
-			out0.println(admin.find(name.getKey()).getInfo().getAddress());
-			out0.println(admin.find(name.getKey()).getInfo().getState());
-			out0.println(admin.find(name.getKey()).getInfo().getCountry());
-			out0.println(admin.find(name.getKey()).getInfo().getSSN());
-			out0.println(admin.find(name.getKey()).getInfo().getZip());
-			out0.println(admin.find(name.getKey()).getInfo().getBirthday());
-			out0.println(admin.find(name.getKey()).getInfo().getType());
-			}
-		} catch (FileNotFoundException e) {
+				name = admin.getRoot();
+				br.write(name.getValue().getInfo().getName());
+				br.newLine();
+				br.write(name.getValue().getInfo().getPassword());
+				br.newLine();
+				br.write(name.getValue().getInfo().getUserName());
+				br.newLine();
+				br.write(name.getValue().getInfo().getEmail());
+				br.newLine();
+				br.write(name.getValue().getInfo().getAddress());
+				br.newLine();
+				br.write(name.getValue().getInfo().getState());
+				br.newLine();
+				br.write(name.getValue().getInfo().getCountry());
+				br.newLine();
+				br.write(Integer.toString(name.getValue().getInfo().getSSN()));
+				br.newLine();
+				br.write(Integer.toString(name.getValue().getInfo().getZip()));
+				br.newLine();
+				br.write(Integer.toString(name.getValue().getInfo().getBirthday()));
+				br.newLine();
+				br.write(Integer.toString(name.getValue().getInfo().getType()));
+				br.newLine();
+				admin.remove(admin.getRoot().getKey());
+				}
+			br.close();
+		}
+		catch (FileNotFoundException e) {
 			System.out.println("Error no such file found!");
 		}
-		
-		// Saves Doctor information into tree
 		try {
-			File docFile = new File("Doctor.txt");
-			docFile.delete();
-			File docNewFile = new File("Doctor.txt");
-			docNewFile.createNewFile();
 			BSTNode<String, Doctor> nameDoc;
-			FileWriter outFile = new FileWriter("Doctor.txt");
-			PrintWriter out1 = new PrintWriter(outFile);
+			BufferedWriter br = new BufferedWriter(new FileWriter("Doctor.txt"));
 			while (doctor.getRoot() != null) {
 				nameDoc = doctor.getRoot();
-				doctor.remove(nameDoc.getKey());
-				out1.println(doctor.find(nameDoc.getKey()).getInfo().getName());
-				out1.println(doctor.find(nameDoc.getKey()).getInfo().getPassword());
-				out1.println(doctor.find(nameDoc.getKey()).getInfo().getUserName());
-				out1.println(doctor.find(nameDoc.getKey()).getInfo().getEmail());
-				out1.println(doctor.find(nameDoc.getKey()).getInfo().getAddress());
-				out1.println(doctor.find(nameDoc.getKey()).getInfo().getState());
-				out1.println(doctor.find(nameDoc.getKey()).getInfo().getCountry());
-				out1.println(doctor.find(nameDoc.getKey()).getInfo().getSSN());
-				out1.println(doctor.find(nameDoc.getKey()).getInfo().getZip());
-				out1.println(doctor.find(nameDoc.getKey()).getInfo().getBirthday());
-				out1.println(doctor.find(nameDoc.getKey()).getInfo().getType());
+				br.write(nameDoc.getValue().getInfo().getName());
+				br.newLine();
+				br.write(nameDoc.getValue().getInfo().getPassword());
+				br.newLine();
+				br.write(nameDoc.getValue().getInfo().getUserName());
+				br.newLine();
+				br.write(nameDoc.getValue().getInfo().getEmail());
+				br.newLine();
+				br.write(nameDoc.getValue().getInfo().getAddress());
+				br.newLine();
+				br.write(nameDoc.getValue().getInfo().getState());
+				br.newLine();
+				br.write(nameDoc.getValue().getInfo().getCountry());
+				br.newLine();
+				br.write(Integer.toString(nameDoc.getValue().getInfo().getSSN()));
+				br.newLine();
+				br.write(Integer.toString(nameDoc.getValue().getInfo().getZip()));
+				br.newLine();
+				br.write(Integer.toString(nameDoc.getValue().getInfo().getBirthday()));
+				br.newLine();
+				br.write(Integer.toString(nameDoc.getValue().getInfo().getType()));
+				br.newLine();
+				doctor.remove(doctor.getRoot().getKey());
 				}
-			
-		} catch (FileNotFoundException e) {
+			br.close();
+		}
+		catch (FileNotFoundException e) {
 			System.out.println("Error no such file found!");
 		}
-		
-		// Saves Nurse information into tree
 		try {
-			File nurFile = new File("Nurse.txt");
-			nurFile.delete();
-			File nurNewFile = new File("Nurse.txt");
-			nurNewFile.createNewFile();
 			BSTNode<String, Nurse> nameNur;
-			FileWriter outFile = new FileWriter("Nurse.txt");
-			PrintWriter out2 = new PrintWriter(outFile);
+			BufferedWriter br = new BufferedWriter(new FileWriter("Nurse.txt"));
 			while (nurse.getRoot() != null) {
 				nameNur = nurse.getRoot();
-				nurse.remove(nameNur.getKey());
-				out2.println(nurse.find(nameNur.getKey()).getInfo().getName());
-				out2.println(nurse.find(nameNur.getKey()).getInfo().getPassword());
-				out2.println(nurse.find(nameNur.getKey()).getInfo().getUserName());
-				out2.println(nurse.find(nameNur.getKey()).getInfo().getEmail());
-				out2.println(nurse.find(nameNur.getKey()).getInfo().getAddress());
-				out2.println(nurse.find(nameNur.getKey()).getInfo().getState());
-				out2.println(nurse.find(nameNur.getKey()).getInfo().getCountry());
-				out2.println(nurse.find(nameNur.getKey()).getInfo().getSSN());
-				out2.println(nurse.find(nameNur.getKey()).getInfo().getZip());
-				out2.println(nurse.find(nameNur.getKey()).getInfo().getBirthday());
-				out2.println(nurse.find(nameNur.getKey()).getInfo().getType());
+				br.write(nameNur.getValue().getInfo().getName());
+				br.newLine();
+				br.write(nameNur.getValue().getInfo().getPassword());
+				br.newLine();
+				br.write(nameNur.getValue().getInfo().getUserName());
+				br.newLine();
+				br.write(nameNur.getValue().getInfo().getEmail());
+				br.newLine();
+				br.write(nameNur.getValue().getInfo().getAddress());
+				br.newLine();
+				br.write(nameNur.getValue().getInfo().getState());
+				br.newLine();
+				br.write(nameNur.getValue().getInfo().getCountry());
+				br.newLine();
+				br.write(Integer.toString(nameNur.getValue().getInfo().getSSN()));
+				br.newLine();
+				br.write(Integer.toString(nameNur.getValue().getInfo().getZip()));
+				br.newLine();
+				br.write(Integer.toString(nameNur.getValue().getInfo().getBirthday()));
+				br.newLine();
+				br.write(Integer.toString(nameNur.getValue().getInfo().getType()));
+				br.newLine();
+				nurse.remove(nurse.getRoot().getKey());
 				}
+			br.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Error no such file found!");
+		}
+		try {
+			BSTNode<String, Patient> namePatient;
+			BufferedWriter br = new BufferedWriter(new FileWriter("Patient.txt"));
+			while (patient.getRoot() != null) {
+				namePatient = patient.getRoot();
+				br.write(namePatient.getValue().getInfo().getName());
+				br.newLine();
+				br.write(namePatient.getValue().getInfo().getPassword());
+				br.newLine();
+				br.write(namePatient.getValue().getInfo().getUserName());
+				br.newLine();
+				br.write(namePatient.getValue().getInfo().getEmail());
+				br.newLine();
+				br.write(namePatient.getValue().getInfo().getAddress());
+				br.newLine();
+				br.write(namePatient.getValue().getInfo().getState());
+				br.newLine();
+				br.write(namePatient.getValue().getInfo().getCountry());
+				br.newLine();
+				br.write(Integer.toString(namePatient.getValue().getInfo().getSSN()));
+				br.newLine();
+				br.write(Integer.toString(namePatient.getValue().getInfo().getZip()));
+				br.newLine();
+				br.write(Integer.toString(namePatient.getValue().getInfo().getBirthday()));
+				br.newLine();
+				br.write(Integer.toString(namePatient.getValue().getInfo().getType()));
+				br.newLine();
+				patient.remove(patient.getRoot().getKey());
+				}
+			br.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("Error no such file found!");
 		}
 		
-		// Saves Patient information into tree
-		try {
-			File pFile = new File("Patient.txt");
-			pFile.delete();
-			File pNewFile = new File("Doctor.txt");
-			pNewFile.createNewFile();
-			BSTNode<String, Patient> namePatient;
-			FileWriter outFile = new FileWriter("Patient.txt");
-			PrintWriter out3 = new PrintWriter(outFile);
-			while (patient.getRoot() != null) {
-				namePatient = patient.getRoot();
-				nurse.remove(namePatient.getKey());
-				out3.println(patient.find(namePatient.getKey()).getInfo().getName());
-				out3.println(patient.find(namePatient.getKey()).getInfo().getPassword());
-				out3.println(patient.find(namePatient.getKey()).getInfo().getUserName());
-				out3.println(patient.find(namePatient.getKey()).getInfo().getEmail());
-				out3.println(patient.find(namePatient.getKey()).getInfo().getAddress());
-				out3.println(patient.find(namePatient.getKey()).getInfo().getState());
-				out3.println(patient.find(namePatient.getKey()).getInfo().getCountry());
-				out3.println(patient.find(namePatient.getKey()).getInfo().getSSN());
-				out3.println(patient.find(namePatient.getKey()).getInfo().getZip());
-				out3.println(patient.find(namePatient.getKey()).getInfo().getBirthday());
-				out3.println(patient.find(namePatient.getKey()).getInfo().getType());
-				}
-		} catch (FileNotFoundException e) {
-			System.out.println("Error no such file found!");
+	}
+	
+	// For test purposes only
+	public Object getTree(int type) {
+		if (type ==0) {
+			// System Admin
+			return this.admin;
 		}
+		else if (type == 1) {
+			// Doctor
+			return this.doctor;
+		}else if (type == 2) {
+			// Nurse
+			return this.nurse;
+		}else if (type == 3) {
+			//Patient
+			return this.patient;
+			
+		}
+		return null;
 	}
 }

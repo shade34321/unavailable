@@ -4,7 +4,7 @@
  * Version 1.0
  * Copyright 2011 BobSoft Inc
  */
-package edu.gatech.oad.logdemo.model;
+package MedicalSoftware;
 
 import java.util.Date;
 import java.util.logging.Formatter;

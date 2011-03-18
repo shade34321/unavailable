@@ -1,5 +1,7 @@
 package MedicalSoftware;
 
+import java.io.IOException;
+
 import junit.framework.TestCase;
 
 public class M5 extends TestCase {
@@ -510,11 +512,11 @@ public class M5 extends TestCase {
 	
 		// Searching for doctors
 		AVL<String,Doctor> docTree = new AVL<String,Doctor>();
-		AVL<String,Info> infoTree = new AVL<String,Info>();
-		Info mInfo = new Info("Michael", "mm", "msimbal", "msimbal@gmail.com", "999 anywhere", "GA", "USA", 55541555, 33033, 91391, 1, false);
+		mInfo = new Info("Michael", "mm", "msimbal", "msimbal@gmail.com", "999 anywhere", "GA", "USA", 55541555, 33033, 91391, 1, false);
 		Doctor doc0 = new Doctor(mInfo);
 		
 		docTree.insert("Michael", doc0);
+		p0.updateTree(patientTree, docTree);
 		assertEquals(p0.Search("Michael").getInfo().getName(), "Michael");
 		assertEquals(p0.Search("Todd"), null);
 	}
@@ -611,20 +613,43 @@ public class M5 extends TestCase {
 		assertEquals(false, adminTree.find("Michael").getInfo().getSusp());
 		assertEquals(false, adminTree.find("Shade").getInfo().getSusp());
 		
+		// Creating users
+		adminTree.find("Shade").createUser("Bob", "password", "userName", "email", "address", "state", "country", 55588555, 33033, 90887, 3);
+		assertEquals(((Patient) adminTree.find("Shade").Search("Bob", 3)).getInfo().getPassword(), "password");
+		assertEquals(((Patient) adminTree.find("Shade").Search("Bob", 3)).getInfo().getUserName(), "userName");
+		assertEquals(((Patient) adminTree.find("Shade").Search("Bob", 3)).getInfo().getEmail(), "email");
+		assertEquals(((Patient) adminTree.find("Shade").Search("Bob", 3)).getInfo().getAddress(), "address");
+		assertEquals(((Patient) adminTree.find("Shade").Search("Bob", 3)).getInfo().getState(), "state");
+		assertEquals(((Patient) adminTree.find("Shade").Search("Bob", 3)).getInfo().getCountry(), "country");
+		assertEquals(((Patient) adminTree.find("Shade").Search("Bob", 3)).getInfo().getSSN(), 55588555);
+		assertEquals(((Patient) adminTree.find("Shade").Search("Bob", 3)).getInfo().getZip(), 33033);
+		assertEquals(((Patient) adminTree.find("Shade").Search("Bob", 3)).getInfo().getBirthday(), 90887);
+		
+		adminTree.find("Shade").createUser("John", "password1", "userName1", "email1", "address1", "state1", "country1", 555885551, 330331, 908871, 3);
+		assertEquals(((Patient) adminTree.find("Shade").Search("John", 3)).getInfo().getPassword(), "password1");
+		assertEquals(((Patient) adminTree.find("Shade").Search("John", 3)).getInfo().getUserName(), "userName1");
+		assertEquals(((Patient) adminTree.find("Shade").Search("John", 3)).getInfo().getEmail(), "email1");
+		assertEquals(((Patient) adminTree.find("Shade").Search("John", 3)).getInfo().getAddress(), "address1");
+		assertEquals(((Patient) adminTree.find("Shade").Search("John", 3)).getInfo().getState(), "state1");
+		assertEquals(((Patient) adminTree.find("Shade").Search("John", 3)).getInfo().getCountry(), "country1");
+		assertEquals(((Patient) adminTree.find("Shade").Search("John", 3)).getInfo().getSSN(), 555885551);
+		assertEquals(((Patient) adminTree.find("Shade").Search("John", 3)).getInfo().getZip(), 330331);
+		assertEquals(((Patient) adminTree.find("Shade").Search("John", 3)).getInfo().getBirthday(), 908871);
+		
 		// Creating Appointments
 		adminTree.find("Shade").createAppt("Bob", 90811, 2, "Shade", "Stomach hurts and puking all of last night.");
-		assertEquals(adminTree.find("Shade").getPatient("Bob").getAppt().find(90811, 2, "Bob", "Shade").getDoctor(), "Shade");
-		assertEquals(adminTree.find("Shade").getPatient("Bob").getAppt().find(90811, 2, "Bob", "Shade").getName(), "Bob");
-		assertEquals(adminTree.find("Shade").getPatient("Bob").getAppt().find(90811, 2, "Bob", "Shade").getTime(), 2);
-		assertEquals(adminTree.find("Shade").getPatient("Bob").getAppt().find(90811, 2, "Bob", "Shade").getDate(), 90811);
-		assertEquals(adminTree.find("Shade").getPatient("Bob").getAppt().find(90811, 2, "Bob", "Shade").getReason(), "Stomach hurts and puking all of last night.");
+		assertEquals(((Patient) adminTree.find("Shade").Search("Bob", 3)).getAppt().find(90811, 2, "Bob", "Shade").getDoctor(), "Shade");
+		assertEquals(((Patient) adminTree.find("Shade").Search("Bob", 3)).getAppt().find(90811, 2, "Bob", "Shade").getName(), "Bob");
+		assertEquals(((Patient) adminTree.find("Shade").Search("Bob", 3)).getAppt().find(90811, 2, "Bob", "Shade").getTime(), 2);
+		assertEquals(((Patient) adminTree.find("Shade").Search("Bob", 3)).getAppt().find(90811, 2, "Bob", "Shade").getDate(), 90811);
+		assertEquals(((Patient) adminTree.find("Shade").Search("Bob", 3)).getAppt().find(90811, 2, "Bob", "Shade").getReason(), "Stomach hurts and puking all of last night.");
 		
 		adminTree.find("Shade").createAppt("Bob", 91411, 5, "Shade", "Stomach still hurts.");
-		assertEquals(adminTree.find("Shade").getPatient("Bob").getAppt().find(91411, 5, "Bob", "Shade").getDoctor(), "Shade");
-		assertEquals(adminTree.find("Shade").getPatient("Bob").getAppt().find(91411, 5, "Bob", "Shade").getName(), "Bob");
-		assertEquals(adminTree.find("Shade").getPatient("Bob").getAppt().find(91411, 5, "Bob", "Shade").getTime(), 5);
-		assertEquals(adminTree.find("Shade").getPatient("Bob").getAppt().find(91411, 5, "Bob", "Shade").getDate(), 91411);
-		assertEquals(adminTree.find("Shade").getPatient("Bob").getAppt().find(91411, 5, "Bob", "Shade").getReason(), "Stomach still hurts.");
+		assertEquals(((Patient) adminTree.find("Shade").Search("Bob", 3)).getAppt().find(91411, 5, "Bob", "Shade").getDoctor(), "Shade");
+		assertEquals(((Patient) adminTree.find("Shade").Search("Bob", 3)).getAppt().find(91411, 5, "Bob", "Shade").getName(), "Bob");
+		assertEquals(((Patient) adminTree.find("Shade").Search("Bob", 3)).getAppt().find(91411, 5, "Bob", "Shade").getTime(), 5);
+		assertEquals(((Patient) adminTree.find("Shade").Search("Bob", 3)).getAppt().find(91411, 5, "Bob", "Shade").getDate(), 91411);
+		assertEquals(((Patient) adminTree.find("Shade").Search("Bob", 3)).getAppt().find(91411, 5, "Bob", "Shade").getReason(), "Stomach still hurts.");
 		
 		// Creating treatment records
 		adminTree.find("Shade").createTreatmentRecords("Bob", 91411, 7, "Stomach hurts", 90, 75, 91, 6, 180);
@@ -661,8 +686,236 @@ public class M5 extends TestCase {
 		assertEquals(adminTree.find("Shade").getInvoice("John").find(112311, "John").getPaid(), false);
 	}
 	
-	public void testLogin() {
+	@SuppressWarnings("unchecked")
+	public void testLogin() throws IOException {
+		Login lg = new Login();
 		
+		// Loads the system's AVL trees with its corresponding text files
+		lg.setup();
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Nathan").getInfo().getName(), "Nathan");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Nathan").getInfo().getPassword(), "password");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Nathan").getInfo().getUserName(), "nheard");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Nathan").getInfo().getEmail(), "aronijin@gg");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Nathan").getInfo().getAddress(), "111 Somewhere USA");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Nathan").getInfo().getState(), "GA");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Nathan").getInfo().getCountry(), "USA");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Nathan").getInfo().getSSN(), 444555667);
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Nathan").getInfo().getZip(), 30000);
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Nathan").getInfo().getBirthday(), 72291);
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Nathan").getInfo().getType(), 0);
+		
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Michael").getInfo().getName(), "Michael");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Michael").getInfo().getPassword(), "people");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Michael").getInfo().getUserName(), "msimbal");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Michael").getInfo().getEmail(), "msimbal@gg");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Michael").getInfo().getAddress(), "987 Somewhere USA");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Michael").getInfo().getState(), "GA");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Michael").getInfo().getCountry(), "USA");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Michael").getInfo().getSSN(), 444555678);
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Michael").getInfo().getZip(), 30000);
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Michael").getInfo().getBirthday(), 72291);
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Michael").getInfo().getType(), 0);
+		
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Kevin Zhou").getInfo().getName(), "Kevin Zhou");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Kevin Zhou").getInfo().getPassword(), "cast");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Kevin Zhou").getInfo().getUserName(), "kevin3");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Kevin Zhou").getInfo().getEmail(), "kevin3@gg");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Kevin Zhou").getInfo().getAddress(), "789 Somewhere USA");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Kevin Zhou").getInfo().getState(), "GA");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Kevin Zhou").getInfo().getCountry(), "USA");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Kevin Zhou").getInfo().getSSN(), 444555789);
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Kevin Zhou").getInfo().getZip(), 30000);
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Kevin Zhou").getInfo().getBirthday(), 72291);
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Kevin Zhou").getInfo().getType(), 0);
+		
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Shade").getInfo().getName(), "Shade");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Shade").getInfo().getPassword(), "kami");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Shade").getInfo().getUserName(), "shade3");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Shade").getInfo().getEmail(), "shade@gg");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Shade").getInfo().getAddress(), "888 Somewhere USA");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Shade").getInfo().getState(), "GA");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Shade").getInfo().getCountry(), "USA");
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Shade").getInfo().getSSN(), 444565667);
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Shade").getInfo().getZip(), 30000);
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Shade").getInfo().getBirthday(), 72291);
+		assertEquals(((AVL<String,SystemAdmin>) lg.getTree(0)).find("Shade").getInfo().getType(), 0);
+		
+		// Doctors
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Nathan").getInfo().getName(), "Nathan");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Nathan").getInfo().getPassword(), "godisok");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Nathan").getInfo().getUserName(), "nheard");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Nathan").getInfo().getEmail(), "aronijin@gg");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Nathan").getInfo().getAddress(), "111 Somewhere USA");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Nathan").getInfo().getState(), "GA");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Nathan").getInfo().getCountry(), "USA");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Nathan").getInfo().getSSN(), 444555667);
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Nathan").getInfo().getZip(), 30000);
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Nathan").getInfo().getBirthday(), 72291);
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Nathan").getInfo().getType(), 0);
+		
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Michael").getInfo().getName(), "Michael");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Michael").getInfo().getPassword(), "people");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Michael").getInfo().getUserName(), "msimbal");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Michael").getInfo().getEmail(), "msimbal@gg");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Michael").getInfo().getAddress(), "987 Somewhere USA");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Michael").getInfo().getState(), "GA");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Michael").getInfo().getCountry(), "USA");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Michael").getInfo().getSSN(), 444555678);
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Michael").getInfo().getZip(), 30000);
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Michael").getInfo().getBirthday(), 72291);
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Michael").getInfo().getType(), 0);
+		
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Kevin Zhou").getInfo().getName(), "Kevin Zhou");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Kevin Zhou").getInfo().getPassword(), "cast");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Kevin Zhou").getInfo().getUserName(), "kevin3");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Kevin Zhou").getInfo().getEmail(), "kevin3@gg");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Kevin Zhou").getInfo().getAddress(), "789 Somewhere USA");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Kevin Zhou").getInfo().getState(), "GA");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Kevin Zhou").getInfo().getCountry(), "USA");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Kevin Zhou").getInfo().getSSN(), 444555789);
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Kevin Zhou").getInfo().getZip(), 30000);
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Kevin Zhou").getInfo().getBirthday(), 72291);
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Kevin Zhou").getInfo().getType(), 0);
+		
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Shade").getInfo().getName(), "Shade");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Shade").getInfo().getPassword(), "kami");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Shade").getInfo().getUserName(), "shade3");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Shade").getInfo().getEmail(), "shade@gg");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Shade").getInfo().getAddress(), "888 Somewhere USA");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Shade").getInfo().getState(), "GA");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Shade").getInfo().getCountry(), "USA");
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Shade").getInfo().getSSN(), 444565667);
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Shade").getInfo().getZip(), 30000);
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Shade").getInfo().getBirthday(), 72291);
+		assertEquals(((AVL<String,Doctor>) lg.getTree(1)).find("Shade").getInfo().getType(), 0);
+	
+		//Nurses
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Nathan").getInfo().getName(), "Nathan");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Nathan").getInfo().getPassword(), "godisok");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Nathan").getInfo().getUserName(), "nheard");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Nathan").getInfo().getEmail(), "aronijin@gg");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Nathan").getInfo().getAddress(), "111 Somewhere USA");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Nathan").getInfo().getState(), "GA");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Nathan").getInfo().getCountry(), "USA");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Nathan").getInfo().getSSN(), 444555667);
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Nathan").getInfo().getZip(), 30000);
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Nathan").getInfo().getBirthday(), 72291);
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Nathan").getInfo().getType(), 0);
+		
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Michael").getInfo().getName(), "Michael");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Michael").getInfo().getPassword(), "people");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Michael").getInfo().getUserName(), "msimbal");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Michael").getInfo().getEmail(), "msimbal@gg");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Michael").getInfo().getAddress(), "987 Somewhere USA");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Michael").getInfo().getState(), "GA");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Michael").getInfo().getCountry(), "USA");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Michael").getInfo().getSSN(), 444555678);
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Michael").getInfo().getZip(), 30000);
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Michael").getInfo().getBirthday(), 72291);
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Michael").getInfo().getType(), 0);
+		
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Kevin Zhou").getInfo().getName(), "Kevin Zhou");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Kevin Zhou").getInfo().getPassword(), "cast");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Kevin Zhou").getInfo().getUserName(), "kevin3");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Kevin Zhou").getInfo().getEmail(), "kevin3@gg");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Kevin Zhou").getInfo().getAddress(), "789 Somewhere USA");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Kevin Zhou").getInfo().getState(), "GA");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Kevin Zhou").getInfo().getCountry(), "USA");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Kevin Zhou").getInfo().getSSN(), 444555789);
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Kevin Zhou").getInfo().getZip(), 30000);
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Kevin Zhou").getInfo().getBirthday(), 72291);
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Kevin Zhou").getInfo().getType(), 0);
+		
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Shade").getInfo().getName(), "Shade");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Shade").getInfo().getPassword(), "kami");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Shade").getInfo().getUserName(), "shade3");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Shade").getInfo().getEmail(), "shade@gg");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Shade").getInfo().getAddress(), "888 Somewhere USA");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Shade").getInfo().getState(), "GA");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Shade").getInfo().getCountry(), "USA");
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Shade").getInfo().getSSN(), 444565667);
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Shade").getInfo().getZip(), 30000);
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Shade").getInfo().getBirthday(), 72291);
+		assertEquals(((AVL<String,Nurse>) lg.getTree(2)).find("Shade").getInfo().getType(), 0);
+		
+		// Patients
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Nathan").getInfo().getName(), "Nathan");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Nathan").getInfo().getPassword(), "godisok");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Nathan").getInfo().getUserName(), "nheard");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Nathan").getInfo().getEmail(), "aronijin@gg");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Nathan").getInfo().getAddress(), "111 Somewhere USA");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Nathan").getInfo().getState(), "GA");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Nathan").getInfo().getCountry(), "USA");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Nathan").getInfo().getSSN(), 444555667);
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Nathan").getInfo().getZip(), 30000);
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Nathan").getInfo().getBirthday(), 72291);
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Nathan").getInfo().getType(), 0);
+		
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Michael").getInfo().getName(), "Michael");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Michael").getInfo().getPassword(), "people");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Michael").getInfo().getUserName(), "msimbal");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Michael").getInfo().getEmail(), "msimbal@gg");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Michael").getInfo().getAddress(), "987 Somewhere USA");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Michael").getInfo().getState(), "GA");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Michael").getInfo().getCountry(), "USA");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Michael").getInfo().getSSN(), 444555678);
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Michael").getInfo().getZip(), 30000);
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Michael").getInfo().getBirthday(), 72291);
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Michael").getInfo().getType(), 0);
+	
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Kevin Zhou").getInfo().getName(), "Kevin Zhou");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Kevin Zhou").getInfo().getPassword(), "cast");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Kevin Zhou").getInfo().getUserName(), "kevin3");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Kevin Zhou").getInfo().getEmail(), "kevin3@gg");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Kevin Zhou").getInfo().getAddress(), "789 Somewhere USA");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Kevin Zhou").getInfo().getState(), "GA");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Kevin Zhou").getInfo().getCountry(), "USA");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Kevin Zhou").getInfo().getSSN(), 444555789);
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Kevin Zhou").getInfo().getZip(), 30000);
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Kevin Zhou").getInfo().getBirthday(), 72291);
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Kevin Zhou").getInfo().getType(), 0);
+		
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Shade").getInfo().getName(), "Shade");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Shade").getInfo().getPassword(), "kami");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Shade").getInfo().getUserName(), "shade3");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Shade").getInfo().getEmail(), "shade@gg");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Shade").getInfo().getAddress(), "888 Somewhere USA");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Shade").getInfo().getState(), "GA");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Shade").getInfo().getCountry(), "USA");
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Shade").getInfo().getSSN(), 444565667);
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Shade").getInfo().getZip(), 30000);
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Shade").getInfo().getBirthday(), 72291);
+		assertEquals(((AVL<String,Patient>) lg.getTree(3)).find("Shade").getInfo().getType(), 0);
+		
+		// Testing the login method
+		assertEquals(lg.loginUser("Shade", "kami", 0), 1);
+		assertEquals(lg.loginUser("Shade", "kami", 1), 1);
+		assertEquals(lg.loginUser("Shade", "kami", 2), 1);
+		assertEquals(lg.loginUser("Shade", "kami", 3), 1);
+		
+		assertEquals(lg.loginUser("Kevin Zhou", "cast", 0), 1);
+		assertEquals(lg.loginUser("Kevin Zhou", "cast", 1), 1);
+		assertEquals(lg.loginUser("Kevin Zhou", "cast", 2), 1);
+		assertEquals(lg.loginUser("Kevin Zhou", "cast", 3), 1);
+		
+		assertEquals(lg.loginUser("Nathan", "password", 0), 1);
+		assertEquals(lg.loginUser("Nathan", "godisok", 1), 1);
+		assertEquals(lg.loginUser("Nathan", "godisok", 2), 1);
+		assertEquals(lg.loginUser("Nathan", "godisok", 3), 1);
+		
+		assertEquals(lg.loginUser("Michael", "people", 0), 1);
+		assertEquals(lg.loginUser("Michael", "people", 1), 1);
+		assertEquals(lg.loginUser("Michael", "people", 2), 1);
+		assertEquals(lg.loginUser("Michael", "people", 3), 1);
+		
+		
+		
+		// Saves the contents of the system to its corresponding texts files
+		lg.createUser("Bob", "password", "userName", "email", "address", "state", "country", 55588555, 33033, 90887, 3);
+		lg.createUser("Bob", "password", "userName", "email", "address", "state", "country", 55588555, 33033, 90887, 2);
+		lg.createUser("Bob", "password", "userName", "email", "address", "state", "country", 55588555, 33033, 90887, 1);
+		lg.createUser("Bob", "password", "userName", "email", "address", "state", "country", 55588555, 33033, 90887, 0);
+		lg.save();
 	}
 	
 	
