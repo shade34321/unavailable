@@ -7,6 +7,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * Class for letting users login to the system
+ * 
+ * @author Nathan Heard
+ *
+ */
 public class Login {
 	private static int suspended = 0;
 	private Info info;
@@ -20,6 +26,9 @@ public class Login {
 	private AVL<String, Nurse> nurse;
 	private AVL<String, Doctor> doctor;
 	
+	/**
+	 * Basic constructor
+	 */
 	Login() {
 		this.admin = new AVL<String, SystemAdmin>();
 		this.doctor = new AVL<String, Doctor>();
@@ -27,6 +36,14 @@ public class Login {
 		this.nurse = new AVL<String, Nurse>();
 	}
 
+	/**
+	 * Constructor
+	 * 
+	 * @param admin
+	 * @param doctor
+	 * @param nurse
+	 * @param patient
+	 */
 	Login(AVL<String, SystemAdmin> admin, AVL<String, Doctor> doctor, AVL<String, Nurse> nurse, AVL<String, Patient> patient) {
 		this.admin = admin;
 		this.doctor = doctor;
@@ -34,11 +51,23 @@ public class Login {
 		this.patient = patient;
 	}
 	
+	/**
+	 * Calls setup
+	 * 
+	 * @throws IOException
+	 */
 	public void run() throws IOException {
-		setup();
-		
+		setup();		
 	}
 
+	/**
+	 * Method for logging in
+	 * 
+	 * @param userName
+	 * @param password
+	 * @param type
+	 * @return
+	 */
 	public int loginUser(String userName, String password, int type) {
 		int status = 0;
 		suspended++;
@@ -70,6 +99,21 @@ public class Login {
 		return status;
 	}
 	
+	/**
+	 * Creates a new user
+	 * 
+	 * @param name
+	 * @param password
+	 * @param userName
+	 * @param email
+	 * @param address
+	 * @param state
+	 * @param country
+	 * @param SSN
+	 * @param zip
+	 * @param birthday
+	 * @param type
+	 */
 	public void createUser(String name, String password, String userName, String email, String address, String state, String country, int SSN, int zip, int birthday, int type) {
 		Info form = new Info(name, password, userName, email, address, state, country, SSN, zip, birthday, type, false);
 		if (type ==0) {
@@ -99,8 +143,12 @@ public class Login {
 			
 		}
 	}
-	
-	// Loads the AVL trees with user information of all types
+
+	/**
+	 * Loads the AVL trees with user information of all types
+	 * 
+	 * @throws IOException
+	 */
 	public void setup() throws IOException {
 		String name;
 		
@@ -157,7 +205,12 @@ public class Login {
 		}
 	}
 	
-	// Saves the AVL trees with user information of all types
+	
+	/**
+	 * Saves the AVL trees with user information of all types
+	 * 
+	 * @throws IOException
+	 */
 	public void save() throws IOException {
 		
 		// Saves SystemAdmin information into tree
@@ -298,7 +351,13 @@ public class Login {
 		
 	}
 	
-	// For test purposes only
+	
+	/**
+	 * For test purposes only, returns a tree
+	 * 
+	 * @param type
+	 * @return
+	 */
 	public Object getTree(int type) {
 		if (type ==0) {
 			// System Admin

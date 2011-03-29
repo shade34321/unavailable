@@ -1,11 +1,5 @@
 package MedicalSoftware;
 
-/**
- * A class created to access patient information create appointments and other such patient functions 
- * @author Kevin Zhou 
- *
- */
-
 import java.io.IOException;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
@@ -13,6 +7,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.XMLFormatter;
 
+/**
+ * A class created to access patient information create appointments and other such patient functions 
+
+ * @author Kevin Zhou 
+ *
+ */
 public class Patient{
 	private Info info;
 	private Appointment appt;
@@ -48,7 +48,12 @@ public class Patient{
     }
 
 
-	// Constructors
+	
+	/**
+	 * Constructor
+	 * 
+	 * @param info
+	 */
 	Patient(Info info) {
 		this.info = info;
 		this.patient = new AVL<String, Patient>();
@@ -60,6 +65,13 @@ public class Patient{
 		myLogger.log(Level.INFO, "Creating new Patient: " + info);
 	}
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param user
+	 * @param p
+	 * @param d
+	 */
 	Patient(String user, AVL<String, Patient> p, AVL<String, Doctor> d) {		
 		this.patient = p;
 		this.doctor = d;
@@ -70,7 +82,30 @@ public class Patient{
 		this.orders = patient.find(user).getOrders();
 		myLogger.log(Level.INFO, "Creating new Patient: " + user);
 	}
+	
+	/**
+	 * Creates a new invoice
+	 * 
+	 * @param name
+	 * @param doc
+	 * @param total
+	 * @param due
+	 * @param paid
+	 */
+	public void addInvoice(String name, String doc, int total, int due, Boolean paid) {
+		invoice.create(name, doc, total, due, paid);
+	}
 
+	/**
+	 * Deletes an invoice
+	 * 
+	 * @param due
+	 * @param name
+	 */
+	public void deleteInvoice(int due, String name) {
+		invoice.cancel(due, name);
+	}
+	
 	// Patient Invoice getter and setter
 	public PatientInvoice getPatientInvoice() {
 		myLogger.log(Level.CONFIG, "Getting Patient Invoice");
@@ -80,14 +115,6 @@ public class Patient{
 	public void setPatientInvoice(PatientInvoice invoice) {
 		this.invoice = invoice;
 		myLogger.log(Level.FINE, "Setting Patient Invoice: " + invoice);
-	}
-	
-	public void addInvoice(String name, String doc, int total, int due, Boolean paid) {
-		invoice.create(name, doc, total, due, paid);
-	}
-
-	public void deleteInvoice(int due, String name) {
-		invoice.cancel(due, name);
 	}
 	
 	// Info getter and setter
@@ -101,10 +128,32 @@ public class Patient{
 		myLogger.log(Level.FINE, "Setting Patient Info: "+ info);
 	}
 
-	// Appointment methods
+	
+	/**
+	 * Creates an appointment
+	 * 
+	 * @param date
+	 * @param time
+	 * @param name
+	 * @param doctor
+	 * @param reason
+	 */
 	public void createAppt(int date, int time, String name, String doctor, String reason) {
 		myLogger.log(Level.INFO, "Creating appointment");
 		appt.create(date, time, name, doctor, reason);
+	}
+	
+	/**
+	 * Deletes an appointment
+	 * 
+	 * @param date
+	 * @param time
+	 * @param user
+	 * @param doc
+	 */
+	public void cancelAppt(int date, int time, String user, String doc) {
+		appt.cancel(date, time, user, doc);
+		
 	}
 	
 	public Appointment getAppt() {
@@ -128,15 +177,40 @@ public class Patient{
 		myLogger.log(Level.INFO, "Setting treatment records");
 	}
 	
+	/**
+	 * Adds treatment records
+	 * 
+	 * @param name
+	 * @param date
+	 * @param time
+	 * @param symptoms
+	 * @param bloodPressure
+	 * @param pulse
+	 * @param temp
+	 * @param height
+	 * @param weight
+	 */
 	public void addRecords(String name, int date, int time, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight) {
 		record.create(name, date, time, symptoms, bloodPressure, pulse, temp, height, weight);
 	}
 	
+	/**
+	 * Delets treatment records
+	 * 
+	 * @param date
+	 * @param time
+	 */
 	public void deleteRecords(int date, int time) {
 		record.cancel(date, time);
 	}
 	
-	// Searches system for doctors
+	
+	/**
+	 * Searches the system for a doctor
+	 * 
+	 * @param user
+	 * @return Doctor
+	 */
 	public Doctor Search(String user) {
 		Doctor ret = doctor.find(user);
 		myLogger.log(Level.INFO, "Searching for: " + user);
@@ -155,27 +229,51 @@ public class Patient{
 		return orders;
 	}
 
+	/**
+	 * Adds a doctors order
+	 * 
+	 * @param user
+	 * @param date
+	 * @param time
+	 * @param prescrip
+	 * @param labW
+	 * @param followUp
+	 * @param other
+	 */
 	public void addOrders(String user, int date, int time, String prescrip, String labW, String followUp, String other) {
 		orders.create(user, date, time, prescrip, labW, followUp, other);
 	}
 	
+	/**
+	 * Deletes a doctors order
+	 * 
+	 * @param user
+	 * @param date
+	 * @param time
+	 * @param prescrip
+	 */
 	public void deleteOrders(String user, int date, int time, String prescrip) {
 		orders.cancel(date, time, user, prescrip);
 	}
 	
-	// Update
+	
+	/**
+	 * Update
+	 */
 	public void update() {
 		
 	}
-	
-	// Updating the AVL trees for searching
+
+	/**
+	 * Updating the AVL trees for searching
+	 * 
+	 * @param patient
+	 * @param doctor
+	 */
 	public void updateTree(AVL<String, Patient> patient, AVL<String, Doctor> doctor) {
 		this.patient = patient;
 		this.doctor = doctor;
 	}
 
-	public void cancelAppt(int date, int time, String user, String doc) {
-		appt.cancel(date, time, user, doc);
-		
-	}
+	
 }

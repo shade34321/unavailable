@@ -1,8 +1,15 @@
 package MedicalSoftware;
 
 import java.sql.*;
+
 import java.util.Properties;
 
+/**
+ * Used for updating the system
+ * 
+ * @author Nathan Heard
+ *
+ */
 public class Update
 {
  private static final String dbClassName = "com.mysql.jdbc.Driver";

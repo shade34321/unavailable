@@ -1,7 +1,10 @@
 package MedicalSoftware;
-/*
- * Info is a class used to store a user's information in the system
- * @author Nathanial heard
+
+/**
+ * Holds a user's information
+ * 
+ * @author Nathan Heard
+ *
  */
 public class Info {
 	
@@ -9,6 +12,11 @@ public class Info {
 	private int SSN, birthday, zip, type;
 	private boolean suspention;
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param type
+	 */
 	Info(int type) {
 		this.name = null;
 		this.userName = null;
@@ -23,7 +31,23 @@ public class Info {
 		this.suspention = false;
 	}
 	
-	// Creating user information and then storing them in the class
+	
+	/**
+	 * Creating user information and then storing them in the class
+	 * 
+	 * @param name
+	 * @param password
+	 * @param userName
+	 * @param email
+	 * @param address
+	 * @param state
+	 * @param country
+	 * @param SSN
+	 * @param zip
+	 * @param birthday
+	 * @param type
+	 * @param susp
+	 */
 	Info (String name, String password, String userName, String email, String address, String state, String country, int SSN, int zip, int birthday, int type, boolean susp) {
 		this.name = name;
 		this.setPassword(password);
@@ -39,7 +63,7 @@ public class Info {
 		this.suspention = susp;
 	}
 	
-	// Getters and Setters
+	
 	public String getName() {
 		return this.name;
 	}

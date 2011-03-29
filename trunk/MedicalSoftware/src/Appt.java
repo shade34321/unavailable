@@ -1,5 +1,11 @@
 package MedicalSoftware;
 
+/**
+ * Represents an appointment
+ * 
+ * @author Nathan Heard
+ *
+ */
 public class Appt implements Comparable<Appt> {
 	private int date;
 	private int time;
@@ -7,6 +13,15 @@ public class Appt implements Comparable<Appt> {
 	private String reason;
 	private String name;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param date
+	 * @param time
+	 * @param name
+	 * @param doctor
+	 * @param reason
+	 */
 	public Appt(int date, int time, String name, String doctor, String reason) {
 		this.date = date;
 		this.time = time;

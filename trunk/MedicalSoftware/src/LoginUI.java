@@ -14,6 +14,12 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 
 
+/**
+ * User Interface for Login
+ * 
+ * @author Kevin Zhou
+ *
+ */
 public class LoginUI {
 
 	private JFrame frame;

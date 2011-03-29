@@ -1,6 +1,12 @@
 package MedicalSoftware;
 
 
+/**
+ * This interface represents one of the four types of users
+ * 
+ * @author Nathan Heard
+ *
+ */
 public interface User {
 	/**
 	 * sets suspensions

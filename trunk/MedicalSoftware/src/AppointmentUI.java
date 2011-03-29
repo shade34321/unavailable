@@ -7,6 +7,12 @@ import javax.swing.JButton;
 import java.awt.FlowLayout;
 
 
+/**
+ * User interface for appointment
+ * 
+ * @author Shade Alabsa
+ *
+ */
 public class AppointmentUI {
 
 	private JFrame frame;

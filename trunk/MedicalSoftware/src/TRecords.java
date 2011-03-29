@@ -1,5 +1,11 @@
 package MedicalSoftware;
 
+/**
+ * This class represents a new treatment record
+ * 
+ * @author Nathan Heard
+ *
+ */
 public class TRecords {
 
 	private String name;
@@ -12,6 +18,19 @@ public class TRecords {
 	private int height;
 	private int weight;
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param name
+	 * @param date
+	 * @param time
+	 * @param symptoms
+	 * @param bloodPressure
+	 * @param pulse
+	 * @param temp
+	 * @param height
+	 * @param weight
+	 */
 	TRecords(String name, int date, int time, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight) {
 		this.name = name;
 		this.date = date;
