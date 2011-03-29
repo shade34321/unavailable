@@ -4,14 +4,20 @@ import java.io.IOException;
 
 import junit.framework.TestCase;
 
+/**
+ * JUnit tests 
+ * 
+ * @author Michael Sambol, Nathan Heard
+ *
+ */
 public class M5 extends TestCase {
 
 	protected void setUp() throws Exception {
 		super.setUp();
 	}
-	/*
-	 * Test to see if the AVL tree for storing doctors works along with the basic functions of a doctor's class
-	 * @Test
+	
+	/**
+	 * Tests Doctor
 	 */
 	public void testCreateDoctor(){
 		AVL<String,Doctor> docTree = new AVL<String,Doctor>();
@@ -216,6 +222,9 @@ public class M5 extends TestCase {
 		
 	}
 	
+	/**
+	 * Tests Nurse
+	 */
 	public void testCreateNurse(){
 		AVL<String,Info> infoTree = new AVL<String,Info>();
 		AVL<String,Nurse> nurTree = new AVL<String,Nurse>();
@@ -415,6 +424,9 @@ public class M5 extends TestCase {
 		assertEquals(nurTree.find("Shade").getPatient("John"), null);
 	}
 	
+	/**
+	 * Tests patient
+	 */
 	public void testCreatePatient(){
 		AVL<String,Patient> patientTree = new AVL<String,Patient>();
 		Info mInfo = new Info("Michael", "mm", "msimbal", "msimbal@gmail.com", "999 anywhere", "GA", "USA", 55541555, 33033, 91391, 3, false);
@@ -521,6 +533,9 @@ public class M5 extends TestCase {
 		assertEquals(p0.Search("Todd"), null);
 	}
 	
+	/**
+	 * Tests admin
+	 */
 	public void testCreateAdmin(){
 		AVL<String,Info> infoTree = new AVL<String,Info>();
 		AVL<String,SystemAdmin> adminTree = new AVL<String,SystemAdmin>();
@@ -686,6 +701,11 @@ public class M5 extends TestCase {
 		assertEquals(adminTree.find("Shade").getInvoice("John").find(112311, "John").getPaid(), false);
 	}
 	
+	/**
+	 * Tests login
+	 * 
+	 * @throws IOException
+	 */
 	@SuppressWarnings("unchecked")
 	public void testLogin() throws IOException {
 		Login lg = new Login();

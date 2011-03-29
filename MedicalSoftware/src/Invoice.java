@@ -1,11 +1,20 @@
 package MedicalSoftware;
 
+/**
+ * Stores the information for an invoice
+ * 
+ * @author Nathan Heard
+ *
+ */
 public class Invoice {
 	private String name, doctor;
 	private int dueDate, total;
 	private boolean paid;
 	
-	// Basic constructor
+	
+	/**
+	 * Basic constructor
+	 */
 	Invoice() {
 		this.name = "N/A";
 		this.doctor = "N/A";
@@ -14,7 +23,15 @@ public class Invoice {
 		this.paid = false;
 	}
 	
-	// Advanced constructor for accepting variables
+	/**
+	 * Advanced constructor for accepting variables
+	 * 
+	 * @param name
+	 * @param doc
+	 * @param total
+	 * @param due
+	 * @param paid
+	 */
 	Invoice(String name, String doc, int total, int due, boolean paid) {
 		this.name = name;
 		this.doctor = doc;
@@ -22,8 +39,7 @@ public class Invoice {
 		this.dueDate = due;
 		this.paid = paid;
 	}
-	
-	// Getters and setters
+
 	public String getName() {
 		return this.name;
 	}

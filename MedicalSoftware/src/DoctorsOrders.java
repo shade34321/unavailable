@@ -2,14 +2,34 @@ package MedicalSoftware;
 
 import java.util.ArrayList;
 
+/**
+ * This class creates, finds, and deletes doctors orders
+ * 
+ * @author Nathan Heard
+ */
 public class DoctorsOrders {
 
+	// ArrayList to hold orders
 	private ArrayList<DOrders> orders;
 
+	/**
+	 * Constructor
+	 */
 	DoctorsOrders() {
 		orders = new ArrayList<DOrders>();
 	}
 
+	/**
+	 * Creates a new doctors orders
+	 * 
+	 * @param name
+	 * @param date
+	 * @param time
+	 * @param prescrip
+	 * @param labW
+	 * @param followUp
+	 * @param other
+	 */
 	public void create(String name, int date, int time, String prescrip, String labW,
 			String followUp, String other) {
 		DOrders order = new DOrders(name, date, time, prescrip, labW, followUp, other);
@@ -17,6 +37,15 @@ public class DoctorsOrders {
 
 	}
 
+	/**
+	 * Finds a doctors order
+	 * 
+	 * @param date
+	 * @param time
+	 * @param name
+	 * @param prescrip
+	 * @return
+	 */
 	public DOrders find(int date, int time, String name, String prescrip) {
 		int size = orders.size();
 		for (int i = 0; i < size; i++) {
@@ -33,6 +62,14 @@ public class DoctorsOrders {
 		return null;
 	}
 	
+	/**
+	 * Deletes a doctors order
+	 * 
+	 * @param date
+	 * @param time
+	 * @param name
+	 * @param prescrip
+	 */
 	public void cancel(int date, int time, String name, String prescrip) {
 		int size = orders.size();
 		for (int i = 0; i < size; i++) {

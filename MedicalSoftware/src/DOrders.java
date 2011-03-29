@@ -1,5 +1,11 @@
 package MedicalSoftware;
 
+/**
+ * Represents a doctors order
+ * 
+ * @author Nathan Heard
+ *
+ */
 public class DOrders {
 	private int date, time;
 	private String prescription;
@@ -8,6 +14,17 @@ public class DOrders {
 	private String otherIns;
 	private String name;
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param user
+	 * @param date
+	 * @param time
+	 * @param prescrip
+	 * @param labW
+	 * @param followUp
+	 * @param other
+	 */
 	public DOrders(String user, int date, int time, String prescrip, String labW,
 			String followUp, String other) {
 		this.setName(user);
@@ -19,7 +36,6 @@ public class DOrders {
 		this.otherIns = other;
 	}
 
-	// Getters and setters
 	public String getPrescription() {
 		return prescription;
 	}

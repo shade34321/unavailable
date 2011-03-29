@@ -18,7 +18,13 @@ import java.util.logging.LogRecord;
  *
  */
 class MyHtmlFormatter extends Formatter {
-    // This method is called for every log records
+	
+    
+    /* 
+     * This method is called for every log records
+     * (non-Javadoc)
+     * @see java.util.logging.Formatter#format(java.util.logging.LogRecord)
+     */
     public String format(LogRecord rec) {
         StringBuffer buf = new StringBuffer(1000);
         // Bold any levels >= WARNING
@@ -37,14 +43,25 @@ class MyHtmlFormatter extends Formatter {
         return buf.toString();
     }
 
-    // This method is called just after the handler using this
-    // formatter is created
+    
+    /* This method is called just after the handler using this
+     * formatter is created
+     * 
+     * (non-Javadoc)
+     * @see java.util.logging.Formatter#getHead(java.util.logging.Handler)
+     */
     public String getHead(Handler h) {
         return "<HTML><HEAD>"+(new Date())+"</HEAD><BODY><PRE>\n";
     }
 
-    // This method is called just after the handler using this
-    // formatter is closed
+ 
+    /*
+     * This method is called just after the handler using this
+     * formatter is closed
+     * 
+     *  (non-Javadoc)
+     * @see java.util.logging.Formatter#getTail(java.util.logging.Handler)
+     */
     public String getTail(Handler h) {
         return "</PRE></BODY></HTML>\n";
     }

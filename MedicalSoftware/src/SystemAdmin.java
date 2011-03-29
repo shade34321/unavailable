@@ -7,10 +7,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.XMLFormatter;
 
-/*
+/**
  * SystemAdmin class designed to allow systemAdmin to control certain things in the medical software system.
- * @author Nathanial Heard
  * 
+ * @author Nathanial Heard
+ *
  */
 public class SystemAdmin{
 	private AVL<String, Info> information;
@@ -45,7 +46,10 @@ public class SystemAdmin{
         
     }
 
-	// Constructor for creating a new admin
+	/**
+	 *  Constructor for creating a new admin
+	 * @param info
+	 */
 	SystemAdmin (Info info) {
 		this.information = new AVL<String, Info>();
 		this.patient = new AVL<String, Patient>();
@@ -56,7 +60,17 @@ public class SystemAdmin{
 		myLogger.log(Level.INFO, "Creating new System Admin: " + info);
 	}
 	
-	// Constructor used for when AVL trees are passed in to be able to search the system and access system admin's information
+ 
+	/**
+	 * Constructor used for when AVL trees are passed in to be able to search the system and access system admin's information
+	 * 
+	 * @param user
+	 * @param i
+	 * @param p
+	 * @param n
+	 * @param d
+	 * @param sa
+	 */
 	SystemAdmin(String user, AVL<String, Info> i, AVL<String, Patient> p, AVL<String, Nurse> n, AVL<String, Doctor> d, AVL<String, SystemAdmin> sa) {
 		this.information = i;
 		this.patient = p;
@@ -67,7 +81,13 @@ public class SystemAdmin{
 		myLogger.log(Level.INFO, "Creating new System Admin: " + user);
 	}
 	
-	// Suspension getter and setter
+	/**
+	 * Sets suspensions
+	 * 
+	 * @param user
+	 * @param type
+	 * @param status
+	 */
 	public void setSusp(String user, int type, Boolean status) {
 		myLogger.log(Level.CONFIG, "Setting suspension for: " + user);
 		if (type ==0) {
@@ -86,6 +106,13 @@ public class SystemAdmin{
 		}
 	}
 	
+	/**
+	 * Gets suspensions
+	 * 
+	 * @param user
+	 * @param type
+	 * @return boolean
+	 */
 	public boolean getSusp(String user, int type) {
 		myLogger.log(Level.CONFIG, "Getting suspension for: " + user);
 		boolean status = false;
@@ -106,7 +133,21 @@ public class SystemAdmin{
 		return status;
 	}
 	
-	// Creating and deleting users class
+	/**
+	 * Creates a new user
+	 * 
+	 * @param name
+	 * @param password
+	 * @param userName
+	 * @param email
+	 * @param address
+	 * @param state
+	 * @param country
+	 * @param SSN
+	 * @param zip
+	 * @param birthday
+	 * @param type
+	 */
 	public void createUser(String name, String password, String userName, String email, String address, String state, String country, int SSN, int zip, int birthday, int type) {
 		myLogger.log(Level.FINER, "Creating new user: " + name);
 		Info form = new Info(name, password, userName, email, address, state, country, SSN, zip, birthday, type, false);
@@ -138,6 +179,12 @@ public class SystemAdmin{
 		}
 	}
 	
+	/**
+	 * Deletes a user
+	 * 
+	 * @param user
+	 * @param type
+	 */
 	public void deleteUser(String user, int type) {
 		myLogger.log(Level.FINEST, "Deleting user: " + user);
 		if (type ==0) {
@@ -172,7 +219,14 @@ public class SystemAdmin{
 		return this.information.find(user);
 	}
 	
-	// Search method
+	
+	/**
+	 * Searches the system for a user
+	 * 
+	 * @param user
+	 * @param type
+	 * @return
+	 */
 	public Object Search(String user, int type) {
 		Object ret = null;
 		if (type ==0) {
@@ -192,71 +246,165 @@ public class SystemAdmin{
 		return ret;
 	}
 	
-	// Creating, canceling, and finding DoctorOrders
+	/**
+	 * Creates doctors orders
+	 * 
+	 * @param user
+	 * @param date
+	 * @param time
+	 * @param prescrip
+	 * @param labW
+	 * @param followUp
+	 * @param other
+	 */
 	public void createOrder(String user, int date, int time, String prescrip, String labW, String followUp, String other){
 		patient.find(user).addOrders(user, date, time, prescrip, labW, followUp, other);
 		
 		myLogger.log(Level.FINE, "Creating Doctors Orders");
 	}
 	
+	/**
+	 * Cancels doctors orders
+	 * 
+	 * @param date
+	 * @param time
+	 * @param name
+	 * @param prescrip
+	 */
 	public void cancelDoctorOrder(int date, int time, String name, String prescrip){
 		patient.find(name).deleteOrders(name, date, time, prescrip);
 		
 		myLogger.log(Level.FINEST, "Canceling Doctors Orders");
 	}
 	
+	/**
+	 * Gets doctors orders
+	 * 
+	 * @param name
+	 * @return
+	 */
 	public DoctorsOrders getOrders(String name){
 		myLogger.log(Level.CONFIG, "Returning Doctors Orders: " + name);
 		
 		return patient.find(name).getOrders();
 	}
 	
-	// PatientInvoice creating, canceling, and finding methods
+
+	/**
+	 * Creates a new invoice
+	 * 
+	 * @param name
+	 * @param doc
+	 * @param total
+	 * @param due
+	 * @param paid
+	 */
 	public void createInvoice(String name, String doc, int total, int due, Boolean paid){
 		patient.find(name).addInvoice(name, doc, total, due, paid);
 		myLogger.log(Level.FINE, "Creating an invoice for: " + name);
 	}
 	
+	/**
+	 * Deletes an invoice
+	 * 
+	 * @param name
+	 * @param due
+	 */
 	public void cancelInvoice(String name, int due){
 		patient.find(name).deleteInvoice(due, name);
 		myLogger.log(Level.FINEST, "Canceling invoice for: " + name);
 	}
 	
+	/**
+	 * Gets an invoice
+	 * 
+	 * @param name
+	 * @return PatientInvoice
+	 */
 	public PatientInvoice getInvoice(String name){
 		myLogger.log(Level.FINER, "Getting invoice for: " + name);
 		
 		return patient.find(name).getPatientInvoice();
 	}
 	
-	// TreatmentRecords find method
+	
+	/**
+	 * Creates a new treatment records
+	 * 
+	 * @param name
+	 * @param date
+	 * @param time
+	 * @param symptoms
+	 * @param bloodPressure
+	 * @param pulse
+	 * @param temp
+	 * @param height
+	 * @param weight
+	 */
 	public void createTreatmentRecords(String name, int date, int time, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight){
 		patient.find(name).addRecords(name, date, time, symptoms, bloodPressure, pulse, temp, height, weight);
 		
 		myLogger.log(Level.CONFIG, "Creating a treatment record for: " + name);
 	}
 	
+	/**
+	 * Deletes a treatment record
+	 * 
+	 * @param name
+	 * @param date
+	 * @param time
+	 */
 	public void removeTreatmentRecord(String name, int date, int time){
 		patient.find(name).deleteRecords(date, time);
 		
 		myLogger.log(Level.FINE, "Removing treatment for: " + name);
 	}
 	
+	/**
+	 * Gets a treatment record
+	 * 
+	 * @param name
+	 * @return TreatmentRecords
+	 */
 	public TreatmentRecords getTreatmentRecords(String name){
 		myLogger.log(Level.FINER, "Getting treatment record for: " + name);
 		return patient.find(name).getTreatmentRecords();
 	}
 	
-	// Appointment find method for patient, create method for patient, and cancel appointment for patient
+	
+	/**
+	 * Creates an appointment
+	 * 
+	 * @param user
+	 * @param date
+	 * @param time
+	 * @param doc
+	 * @param reason
+	 */
 	public void createAppt(String user, int date, int time, String doc, String reason){
 		patient.find(user).createAppt(date, time, user, doc, reason);
 		myLogger.log(Level.INFO, "Creating appointment for: " + user);
 	}
 	
+	/**
+	 * Deletes an appointment
+	 * 
+	 * @param user
+	 * @param doc
+	 * @param date
+	 * @param time
+	 */
 	public void cancelAppt(String user, String doc, int date, int time){
 		patient.find(user).cancelAppt(date, time, user, doc);
 		myLogger.log(Level.INFO, "Canceling appointment for: " + user);
 	}	
 
+	/**
+	 * Finds an appointment
+	 * 
+	 * @param user
+	 * @return Appointment
+	 */
 	public Appointment findAppt(String user) {
 		myLogger.log(Level.INFO, "Finding appointment for: " + user);
 		return patient.find(user).getAppt();
@@ -273,11 +421,22 @@ public class SystemAdmin{
 		myLogger.log(Level.INFO, "Setting suspensions for: " + name);
 	}
 	
-	// Update
+	
+	/**
+	 * Update
+	 */
 	public void update() {
 	}
 	
-	// Update trees
+	/**
+	 * Update trees
+	 * 
+	 * @param p
+	 * @param n
+	 * @param d
+	 * @param sa
+	 * @param i
+	 */
 	public void updateTree(AVL<String, Patient> p, AVL<String, Nurse> n, AVL<String, Doctor> d, AVL<String, SystemAdmin> sa, AVL<String, Info> i) {		
 		this.patient = p;
 		this.nurse = n;
