@@ -24,7 +24,7 @@ public class Update
    System.out.println(dbClassName);
    Class.forName(dbdriver).newInstance(); 
    Properties p = new Properties();
-   p.put("user","system");
+   p.put("user","update");
    p.put("password","miniserver");
 
    // Now try to connect
