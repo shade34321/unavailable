@@ -1,18 +1,16 @@
-package MedicalSoftware;
-
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
 import javax.swing.JButton;
-import java.awt.FlowLayout;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 
 
-/**
- * User interface for appointment
- * 
- * @author Shade Alabsa
- *
- */
 public class AppointmentUI {
 
 	private JFrame frame;
@@ -45,21 +43,26 @@ public class AppointmentUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setFont(new Font("Wide Latin", Font.PLAIN, 14));
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JButton btnPatient = new JButton("Patient");
-		frame.getContentPane().add(btnPatient);
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		frame.getContentPane().add(tabbedPane, BorderLayout.WEST);
 		
-		JButton btnAppoint = new JButton("Appointments");
-		frame.getContentPane().add(btnAppoint);
+		JButton btnPatient = new JButton("Patients");
+		tabbedPane.addTab("Menu", btnPatient);
 		
-		JButton btnRefresh = new JButton("Refresh");
-		frame.getContentPane().add(btnRefresh);
-		
-		JButton btnBack = new JButton("back");
-		frame.getContentPane().add(btnBack);
 	}
+	
+	protected JComponent makeTextPanel(String text) {
+        JPanel panel = new JPanel(false);
+        JLabel filler = new JLabel(text);
+        filler.setHorizontalAlignment(JLabel.CENTER);
+        panel.setLayout(new GridLayout(1, 1));
+        panel.add(filler);
+        return panel;
+    }
 
 }
