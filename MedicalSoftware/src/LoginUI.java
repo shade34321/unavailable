@@ -1,30 +1,25 @@
-package MedicalSoftware;
-
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import javax.swing.JLabel;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.RowSpec;
+import com.jgoodies.forms.factories.FormFactory;
+import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
 
-/**
- * User Interface for Login
- * 
- * @author Kevin Zhou
- *
- */
-public class LoginUI {
+public class LoginUI implements ActionListener{
 
 	private JFrame frame;
-	private JTextField txtUsrName;
-	private JTextField txtPassword;
+	private JTextField txtUser;
+	private JPasswordField psfPass;
 
 	/**
 	 * Launch the application.
@@ -56,17 +51,18 @@ public class LoginUI {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		JPanel panel = new JPanel();
-		frame.getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("143px"),
-				ColumnSpec.decode("75px:grow"),
-				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("82px"),},
+		frame.getContentPane().setLayout(new FormLayout(new ColumnSpec[] {
+				FormFactory.RELATED_GAP_COLSPEC,
+				FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC,
+				FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC,
+				FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),},
 			new RowSpec[] {
-				FormFactory.LINE_GAP_ROWSPEC,
-				RowSpec.decode("15px"),
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC,
@@ -82,26 +78,36 @@ public class LoginUI {
 				FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,}));
 		
-		JLabel lblUsrName = new JLabel("User Name:");
-		panel.add(lblUsrName, "1, 4, right, top");
+		JLabel lblUser = new JLabel("User Name:");
+		lblUser.setFont(new Font("Wide Latin", Font.PLAIN, 14));
+		frame.getContentPane().add(lblUser, "4, 4, right, default");
 		
-		txtUsrName = new JTextField();
-		panel.add(txtUsrName, "2, 4, fill, top");
-		txtUsrName.setColumns(10);
+		txtUser = new JTextField();
+		txtUser.setFont(new Font("Wide Latin", Font.PLAIN, 14));
+		frame.getContentPane().add(txtUser, "8, 4, fill, default");
+		txtUser.setColumns(10);
 		
 		JLabel lblPass = new JLabel("Password:");
-		panel.add(lblPass, "1, 8, right, top");
+		lblPass.setFont(new Font("Wide Latin", Font.PLAIN, 14));
+		frame.getContentPane().add(lblPass, "4, 10");
 		
-		txtPassword = new JTextField();
-		panel.add(txtPassword, "2, 8, fill, default");
-		txtPassword.setColumns(10);
+		psfPass = new JPasswordField();
+		frame.getContentPane().add(psfPass, "8, 10, fill, default");
 		
 		JButton btnLogin = new JButton("Login");
-		panel.add(btnLogin, "2, 12");
+		btnLogin.setFont(new Font("Wide Latin", Font.PLAIN, 14));
+		btnLogin.addActionListener(this);
+		frame.getContentPane().add(btnLogin, "4, 14");
 		
-		JLabel lblError = new JLabel("");
-		lblError.setEnabled(false);
-		panel.add(lblError, "1, 14, 4, 3");
+		JLabel lblStatus = new JLabel("");
+		lblStatus.setFont(new Font("Wide Latin", Font.PLAIN, 14));
+		frame.getContentPane().add(lblStatus, "4, 16, 5, 1");
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
