@@ -55,6 +55,14 @@ public class DefaultUI extends JFrame {
 	 * Create the frame.
 	 */
 	public DefaultUI() {
+		initialize();
+	}
+	
+	public DefaultUI(){
+		this();
+	}
+	
+	private void initialize(){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		

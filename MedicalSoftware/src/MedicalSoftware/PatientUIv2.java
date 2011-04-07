@@ -22,7 +22,8 @@ public class PatientUIv2 extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
-
+	private Patient patient;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -43,6 +44,15 @@ public class PatientUIv2 extends JFrame {
 	 * Create the frame.
 	 */
 	public PatientUIv2() {
+		initialize();
+	}
+	
+	public PatientUIv2(Patient patient){
+		this();
+		this.patient = patient;
+	}
+	
+	private void initialize(){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		
@@ -70,6 +80,9 @@ public class PatientUIv2 extends JFrame {
 		
 		JLabel lblMedicalHistory = new JLabel("Medical History");
 		panel.add(lblMedicalHistory);
+		/**
+		 * ArrayList<TRecords> records = (patient.getTreatmentRecords).getRecords();
+		 */
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Request Appointment", null, panel_1, null);

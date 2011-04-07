@@ -1,3 +1,4 @@
+package MedicalSoftware;
 
 import java.awt.EventQueue;
 
@@ -14,10 +15,12 @@ import java.awt.event.ActionListener;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import java.util.ArrayList;
 
 
 public class LoginUI implements ActionListener{
-
+	private static final JLabel lblStatus = null;
+	private Login login;
 	private JFrame frame;
 	private JTextField txtUser;
 	private JPasswordField psfPass;
@@ -43,6 +46,11 @@ public class LoginUI implements ActionListener{
 	 */
 	public LoginUI() {
 		initialize();
+	}
+	
+	public LoginUI(Login log){
+		this();
+		this.login = log;
 	}
 
 	/**
@@ -107,8 +115,34 @@ public class LoginUI implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		String user = txtUser.getText();
+		String pass = new String(psfPass.getPassword());
+		int error = login.loginUser(user, pass);
 		
+		if(error == -1){
+			lblStatus.setText("Your account is suspended! You fail!");
+		}
+		else if(error == 0){
+			lblStatus.setText("You have entered in wrong information.");
+		}
+		else if(error == 1){
+			int userType = login.run(user);
+			if (userType == -1){
+				lblStatus.setText("There has been an error processing your account. Please contact your system administartor to resolve this issue.");
+			}
+			else if(userType == 3){
+				PatientUIv2 currentUI = new PatientUIv2(login.getPatient());
+			}
+			else if(userType == 2){
+				NurseUI currentUI = new NurseUI();
+			}
+			else if(userType == 1){
+				DefaultUI currentUI = new DefaultUI();
+			}
+			else if(userType == 0){
+				AdminUI currentUI = new AdminUI();
+			}
+		}
 	}
 
 }
