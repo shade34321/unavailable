@@ -1,5 +1,4 @@
 package MedicalSoftware;
-
 /**
  * This class represents a new treatment record
  * 
@@ -9,6 +8,7 @@ package MedicalSoftware;
 public class TRecords {
 
 	private String name;
+	private String doctor;
 	private int date;
 	private int time;
 	private String symptoms;
@@ -31,8 +31,9 @@ public class TRecords {
 	 * @param height
 	 * @param weight
 	 */
-	TRecords(String name, int date, int time, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight) {
+	TRecords(String name, String doc, int date, int time, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight) {
 		this.name = name;
+		this.setDoctor(doc);
 		this.date = date;
 		this.time = time;
 		this.symptoms = symptoms;
@@ -117,5 +118,15 @@ public class TRecords {
 
 	public String getName() {
 		return name;
+	}
+
+
+	public void setDoctor(String doctor) {
+		this.doctor = doctor;
+	}
+
+
+	public String getDoctor() {
+		return doctor;
 	}
 }

@@ -15,12 +15,8 @@ import java.util.logging.XMLFormatter;
  */
 public class Patient{
 	private Info info;
-	private Appointment appt;
-	private DoctorsOrders orders;
-	private TreatmentRecords record;
-	private PatientInvoice invoice;
-	private AVL<String, Patient> patient;
-	private AVL<String, Doctor> doctor;
+	private AVL<String, Info> information;
+	private AVL<String, Info> informationName;
 	
 	private static Logger myLogger = Logger.getLogger("Patient");
     
@@ -56,12 +52,8 @@ public class Patient{
 	 */
 	Patient(Info info) {
 		this.info = info;
-		this.patient = new AVL<String, Patient>();
-		this.doctor = new AVL<String, Doctor>();
-		this.appt = new Appointment();
-		this.record = new TreatmentRecords();
-		this.invoice = new PatientInvoice();
-		this.orders = new DoctorsOrders();
+		this.information = new AVL<String, Info>();
+		this.informationName = new AVL<String, Info>();
 		myLogger.log(Level.INFO, "Creating new Patient: " + info);
 	}
 	
@@ -72,14 +64,10 @@ public class Patient{
 	 * @param p
 	 * @param d
 	 */
-	Patient(String user, AVL<String, Patient> p, AVL<String, Doctor> d) {		
-		this.patient = p;
-		this.doctor = d;
-		this.info = patient.find(user).getInfo();
-		this.appt = patient.find(user).getAppt();
-		this.record = patient.find(user).getTreatmentRecords();
-		this.invoice = patient.find(user).getPatientInvoice();
-		this.orders = patient.find(user).getOrders();
+	Patient(String user, AVL<String, Info> inform, AVL<String, Info> informName) {		
+		this.info = inform.find(user);
+		this.information = inform;
+		this.informationName = informName;
 		myLogger.log(Level.INFO, "Creating new Patient: " + user);
 	}
 	
@@ -93,7 +81,7 @@ public class Patient{
 	 * @param paid
 	 */
 	public void addInvoice(String name, String doc, int total, int due, Boolean paid) {
-		invoice.create(name, doc, total, due, paid);
+		info.getInvoice().create(name, doc, total, due, paid);
 	}
 
 	/**
@@ -103,17 +91,17 @@ public class Patient{
 	 * @param name
 	 */
 	public void deleteInvoice(int due, String name) {
-		invoice.cancel(due, name);
+		info.getInvoice().cancel(due, name);
 	}
 	
 	// Patient Invoice getter and setter
 	public PatientInvoice getPatientInvoice() {
 		myLogger.log(Level.CONFIG, "Getting Patient Invoice");
-		return this.invoice;
+		return this.info.getInvoice();
 	}
 	
 	public void setPatientInvoice(PatientInvoice invoice) {
-		this.invoice = invoice;
+		this.info.setInvoice(invoice);
 		myLogger.log(Level.FINE, "Setting Patient Invoice: " + invoice);
 	}
 	
@@ -140,7 +128,7 @@ public class Patient{
 	 */
 	public void createAppt(int date, int time, String name, String doctor, String reason) {
 		myLogger.log(Level.INFO, "Creating appointment");
-		appt.create(date, time, name, doctor, reason);
+		info.getAppt().create(date, time, name, doctor, reason);
 	}
 	
 	/**
@@ -152,28 +140,28 @@ public class Patient{
 	 * @param doc
 	 */
 	public void cancelAppt(int date, int time, String user, String doc) {
-		appt.cancel(date, time, user, doc);
+		info.getAppt().cancel(date, time, user, doc);
 		
 	}
 	
 	public Appointment getAppt() {
 		myLogger.log(Level.INFO, "Getting appointment: " + info);
-		return appt;
+		return info.getAppt();
 	}
 
 	public void setAppt(Appointment appt) {
-		this.appt = appt;
+		this.info.setAppt(appt);
 		myLogger.log(Level.INFO, "Setting appointment");
 	}
 	
 	// TreatmentRecords getter and setter
 	public TreatmentRecords getTreatmentRecords() {
 		myLogger.log(Level.INFO, "Getting treatment records");
-		return this.record;
+		return this.info.getRecord();
 	}
 
 	public void setTreatmentRecords(TreatmentRecords record) {
-		this.record = record;
+		this.info.setRecord(record);
 		myLogger.log(Level.INFO, "Setting treatment records");
 	}
 	
@@ -190,18 +178,18 @@ public class Patient{
 	 * @param height
 	 * @param weight
 	 */
-	public void addRecords(String name, int date, int time, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight) {
-		record.create(name, date, time, symptoms, bloodPressure, pulse, temp, height, weight);
+	public void addRecords(String name, String doctor, int date, int time, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight) {
+		info.getRecord().create(name, doctor, date, time, symptoms, bloodPressure, pulse, temp, height, weight);
 	}
 	
 	/**
-	 * Delets treatment records
+	 * Deletes treatment records
 	 * 
 	 * @param date
 	 * @param time
 	 */
-	public void deleteRecords(int date, int time) {
-		record.cancel(date, time);
+	public void deleteRecords(String name, int date, int time) {
+		info.getRecord().cancel(name, date, time);
 	}
 	
 	
@@ -211,22 +199,26 @@ public class Patient{
 	 * @param user
 	 * @return Doctor
 	 */
-	public Doctor Search(String user) {
-		Doctor ret = doctor.find(user);
+	public Info Search(String user) {
 		myLogger.log(Level.INFO, "Searching for: " + user);
 
-		return ret;
+		Info ret;
+			if ((ret = informationName.find(user)).getType() == 1){
+				return ret;
+			} else {
+				return null;
+			}		
 	}
 
 	// DoctorsOrders getter and setter
 	public void setOrders(DoctorsOrders orders) {
-		this.orders = orders;
+		this.info.setOrders(orders);
 		myLogger.log(Level.INFO, "Setting orders");
 	}
 
 	public DoctorsOrders getOrders() {
 		myLogger.log(Level.INFO, "Getting doctors orders");
-		return orders;
+		return info.getOrders();
 	}
 
 	/**
@@ -241,7 +233,7 @@ public class Patient{
 	 * @param other
 	 */
 	public void addOrders(String user, int date, int time, String prescrip, String labW, String followUp, String other) {
-		orders.create(user, date, time, prescrip, labW, followUp, other);
+		info.getOrders().create(user, date, time, prescrip, labW, followUp, other);
 	}
 	
 	/**
@@ -253,7 +245,7 @@ public class Patient{
 	 * @param prescrip
 	 */
 	public void deleteOrders(String user, int date, int time, String prescrip) {
-		orders.cancel(date, time, user, prescrip);
+		info.getOrders().cancel(date, time, user, prescrip);
 	}
 	
 	
@@ -262,17 +254,6 @@ public class Patient{
 	 */
 	public void update() {
 		
-	}
-
-	/**
-	 * Updating the AVL trees for searching
-	 * 
-	 * @param patient
-	 * @param doctor
-	 */
-	public void updateTree(AVL<String, Patient> patient, AVL<String, Doctor> doctor) {
-		this.patient = patient;
-		this.doctor = doctor;
 	}
 
 	

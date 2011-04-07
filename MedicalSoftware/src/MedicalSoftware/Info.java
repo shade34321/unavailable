@@ -11,6 +11,10 @@ public class Info {
 	private String name, email, password, userName, address, state, country;
 	private int SSN, birthday, zip, type;
 	private boolean suspention;
+	private Appointment appt;
+	private DoctorsOrders orders;
+	private TreatmentRecords record;
+	private PatientInvoice invoice;
 	
 	/**
 	 * Constructor
@@ -29,6 +33,10 @@ public class Info {
 		this.zip = 0;
 		this.type = type;
 		this.suspention = false;
+		this.appt = new Appointment();
+		this.orders = new DoctorsOrders();
+		this.record = new TreatmentRecords();
+		this.invoice = new PatientInvoice();
 	}
 	
 	
@@ -158,5 +166,45 @@ public class Info {
 
 	public String getPassword() {
 		return password;
+	}
+
+
+	public void setAppt(Appointment appt) {
+		this.appt = appt;
+	}
+
+
+	public Appointment getAppt() {
+		return appt;
+	}
+
+
+	public void setOrders(DoctorsOrders orders) {
+		this.orders = orders;
+	}
+
+
+	public DoctorsOrders getOrders() {
+		return orders;
+	}
+
+
+	public void setRecord(TreatmentRecords record) {
+		this.record = record;
+	}
+
+
+	public TreatmentRecords getRecord() {
+		return record;
+	}
+
+
+	public void setInvoice(PatientInvoice invoice) {
+		this.invoice = invoice;
+	}
+
+
+	public PatientInvoice getInvoice() {
+		return invoice;
 	}
 }

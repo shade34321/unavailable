@@ -1,7 +1,4 @@
 package MedicalSoftware;
-
-
-
 import java.util.ArrayList;
 
 /**
@@ -36,8 +33,8 @@ public class TreatmentRecords {
 	 * @param height
 	 * @param weight
 	 */
-	public void create(String name, int date, int time, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight) {
-		TRecords tr = new TRecords(name, date, time, symptoms, bloodPressure, pulse, temp, height, weight);
+	public void create(String name, String doctor, int date, int time, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight) {
+		TRecords tr = new TRecords(name, doctor, date, time, symptoms, bloodPressure, pulse, temp, height, weight);
 		records.add(tr);
 
 	}
@@ -49,12 +46,14 @@ public class TreatmentRecords {
 	 * @param time
 	 * @return TRecords
 	 */
-	public TRecords find(int date, int time) {
+	public TRecords find(String name, int date, int time) {
 		int size = records.size();
 		for (int i = 0; i < size; i++) {
+			if (records.get(i).getName().equals(name)) {
 				if (records.get(i).getDate() == date) {
 					if (records.get(i).getTime() == time) {
 							return records.get(i);
+					}
 				}
 			}
 		}
@@ -67,12 +66,14 @@ public class TreatmentRecords {
 	 * @param date
 	 * @param time
 	 */
-	public void cancel(int date, int time) {
+	public void cancel(String name, int date, int time) {
 		int size = records.size();
 		for (int i = 0; i < size; i++) {
+			if (records.get(i).getName().equals(name)) {
 				if (records.get(i).getDate() == date) {
 					if (records.get(i).getTime() == time) {
 							records.remove(i);
+					}
 				}
 			}
 		}

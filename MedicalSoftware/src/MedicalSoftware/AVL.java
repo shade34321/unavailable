@@ -1,5 +1,4 @@
 package MedicalSoftware;
-
 public class AVL<K extends Comparable<K>, V> {
 	private BSTNode<K, V> root;
 
@@ -101,6 +100,7 @@ public class AVL<K extends Comparable<K>, V> {
 		if (t != null) {
 			s = inorder(t.getLeft(), s);
 			s = s + t.toString();
+			System.out.println(t.getKey());
 			s = inorder(t.getRight(), s);
 		}
 
