@@ -30,8 +30,8 @@ public class Login {
 	 */
 	Login(AVL<String, Info> informationUserName,
 			AVL<String, Info> informationName) {
-		this.information = informationUserName;
-		this.informationName = informationName;
+		Login.information = informationUserName;
+		Login.informationName = informationName;
 	}
 
 	/**

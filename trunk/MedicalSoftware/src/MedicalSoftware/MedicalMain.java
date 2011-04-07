@@ -1,7 +1,6 @@
 package MedicalSoftware;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Includes a main method used for testing
@@ -21,7 +20,9 @@ public class MedicalMain {
 		Server ser = new Server();
 		AVL<String, Info> informationUserName = ser.load();
 		AVL<String, Info> informationName = setup(informationUserName);
-		//Login log = new Login(information);
+		ser.save(informationUserName);
+		Login log = new Login(informationUserName, informationName);
+		//log.run();
 	}
 
 	/*
