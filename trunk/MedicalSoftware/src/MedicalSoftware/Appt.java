@@ -1,5 +1,4 @@
 package MedicalSoftware;
-
 /**
  * Represents an appointment
  * 

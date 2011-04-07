@@ -15,9 +15,7 @@ import java.util.logging.XMLFormatter;
 
 public class Nurse {
 	private AVL<String, Info> information;
-	private AVL<String, Patient> patient;
-	private AVL<String, Nurse> nurse;
-	private AVL<String, Doctor> doctor;
+	private AVL<String, Info> informationName;
 	private Info info;
 	
 	private static Logger myLogger = Logger.getLogger("Nurse");
@@ -55,13 +53,10 @@ public class Nurse {
 	 * @param doctor
 	 * @param patient
 	 */
-	Nurse(String user, AVL<String, Info> information, AVL<String, Nurse> nurse, AVL<String, Doctor> doctor, AVL<String, Patient> patient){
+	Nurse(String user, AVL<String, Info> information, AVL<String, Info> informationUser){
 		this.information = information;
-		this.patient = patient;
-		this.nurse = nurse;
-		this.doctor = doctor;
-		this.info = nurse.find(user).getInfo();		
-		
+		this.informationName = informationUser;
+		this.info = informationName.find(user);
 		myLogger.log(Level.INFO, "Creating new Nurse: " + user);
 	}
 	
@@ -72,9 +67,7 @@ public class Nurse {
 	 */
 	Nurse (Info info) {
 		this.information = new AVL<String, Info>();
-		this.patient = new AVL<String, Patient>();
-		this.nurse = new AVL<String, Nurse>();
-		this.doctor = new AVL<String, Doctor>();
+		this.informationName = new AVL<String, Info>();
 		this.info = info;
 		
 		myLogger.log(Level.INFO, "Creating new Nurse: " + info);
@@ -97,10 +90,8 @@ public class Nurse {
 	 */
 	public void createPatient(String name, String password, String userName, String email, String address, String state, String country, int SSN, int zip, int birthday) {
 		Info form = new Info(name, password, userName, email, address, state, country, SSN, zip, birthday, 3, false);
-		Patient p = new Patient(form);
-		patient.insert(name, p);
-			p.updateTree(this.patient, this.doctor);
-		
+		information.insert(userName, form);
+		informationName.insert(name, form);
 		
 		myLogger.log(Level.FINE, "Creating Patient: " + name);
 	}
@@ -110,9 +101,18 @@ public class Nurse {
 	 * 
 	 * @param name
 	 */
-	public void deletePatient(String name){
-		patient.remove(name);
-		myLogger.log(Level.FINEST, "Removing patient: " + name);
+	public boolean deletePatient(String name){
+		boolean status = false;
+		String userName = informationName.find(name).getUserName();
+		if (informationName.find(name) == null) {
+			myLogger.log(Level.CONFIG, "Patient does not exist!.. Or miss typed... " + name);
+		} else if (informationName.find(name).getType() == 3) {
+			informationName.remove(name);
+			information.remove(userName);
+			myLogger.log(Level.FINEST, "Removing patient: " + name);
+			status = true;
+		}
+		return status;
 	}
 	
 	/**
@@ -121,10 +121,17 @@ public class Nurse {
 	 * @param name
 	 * @return Patient
 	 */
-	public Patient getPatient(String name){
-		myLogger.log(Level.CONFIG, "Returning Patient: " + name);
-		return patient.find(name);
+	public Info getPatient(String name){
+		Info temp = null;
+		if (informationName.find(name) == null) {
+			myLogger.log(Level.CONFIG, "Patient does not exist!.. Or miss typed... " + name);
+		} else if (informationName.find(name).getType() == 3) {
+			temp = informationName.find(name);
+			myLogger.log(Level.CONFIG, "Returning Patient: " + name);
+		}
+			return temp;
 	}
+
 	
 	
 	/**
@@ -139,9 +146,13 @@ public class Nurse {
 	 * @param other
 	 */
 	public void createOrder(String user, int date, int time, String prescrip, String labW, String followUp, String other){
-		patient.find(user).addOrders(user, date, time, prescrip, labW, followUp, other);
-		
-		myLogger.log(Level.FINE, "Creating Doctors Orders");
+
+		if (informationName.find(user) != null) {
+			informationName.find(user).getOrders().create(user, date, time, prescrip, labW, followUp, other);
+			myLogger.log(Level.FINE, "Creating Doctors Orders");
+		} else {
+			myLogger.log(Level.FINE, "User did not exist... ");
+		}
 	}
 	
 	/**
@@ -153,9 +164,13 @@ public class Nurse {
 	 * @param prescrip
 	 */
 	public void cancelDoctorOrder(int date, int time, String name, String prescrip){
-		patient.find(name).deleteOrders(name, date, time, prescrip);
 		
-		myLogger.log(Level.FINEST, "Canceling Doctors Orders");
+		if (informationName.find(name) != null) {
+			informationName.find(name).getOrders().cancel(date, time, name, prescrip);
+			myLogger.log(Level.FINE, "Deleting  Doctors Orders");
+		} else {
+			myLogger.log(Level.FINE, "User did not exist... ");
+		}
 	}
 	
 	/**
@@ -166,7 +181,7 @@ public class Nurse {
 	 */
 	public DoctorsOrders getOrders(String name){
 		myLogger.log(Level.CONFIG, "Returning Doctors Orders: " + name);
-		return patient.find(name).getOrders();
+		return information.find(name).getOrders();
 	}
 	
 	
@@ -180,8 +195,12 @@ public class Nurse {
 	 * @param paid
 	 */
 	public void createInvoice(String name, String doc, int total, int due, Boolean paid){
-		patient.find(name).addInvoice(name, doc, total, due, paid);
-		myLogger.log(Level.FINE, "Creating an invoice for: " + name);
+		if (informationName.find(name) != null) {
+			informationName.find(name).getInvoice().create(name, doc, total, due, paid);
+			myLogger.log(Level.FINE, "Creating an invoice for: " + name);
+		} else {
+			myLogger.log(Level.FINE, "Could not find " + name);
+		}
 	}
 	
 	/**
@@ -191,8 +210,12 @@ public class Nurse {
 	 * @param due
 	 */
 	public void cancelInvoice(String name, int due){
-		patient.find(name).deleteInvoice(due, name);
-		myLogger.log(Level.FINEST, "Canceling invoice for: " + name);
+		if (informationName.find(name) != null) {
+			informationName.find(name).getInvoice().cancel(due, name);
+			myLogger.log(Level.FINE, "Deleteing patient invoice for " + name);
+		} else {
+			myLogger.log(Level.FINE, "Could not find " + name);
+		}
 	}
 	
 	/**
@@ -204,7 +227,7 @@ public class Nurse {
 	public PatientInvoice getInvoice(String name){
 		myLogger.log(Level.FINER, "Getting invoice for: " + name);
 		
-		return patient.find(name).getPatientInvoice();
+		return informationName.find(name).getInvoice();
 	}
 	
 	
@@ -221,10 +244,13 @@ public class Nurse {
 	 * @param height
 	 * @param weight
 	 */
-	public void createTreatmentRecords(String name, int date, int time, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight){
-		patient.find(name).addRecords(name, date, time, symptoms, bloodPressure, pulse, temp, height, weight);
-		
-		myLogger.log(Level.CONFIG, "Creating a treatment record for: " + name);
+	public void createTreatmentRecords(String name, String doctor, int date, int time, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight){
+		if (informationName.find(name) != null) {
+			informationName.find(name).getRecord().create(name, doctor, date, time, symptoms, bloodPressure, pulse, temp, height, weight);
+			myLogger.log(Level.CONFIG, "Creating a treatment record for: " + name);
+		} else {
+			myLogger.log(Level.CONFIG, "Could not find " + name);
+		}
 	}
 	
 	/**
@@ -235,9 +261,12 @@ public class Nurse {
 	 * @param time
 	 */
 	public void removeTreatmentRecord(String name, int date, int time){
-		patient.find(name).deleteRecords(date, time);
-		
-		myLogger.log(Level.FINE, "Removing treatment for: " + name);
+		if (informationName.find(name) != null) {
+			informationName.find(name).getRecord().cancel(name, date, time);
+			myLogger.log(Level.CONFIG, "Deleting a treatment record for: " + name);
+		} else {
+			myLogger.log(Level.CONFIG, "Could not find " + name);
+		}
 	}
 	
 	/**
@@ -248,7 +277,7 @@ public class Nurse {
 	 */
 	public TreatmentRecords getTreatmentRecords(String name){
 		myLogger.log(Level.FINER, "Getting treatment record for: " + name);
-		return patient.find(name).getTreatmentRecords();
+		return informationName.find(name).getRecord();
 	}
 	
 	
@@ -289,7 +318,7 @@ public class Nurse {
 	 */
 	public Appointment findAppt(String user) {
 		myLogger.log(Level.INFO, "Getting appointment for: " + user);
-		return patient.find(user).getAppt();
+		return informationName.find(user).getAppt();
 	}
 	
 
@@ -325,21 +354,5 @@ public class Nurse {
 	 */
 	public void update() {
 		
-	}
-	
-	
-	/**
-	 * Update trees
-	 * 
-	 * @param p
-	 * @param n
-	 * @param d
-	 * @param i
-	 */
-	public void updateTree(AVL<String, Patient> p, AVL<String, Nurse> n, AVL<String, Doctor> d, AVL<String, Info> i) {		
-		this.patient = p;
-		this.nurse = n;
-		this.doctor = d;
-		this.information = i;
 	}
 }
