@@ -10,33 +10,40 @@ import java.util.ArrayList;
 
 class Server {
 
-	static final int PORT = 5900; 
+	static final int PORT = 5900;
 	static final String HOST = "cs2340.dyndns-server.com";
 	
-	public void save(AVL<String, SystemAdmin> admin) {
+	public void save(AVL<String, Info> inform) {
 		try {
-			Socket skt = new Socket(HOST, PORT);
+			Socket skt2 = new Socket(HOST, PORT);
 			String str = "";
 			try {
-				BSTNode<String, SystemAdmin> name;
-				while (admin.getRoot() != null) {
-					name = admin.getRoot();
-					str += (name.getValue().getInfo().getName() + "-1");
-					str += (name.getValue().getInfo().getPassword()+ "-1");
-					str += (name.getValue().getInfo().getUserName() + "-1");
-					str += (name.getValue().getInfo().getEmail() + "-1");
-					str += (name.getValue().getInfo().getAddress() + "-1");
-					str += (name.getValue().getInfo().getState() + "-1");
-					str += (name.getValue().getInfo().getCountry() + "-1");
-					str += (Integer.toString(name.getValue().getInfo().getSSN()) + "-1");
-					str += (Integer.toString(name.getValue().getInfo().getZip()) + "-1");
-					str += (Integer.toString(name.getValue().getInfo().getBirthday()) + "-1");
-					str += (Integer.toString(name.getValue().getInfo().getType()) + "-1");
-					admin.remove(admin.getRoot().getKey());
+				BSTNode<String, Info> name;
+				while (inform.getRoot() != null) {
+						name = inform.getRoot();
+						str += (name.getValue().getName() + "-1");
+						str += (name.getValue().getPassword()+ "-1");
+						str += (name.getValue().getUserName() + "-1");
+						str += (name.getValue().getEmail() + "-1");
+						str += (name.getValue().getAddress() + "-1");
+						str += (name.getValue().getState() + "-1");
+						str += (name.getValue().getCountry() + "-1");
+						str += (Integer.toString(name.getValue().getSSN()) + "-1");
+						str += (Integer.toString(name.getValue().getZip()) + "-1");
+						str += (Integer.toString(name.getValue().getBirthday()) + "-1");
+						str += (Integer.toString(name.getValue().getType()) + "-1");
+						if (name.getValue().getSusp() == true) {
+							str += "1-1";
+						} else {
+							str += "0-1";
+						}
+						inform.remove(inform.getRoot().getKey());
 					}
-				PrintStream output = new PrintStream(skt.getOutputStream());
+				PrintStream output = new PrintStream(skt2.getOutputStream());
 				output.print(str);
 				output.close();
+				skt2.close();
+				
 			}
 			catch (FileNotFoundException e) {
 				System.out.println("Error no such file found!");
