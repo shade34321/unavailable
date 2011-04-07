@@ -39,10 +39,23 @@ public class Login {
 	 * 
 	 * @throws IOException
 	 */
-	public void run() throws IOException {
-		String userName = "", password = "", input = "";
-		// Runs GUIS HERE!!!
-		loginUser(userName, password);
+	public int run(String user) throws IOException {
+		Info inform = information.find(user);
+		int temp = -1;
+		if (inform.getType() == 0) {
+			systemAdmin = new SystemAdmin(inform.getName(), information, informationName);
+			temp = 0;
+		} else if (inform.getType() == 1) {
+			doc = new Doctor(inform.getName(), information, informationName);
+			temp = 1;
+		} else if (inform.getType() == 2) {
+			nur = new Nurse(inform.getName(), information, informationName);
+			temp = 2;
+		} else if (inform.getType() == 3) {
+			person = new Patient(inform.getName(), information, informationName);
+			temp = 3;
+		}
+		return temp;
 	}
 
 	/**
@@ -52,13 +65,14 @@ public class Login {
 	 * @param password
 	 * @return
 	 */
-	public boolean loginUser(String userName, String password) {
+	public int loginUser(String userName, String password) {
 
-		boolean status = false;
+		int status = 0;
 
-		if (suspended == 3) {
+		if (suspended >= 3) {
 			if (information.find(userName) != null) {
 				information.find(userName).setSusp(true);
+				status = -1;
 			}
 		} else {
 
@@ -66,8 +80,10 @@ public class Login {
 			if (password.equals(information.find(userName).getPassword())) {
 				
 				if (information.find(userName).getSusp() != true) {
-					status = true;
+					status = 1;
 					suspended = 0;
+				} else {
+					status = -1;
 				}
 			}
 		}
@@ -103,5 +119,21 @@ public class Login {
 			AVL<String, Info> informationName2) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public Patient getPatient() {
+		return this.person;
+	}
+	
+	public Nurse getNurse() {
+		return this.nur;
+	}
+	
+	public Doctor getDoctor() {
+		return this.doc;
+	}
+	
+	public SystemAdmin getAdmin() {
+		return this.systemAdmin;
 	}
 }

@@ -78,4 +78,8 @@ public class TreatmentRecords {
 			}
 		}
 	}
+	
+	public ArrayList<TRecords> getRecords() {
+		return this.records;
+	}
 }
