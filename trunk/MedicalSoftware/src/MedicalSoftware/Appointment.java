@@ -82,4 +82,8 @@ public class Appointment {
 			}
 		}
 	}
+	
+	public ArrayList<Appt> getAppt() {
+		return this.App;
+	}
 }

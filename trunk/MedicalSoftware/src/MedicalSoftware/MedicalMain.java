@@ -22,6 +22,7 @@ public class MedicalMain {
 		AVL<String, Info> informationName = setup(informationUserName);
 		ser.save(informationUserName);
 		Login log = new Login(informationUserName, informationName);
+		// LoginUI logging = new LoginUI(log);
 		//log.run();
 	}
 

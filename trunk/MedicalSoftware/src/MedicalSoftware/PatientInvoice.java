@@ -68,4 +68,8 @@ public class PatientInvoice {
 			}
 		}
 	}
+	
+	public ArrayList<Invoice> getInvoice() {
+		return this.invoice;
+	}
 }

@@ -48,8 +48,6 @@ class Server {
 			catch (FileNotFoundException e) {
 				System.out.println("Error no such file found!");
 			}
-			
-			
 
 		} catch (Exception e) {
 			System.out.print("Error! It didn't work! " + e + "\n");

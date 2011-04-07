@@ -84,4 +84,8 @@ public class DoctorsOrders {
 			}
 		}
 	}
+	
+	public ArrayList<DOrders> getOrders() {
+		return this.orders;
+	}
 }
