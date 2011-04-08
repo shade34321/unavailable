@@ -1,4 +1,5 @@
 package MedicalSoftware;
+
 import java.awt.EventQueue;
 
 import javax.swing.JButton;
@@ -10,7 +11,6 @@ import javax.swing.JTabbedPane;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-
 
 public class AppointmentUI {
 
@@ -48,22 +48,22 @@ public class AppointmentUI {
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
-		
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.WEST);
-		
+
 		JButton btnPatient = new JButton("Patients");
 		tabbedPane.addTab("Menu", btnPatient);
-		
+
 	}
-	
+
 	protected JComponent makeTextPanel(String text) {
-        JPanel panel = new JPanel(false);
-        JLabel filler = new JLabel(text);
-        filler.setHorizontalAlignment(JLabel.CENTER);
-        panel.setLayout(new GridLayout(1, 1));
-        panel.add(filler);
-        return panel;
-    }
+		JPanel panel = new JPanel(false);
+		JLabel filler = new JLabel(text);
+		filler.setHorizontalAlignment(JLabel.CENTER);
+		panel.setLayout(new GridLayout(1, 1));
+		panel.add(filler);
+		return panel;
+	}
 
 }

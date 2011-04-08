@@ -136,7 +136,7 @@ public class LoginUI implements ActionListener {
 								"Please contact your system administartor " +
 								"to resolve this issue.");
 			} else if (userType == 3) {
-				PatientUIv2 currentUI = new PatientUIv2(login.getPatient());
+				PatientUI currentUI = new PatientUI(login.getPatient());
 			} else if (userType == 2) {
 				NurseUI currentUI = new NurseUI();
 			} else if (userType == 1) {

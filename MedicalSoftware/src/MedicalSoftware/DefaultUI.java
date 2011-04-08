@@ -1,39 +1,36 @@
 package MedicalSoftware;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
-import javax.swing.JSplitPane;
 import javax.swing.JMenuBar;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import java.awt.GridLayout;
 import java.awt.CardLayout;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JScrollBar;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JList;
-import javax.swing.JTable;
 import javax.swing.JScrollPane;
-
 
 public class DefaultUI extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	
+	private JTextField textFieldPrescription;
+	
+	private JTextField textFieldLabWork;
+	
+	private JTextField textFieldFollowUp;
+	
+	private JTextField textFieldOtherIns;
+	private JTextField textFieldNameSearch;
+	private JTextField textFieldNewPatient;
 
 	/**
 	 * Launch the application.
@@ -57,607 +54,637 @@ public class DefaultUI extends JFrame {
 	public DefaultUI() {
 		initialize();
 	}
-	
-	public DefaultUI(){
+
+	public DefaultUI(Login log) {
 		this();
 	}
-	
-	private void initialize(){
+
+	private void initialize() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
 		JLabel lblUsername = new JLabel(" username");
 		menuBar.add(lblUsername);
-		
+
 		JButton btnLogout = new JButton("logout");
 		menuBar.add(btnLogout);
-		
+
 		JButton btnRefresh = new JButton("Refresh");
 		menuBar.add(btnRefresh);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane);
-		
-		JPanel panel = new JPanel();
-		tabbedPane.addTab("Patients", null, panel, null);
-		panel.setLayout(new CardLayout(0, 0));
-		
-		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.LEFT);
-		tabbedPane_1.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		panel.add(tabbedPane_1);
-		
-		JPanel panel_2 = new JPanel();
-		tabbedPane_1.addTab("Personal Info", null, panel_2, null);
-		GridBagLayout gbl_panel_2 = new GridBagLayout();
-		gbl_panel_2.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_panel_2.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
-		gbl_panel_2.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel_2.setLayout(gbl_panel_2);
-		
+
+		JPanel patientsTab = new JPanel();
+		tabbedPane.addTab("Patients", null, patientsTab, null);
+		patientsTab.setLayout(new CardLayout(0, 0));
+
+		JTabbedPane patientsTabPane = new JTabbedPane(JTabbedPane.LEFT);
+		patientsTabPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		patientsTab.add(patientsTabPane);
+
+		JPanel PersonalInfoPanel = new JPanel();
+		patientsTabPane.addTab("Personal Info", null, PersonalInfoPanel, null);
+		GridBagLayout gbl_PersonalInfoPanel = new GridBagLayout();
+		gbl_PersonalInfoPanel.columnWidths = new int[] { 0, 0, 0, 0 };
+		gbl_PersonalInfoPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0 };
+		gbl_PersonalInfoPanel.columnWeights = new double[] { 0.0, 1.0, 0.0,
+				Double.MIN_VALUE };
+		gbl_PersonalInfoPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+				Double.MIN_VALUE };
+		PersonalInfoPanel.setLayout(gbl_PersonalInfoPanel);
+
 		JLabel lblName = new JLabel("Name:");
 		GridBagConstraints gbc_lblName = new GridBagConstraints();
 		gbc_lblName.anchor = GridBagConstraints.WEST;
 		gbc_lblName.insets = new Insets(0, 0, 5, 5);
 		gbc_lblName.gridx = 0;
 		gbc_lblName.gridy = 0;
-		panel_2.add(lblName, gbc_lblName);
-		
-		JLabel lblNoInformation = new JLabel("no info");
-		GridBagConstraints gbc_lblNoInformation = new GridBagConstraints();
-		gbc_lblNoInformation.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNoInformation.gridx = 1;
-		gbc_lblNoInformation.gridy = 0;
-		panel_2.add(lblNoInformation, gbc_lblNoInformation);
-		
-		JButton btnEdit = new JButton("edit");
-		GridBagConstraints gbc_btnEdit = new GridBagConstraints();
-		gbc_btnEdit.insets = new Insets(0, 0, 5, 0);
-		gbc_btnEdit.gridx = 2;
-		gbc_btnEdit.gridy = 0;
-		panel_2.add(btnEdit, gbc_btnEdit);
-		
+		PersonalInfoPanel.add(lblName, gbc_lblName);
+
+		JLabel lblNameInfo = new JLabel("no info");
+		GridBagConstraints gbc_lblNameInfo = new GridBagConstraints();
+		gbc_lblNameInfo.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNameInfo.gridx = 1;
+		gbc_lblNameInfo.gridy = 0;
+		PersonalInfoPanel.add(lblNameInfo, gbc_lblNameInfo);
+
+		JButton btnNameEdit = new JButton("edit");
+		GridBagConstraints gbc_btnNameEdit = new GridBagConstraints();
+		gbc_btnNameEdit.insets = new Insets(0, 0, 5, 0);
+		gbc_btnNameEdit.gridx = 2;
+		gbc_btnNameEdit.gridy = 0;
+		PersonalInfoPanel.add(btnNameEdit, gbc_btnNameEdit);
+
 		JLabel lblAddress = new JLabel("Address:");
 		GridBagConstraints gbc_lblAddress = new GridBagConstraints();
 		gbc_lblAddress.anchor = GridBagConstraints.WEST;
 		gbc_lblAddress.insets = new Insets(0, 0, 5, 5);
 		gbc_lblAddress.gridx = 0;
 		gbc_lblAddress.gridy = 1;
-		panel_2.add(lblAddress, gbc_lblAddress);
-		
-		JLabel lblNoInfo = new JLabel("no info");
-		GridBagConstraints gbc_lblNoInfo = new GridBagConstraints();
-		gbc_lblNoInfo.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNoInfo.gridx = 1;
-		gbc_lblNoInfo.gridy = 1;
-		panel_2.add(lblNoInfo, gbc_lblNoInfo);
-		
-		JButton btnEdit_1 = new JButton("edit");
-		GridBagConstraints gbc_btnEdit_1 = new GridBagConstraints();
-		gbc_btnEdit_1.insets = new Insets(0, 0, 5, 0);
-		gbc_btnEdit_1.gridx = 2;
-		gbc_btnEdit_1.gridy = 1;
-		panel_2.add(btnEdit_1, gbc_btnEdit_1);
-		
+		PersonalInfoPanel.add(lblAddress, gbc_lblAddress);
+
+		JLabel lblAddressInfo = new JLabel("no info");
+		GridBagConstraints gbc_lblAddressInfo = new GridBagConstraints();
+		gbc_lblAddressInfo.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAddressInfo.gridx = 1;
+		gbc_lblAddressInfo.gridy = 1;
+		PersonalInfoPanel.add(lblAddressInfo, gbc_lblAddressInfo);
+
+		JButton btnAddressEdit = new JButton("edit");
+		GridBagConstraints gbc_btnAddressEdit = new GridBagConstraints();
+		gbc_btnAddressEdit.insets = new Insets(0, 0, 5, 0);
+		gbc_btnAddressEdit.gridx = 2;
+		gbc_btnAddressEdit.gridy = 1;
+		PersonalInfoPanel.add(btnAddressEdit, gbc_btnAddressEdit);
+
 		JLabel lblPhone = new JLabel("Phone:");
 		GridBagConstraints gbc_lblPhone = new GridBagConstraints();
 		gbc_lblPhone.anchor = GridBagConstraints.WEST;
 		gbc_lblPhone.insets = new Insets(0, 0, 5, 5);
 		gbc_lblPhone.gridx = 0;
 		gbc_lblPhone.gridy = 2;
-		panel_2.add(lblPhone, gbc_lblPhone);
-		
-		JLabel lblNoInfo_1 = new JLabel("no info");
-		GridBagConstraints gbc_lblNoInfo_1 = new GridBagConstraints();
-		gbc_lblNoInfo_1.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNoInfo_1.gridx = 1;
-		gbc_lblNoInfo_1.gridy = 2;
-		panel_2.add(lblNoInfo_1, gbc_lblNoInfo_1);
-		
-		JButton btnEdit_2 = new JButton("edit");
-		GridBagConstraints gbc_btnEdit_2 = new GridBagConstraints();
-		gbc_btnEdit_2.insets = new Insets(0, 0, 5, 0);
-		gbc_btnEdit_2.gridx = 2;
-		gbc_btnEdit_2.gridy = 2;
-		panel_2.add(btnEdit_2, gbc_btnEdit_2);
-		
-		JLabel lblEmail = new JLabel("email:");
+		PersonalInfoPanel.add(lblPhone, gbc_lblPhone);
+
+		JLabel lblPhoneInfo = new JLabel("no info");
+		GridBagConstraints gbc_lblPhoneInfo = new GridBagConstraints();
+		gbc_lblPhoneInfo.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPhoneInfo.gridx = 1;
+		gbc_lblPhoneInfo.gridy = 2;
+		PersonalInfoPanel.add(lblPhoneInfo, gbc_lblPhoneInfo);
+
+		JButton btnPhoneEdit = new JButton("edit");
+		GridBagConstraints gbc_btnPhoneEdit = new GridBagConstraints();
+		gbc_btnPhoneEdit.insets = new Insets(0, 0, 5, 0);
+		gbc_btnPhoneEdit.gridx = 2;
+		gbc_btnPhoneEdit.gridy = 2;
+		PersonalInfoPanel.add(btnPhoneEdit, gbc_btnPhoneEdit);
+
+		JLabel lblEmail = new JLabel("Email:");
 		GridBagConstraints gbc_lblEmail = new GridBagConstraints();
 		gbc_lblEmail.anchor = GridBagConstraints.WEST;
 		gbc_lblEmail.insets = new Insets(0, 0, 5, 5);
 		gbc_lblEmail.gridx = 0;
 		gbc_lblEmail.gridy = 3;
-		panel_2.add(lblEmail, gbc_lblEmail);
-		
-		JLabel lblNoInfo_2 = new JLabel("no info");
-		GridBagConstraints gbc_lblNoInfo_2 = new GridBagConstraints();
-		gbc_lblNoInfo_2.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNoInfo_2.gridx = 1;
-		gbc_lblNoInfo_2.gridy = 3;
-		panel_2.add(lblNoInfo_2, gbc_lblNoInfo_2);
-		
-		JButton btnEdit_3 = new JButton("edit");
-		GridBagConstraints gbc_btnEdit_3 = new GridBagConstraints();
-		gbc_btnEdit_3.insets = new Insets(0, 0, 5, 0);
-		gbc_btnEdit_3.gridx = 2;
-		gbc_btnEdit_3.gridy = 3;
-		panel_2.add(btnEdit_3, gbc_btnEdit_3);
-		
-		JLabel lblGender = new JLabel("gender:");
+		PersonalInfoPanel.add(lblEmail, gbc_lblEmail);
+
+		JLabel lblEmailInfo = new JLabel("no info");
+		GridBagConstraints gbc_lblEmailInfo = new GridBagConstraints();
+		gbc_lblEmailInfo.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEmailInfo.gridx = 1;
+		gbc_lblEmailInfo.gridy = 3;
+		PersonalInfoPanel.add(lblEmailInfo, gbc_lblEmailInfo);
+
+		JButton btnEmailEdit = new JButton("edit");
+		GridBagConstraints gbc_btnEmailEdit = new GridBagConstraints();
+		gbc_btnEmailEdit.insets = new Insets(0, 0, 5, 0);
+		gbc_btnEmailEdit.gridx = 2;
+		gbc_btnEmailEdit.gridy = 3;
+		PersonalInfoPanel.add(btnEmailEdit, gbc_btnEmailEdit);
+
+		JLabel lblGender = new JLabel("Gender:");
 		GridBagConstraints gbc_lblGender = new GridBagConstraints();
 		gbc_lblGender.anchor = GridBagConstraints.WEST;
 		gbc_lblGender.insets = new Insets(0, 0, 5, 5);
 		gbc_lblGender.gridx = 0;
 		gbc_lblGender.gridy = 4;
-		panel_2.add(lblGender, gbc_lblGender);
-		
-		JLabel lblNoInfo_3 = new JLabel("no info");
-		GridBagConstraints gbc_lblNoInfo_3 = new GridBagConstraints();
-		gbc_lblNoInfo_3.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNoInfo_3.gridx = 1;
-		gbc_lblNoInfo_3.gridy = 4;
-		panel_2.add(lblNoInfo_3, gbc_lblNoInfo_3);
-		
-		JButton btnEdit_4 = new JButton("edit");
-		GridBagConstraints gbc_btnEdit_4 = new GridBagConstraints();
-		gbc_btnEdit_4.insets = new Insets(0, 0, 5, 0);
-		gbc_btnEdit_4.gridx = 2;
-		gbc_btnEdit_4.gridy = 4;
-		panel_2.add(btnEdit_4, gbc_btnEdit_4);
-		
-		JLabel lblAge = new JLabel("age:");
+		PersonalInfoPanel.add(lblGender, gbc_lblGender);
+
+		JLabel lblGenderInfo = new JLabel("no info");
+		GridBagConstraints gbc_lblGenderInfo = new GridBagConstraints();
+		gbc_lblGenderInfo.insets = new Insets(0, 0, 5, 5);
+		gbc_lblGenderInfo.gridx = 1;
+		gbc_lblGenderInfo.gridy = 4;
+		PersonalInfoPanel.add(lblGenderInfo, gbc_lblGenderInfo);
+
+		JButton btnGenderEdit = new JButton("edit");
+		GridBagConstraints gbc_btnGenderEdit = new GridBagConstraints();
+		gbc_btnGenderEdit.insets = new Insets(0, 0, 5, 0);
+		gbc_btnGenderEdit.gridx = 2;
+		gbc_btnGenderEdit.gridy = 4;
+		PersonalInfoPanel.add(btnGenderEdit, gbc_btnGenderEdit);
+
+		JLabel lblAge = new JLabel("Age:");
 		GridBagConstraints gbc_lblAge = new GridBagConstraints();
 		gbc_lblAge.anchor = GridBagConstraints.WEST;
 		gbc_lblAge.insets = new Insets(0, 0, 0, 5);
 		gbc_lblAge.gridx = 0;
 		gbc_lblAge.gridy = 5;
-		panel_2.add(lblAge, gbc_lblAge);
-		
-		JLabel lblNoInfo_4 = new JLabel("no info");
-		GridBagConstraints gbc_lblNoInfo_4 = new GridBagConstraints();
-		gbc_lblNoInfo_4.insets = new Insets(0, 0, 0, 5);
-		gbc_lblNoInfo_4.gridx = 1;
-		gbc_lblNoInfo_4.gridy = 5;
-		panel_2.add(lblNoInfo_4, gbc_lblNoInfo_4);
-		
-		JButton btnEdit_5 = new JButton("edit");
-		GridBagConstraints gbc_btnEdit_5 = new GridBagConstraints();
-		gbc_btnEdit_5.gridx = 2;
-		gbc_btnEdit_5.gridy = 5;
-		panel_2.add(btnEdit_5, gbc_btnEdit_5);
-		
-		JPanel panel_9 = new JPanel();
-		tabbedPane_1.addTab("Medical Info", null, panel_9, null);
-		GridBagLayout gbl_panel_9 = new GridBagLayout();
-		gbl_panel_9.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_panel_9.rowHeights = new int[]{0, 0, 0, 0};
-		gbl_panel_9.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_9.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel_9.setLayout(gbl_panel_9);
-		
+		PersonalInfoPanel.add(lblAge, gbc_lblAge);
+
+		JLabel lblAgeInfo = new JLabel("no info");
+		GridBagConstraints gbc_lblAgeInfo = new GridBagConstraints();
+		gbc_lblAgeInfo.insets = new Insets(0, 0, 0, 5);
+		gbc_lblAgeInfo.gridx = 1;
+		gbc_lblAgeInfo.gridy = 5;
+		PersonalInfoPanel.add(lblAgeInfo, gbc_lblAgeInfo);
+
+		JButton btnAgeEdit = new JButton("edit");
+		GridBagConstraints gbc_btnAgeEdit = new GridBagConstraints();
+		gbc_btnAgeEdit.gridx = 2;
+		gbc_btnAgeEdit.gridy = 5;
+		PersonalInfoPanel.add(btnAgeEdit, gbc_btnAgeEdit);
+
+		JPanel MedicalInfoPanel = new JPanel();
+		patientsTabPane.addTab("Medical Info", null, MedicalInfoPanel, null);
+		GridBagLayout gbl_MedicalInfoPanel = new GridBagLayout();
+		gbl_MedicalInfoPanel.columnWidths = new int[] { 0, 0, 0, 0 };
+		gbl_MedicalInfoPanel.rowHeights = new int[] { 0, 0, 0, 0 };
+		gbl_MedicalInfoPanel.columnWeights = new double[] { 0.0, 1.0, 0.0,
+				Double.MIN_VALUE };
+		gbl_MedicalInfoPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		MedicalInfoPanel.setLayout(gbl_MedicalInfoPanel);
+
 		JLabel lblPharmacy = new JLabel("Pharmacy:");
 		GridBagConstraints gbc_lblPharmacy = new GridBagConstraints();
 		gbc_lblPharmacy.insets = new Insets(0, 0, 5, 5);
 		gbc_lblPharmacy.gridx = 0;
 		gbc_lblPharmacy.gridy = 0;
-		panel_9.add(lblPharmacy, gbc_lblPharmacy);
-		
-		JLabel lblNoInformation_1 = new JLabel("no info");
-		GridBagConstraints gbc_lblNoInformation_1 = new GridBagConstraints();
-		gbc_lblNoInformation_1.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNoInformation_1.gridx = 1;
-		gbc_lblNoInformation_1.gridy = 0;
-		panel_9.add(lblNoInformation_1, gbc_lblNoInformation_1);
-		
-		JButton btnEdit_6 = new JButton("edit");
-		GridBagConstraints gbc_btnEdit_6 = new GridBagConstraints();
-		gbc_btnEdit_6.insets = new Insets(0, 0, 5, 0);
-		gbc_btnEdit_6.gridx = 2;
-		gbc_btnEdit_6.gridy = 0;
-		panel_9.add(btnEdit_6, gbc_btnEdit_6);
-		
+		MedicalInfoPanel.add(lblPharmacy, gbc_lblPharmacy);
+
+		JLabel lblPharmacyInfo = new JLabel("no info");
+		GridBagConstraints gbc_lblPharmacyInfo = new GridBagConstraints();
+		gbc_lblPharmacyInfo.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPharmacyInfo.gridx = 1;
+		gbc_lblPharmacyInfo.gridy = 0;
+		MedicalInfoPanel.add(lblPharmacyInfo, gbc_lblPharmacyInfo);
+
+		JButton btnPharmacyEdit = new JButton("edit");
+		GridBagConstraints gbc_btnPharmacyEdit = new GridBagConstraints();
+		gbc_btnPharmacyEdit.insets = new Insets(0, 0, 5, 0);
+		gbc_btnPharmacyEdit.gridx = 2;
+		gbc_btnPharmacyEdit.gridy = 0;
+		MedicalInfoPanel.add(btnPharmacyEdit, gbc_btnPharmacyEdit);
+
 		JLabel lblInsuranceCarrier = new JLabel("Insurance Carrier:");
 		GridBagConstraints gbc_lblInsuranceCarrier = new GridBagConstraints();
 		gbc_lblInsuranceCarrier.insets = new Insets(0, 0, 5, 5);
 		gbc_lblInsuranceCarrier.gridx = 0;
 		gbc_lblInsuranceCarrier.gridy = 1;
-		panel_9.add(lblInsuranceCarrier, gbc_lblInsuranceCarrier);
-		
-		JLabel lblNoInfo_5 = new JLabel("no info");
-		GridBagConstraints gbc_lblNoInfo_5 = new GridBagConstraints();
-		gbc_lblNoInfo_5.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNoInfo_5.gridx = 1;
-		gbc_lblNoInfo_5.gridy = 1;
-		panel_9.add(lblNoInfo_5, gbc_lblNoInfo_5);
-		
-		JButton btnEdit_7 = new JButton("edit");
-		GridBagConstraints gbc_btnEdit_7 = new GridBagConstraints();
-		gbc_btnEdit_7.insets = new Insets(0, 0, 5, 0);
-		gbc_btnEdit_7.gridx = 2;
-		gbc_btnEdit_7.gridy = 1;
-		panel_9.add(btnEdit_7, gbc_btnEdit_7);
-		
+		MedicalInfoPanel.add(lblInsuranceCarrier, gbc_lblInsuranceCarrier);
+
+		JLabel lblInsuranceInfo = new JLabel("no info");
+		GridBagConstraints gbc_lblInsuranceInfo = new GridBagConstraints();
+		gbc_lblInsuranceInfo.insets = new Insets(0, 0, 5, 5);
+		gbc_lblInsuranceInfo.gridx = 1;
+		gbc_lblInsuranceInfo.gridy = 1;
+		MedicalInfoPanel.add(lblInsuranceInfo, gbc_lblInsuranceInfo);
+
+		JButton btnInsuranceEdit = new JButton("edit");
+		GridBagConstraints gbc_btnInsuranceEdit = new GridBagConstraints();
+		gbc_btnInsuranceEdit.insets = new Insets(0, 0, 5, 0);
+		gbc_btnInsuranceEdit.gridx = 2;
+		gbc_btnInsuranceEdit.gridy = 1;
+		MedicalInfoPanel.add(btnInsuranceEdit, gbc_btnInsuranceEdit);
+
 		JLabel lblAllergies = new JLabel("Allergies:");
 		GridBagConstraints gbc_lblAllergies = new GridBagConstraints();
 		gbc_lblAllergies.insets = new Insets(0, 0, 0, 5);
 		gbc_lblAllergies.gridx = 0;
 		gbc_lblAllergies.gridy = 2;
-		panel_9.add(lblAllergies, gbc_lblAllergies);
-		
-		JLabel lblNoInfo_6 = new JLabel("no info");
-		GridBagConstraints gbc_lblNoInfo_6 = new GridBagConstraints();
-		gbc_lblNoInfo_6.insets = new Insets(0, 0, 0, 5);
-		gbc_lblNoInfo_6.gridx = 1;
-		gbc_lblNoInfo_6.gridy = 2;
-		panel_9.add(lblNoInfo_6, gbc_lblNoInfo_6);
-		
-		JButton btnEdit_8 = new JButton("edit");
-		GridBagConstraints gbc_btnEdit_8 = new GridBagConstraints();
-		gbc_btnEdit_8.gridx = 2;
-		gbc_btnEdit_8.gridy = 2;
-		panel_9.add(btnEdit_8, gbc_btnEdit_8);
-		
-		JPanel panel_3 = new JPanel();
-		tabbedPane_1.addTab("Treatment Records", null, panel_3, null);
-		GridBagLayout gbl_panel_3 = new GridBagLayout();
-		gbl_panel_3.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_panel_3.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_panel_3.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_3.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel_3.setLayout(gbl_panel_3);
-		
-		JButton btnNew = new JButton("New");
-		GridBagConstraints gbc_btnNew = new GridBagConstraints();
-		gbc_btnNew.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNew.gridx = 0;
-		gbc_btnNew.gridy = 0;
-		panel_3.add(btnNew, gbc_btnNew);
-		
+		MedicalInfoPanel.add(lblAllergies, gbc_lblAllergies);
+
+		JLabel lblAllergiesInfo = new JLabel("no info");
+		GridBagConstraints gbc_lblAllergiesInfo = new GridBagConstraints();
+		gbc_lblAllergiesInfo.insets = new Insets(0, 0, 0, 5);
+		gbc_lblAllergiesInfo.gridx = 1;
+		gbc_lblAllergiesInfo.gridy = 2;
+		MedicalInfoPanel.add(lblAllergiesInfo, gbc_lblAllergiesInfo);
+
+		JButton btnAllergiesEdit = new JButton("edit");
+		GridBagConstraints gbc_btnAllergiesEdit = new GridBagConstraints();
+		gbc_btnAllergiesEdit.gridx = 2;
+		gbc_btnAllergiesEdit.gridy = 2;
+		MedicalInfoPanel.add(btnAllergiesEdit, gbc_btnAllergiesEdit);
+
+		JPanel TreatmentRecordsPanel = new JPanel();
+		patientsTabPane.addTab("Treatment Records", null, TreatmentRecordsPanel, null);
+		GridBagLayout gbl_TreatmentRecordsPanel = new GridBagLayout();
+		gbl_TreatmentRecordsPanel.columnWidths = new int[] { 0, 0, 0, 0 };
+		gbl_TreatmentRecordsPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_TreatmentRecordsPanel.columnWeights = new double[] { 0.0, 1.0, 0.0,
+				Double.MIN_VALUE };
+		gbl_TreatmentRecordsPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+				0.0, 0.0, Double.MIN_VALUE };
+		TreatmentRecordsPanel.setLayout(gbl_TreatmentRecordsPanel);
+
+		JButton btnNewTreatmentRecord = new JButton("New");
+		GridBagConstraints gbc_btnNewTreatmentRecord = new GridBagConstraints();
+		gbc_btnNewTreatmentRecord.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNewTreatmentRecord.gridx = 0;
+		gbc_btnNewTreatmentRecord.gridy = 0;
+		TreatmentRecordsPanel.add(btnNewTreatmentRecord, gbc_btnNewTreatmentRecord);
+
 		JButton btnGetTreatmentRecord = new JButton("Get Treatment Record");
 		GridBagConstraints gbc_btnGetTreatmentRecord = new GridBagConstraints();
 		gbc_btnGetTreatmentRecord.insets = new Insets(0, 0, 5, 5);
 		gbc_btnGetTreatmentRecord.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnGetTreatmentRecord.gridx = 1;
 		gbc_btnGetTreatmentRecord.gridy = 0;
-		panel_3.add(btnGetTreatmentRecord, gbc_btnGetTreatmentRecord);
-		
-		JScrollBar scrollBar = new JScrollBar();
-		GridBagConstraints gbc_scrollBar = new GridBagConstraints();
-		gbc_scrollBar.insets = new Insets(0, 0, 5, 0);
-		gbc_scrollBar.gridheight = 7;
-		gbc_scrollBar.gridx = 2;
-		gbc_scrollBar.gridy = 0;
-		panel_3.add(scrollBar, gbc_scrollBar);
-		
+		TreatmentRecordsPanel.add(btnGetTreatmentRecord, gbc_btnGetTreatmentRecord);
+
+		JScrollBar scrollBarTreatmentRecords = new JScrollBar();
+		GridBagConstraints gbc_scrollBarTreatmentRecords = new GridBagConstraints();
+		gbc_scrollBarTreatmentRecords.insets = new Insets(0, 0, 5, 0);
+		gbc_scrollBarTreatmentRecords.gridheight = 7;
+		gbc_scrollBarTreatmentRecords.gridx = 2;
+		gbc_scrollBarTreatmentRecords.gridy = 0;
+		TreatmentRecordsPanel.add(scrollBarTreatmentRecords, gbc_scrollBarTreatmentRecords);
+
 		JLabel lblTreatingDoctor = new JLabel("Treating Doctor:");
 		GridBagConstraints gbc_lblTreatingDoctor = new GridBagConstraints();
 		gbc_lblTreatingDoctor.anchor = GridBagConstraints.WEST;
 		gbc_lblTreatingDoctor.insets = new Insets(0, 0, 5, 5);
 		gbc_lblTreatingDoctor.gridx = 0;
 		gbc_lblTreatingDoctor.gridy = 1;
-		panel_3.add(lblTreatingDoctor, gbc_lblTreatingDoctor);
-		
-		JLabel lblSelectTreamentRecord = new JLabel("select treament record");
-		GridBagConstraints gbc_lblSelectTreamentRecord = new GridBagConstraints();
-		gbc_lblSelectTreamentRecord.insets = new Insets(0, 0, 5, 5);
-		gbc_lblSelectTreamentRecord.gridx = 1;
-		gbc_lblSelectTreamentRecord.gridy = 1;
-		panel_3.add(lblSelectTreamentRecord, gbc_lblSelectTreamentRecord);
-		
+		TreatmentRecordsPanel.add(lblTreatingDoctor, gbc_lblTreatingDoctor);
+
+		JLabel lblTreatingDoctorInfo = new JLabel("select treament record");
+		GridBagConstraints gbc_lblTreatingDoctorInfo = new GridBagConstraints();
+		gbc_lblTreatingDoctorInfo.insets = new Insets(0, 0, 5, 5);
+		gbc_lblTreatingDoctorInfo.gridx = 1;
+		gbc_lblTreatingDoctorInfo.gridy = 1;
+		TreatmentRecordsPanel.add(lblTreatingDoctorInfo, gbc_lblTreatingDoctorInfo);
+
 		JLabel lblDatetime = new JLabel("Date/Time:");
 		GridBagConstraints gbc_lblDatetime = new GridBagConstraints();
 		gbc_lblDatetime.anchor = GridBagConstraints.WEST;
 		gbc_lblDatetime.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDatetime.gridx = 0;
 		gbc_lblDatetime.gridy = 2;
-		panel_3.add(lblDatetime, gbc_lblDatetime);
-		
-		JLabel lblSelectTreatmentRecord = new JLabel("select treatment record");
-		GridBagConstraints gbc_lblSelectTreatmentRecord = new GridBagConstraints();
-		gbc_lblSelectTreatmentRecord.insets = new Insets(0, 0, 5, 5);
-		gbc_lblSelectTreatmentRecord.gridx = 1;
-		gbc_lblSelectTreatmentRecord.gridy = 2;
-		panel_3.add(lblSelectTreatmentRecord, gbc_lblSelectTreatmentRecord);
-		
+		TreatmentRecordsPanel.add(lblDatetime, gbc_lblDatetime);
+
+		JLabel lblDateTimeInfo = new JLabel("select treatment record");
+		GridBagConstraints gbc_lblDateTimeInfo = new GridBagConstraints();
+		gbc_lblDateTimeInfo.insets = new Insets(0, 0, 5, 5);
+		gbc_lblDateTimeInfo.gridx = 1;
+		gbc_lblDateTimeInfo.gridy = 2;
+		TreatmentRecordsPanel.add(lblDateTimeInfo, gbc_lblDateTimeInfo);
+
 		JLabel lblAttendingNurse = new JLabel("Attending Nurse:");
 		GridBagConstraints gbc_lblAttendingNurse = new GridBagConstraints();
 		gbc_lblAttendingNurse.anchor = GridBagConstraints.WEST;
 		gbc_lblAttendingNurse.insets = new Insets(0, 0, 5, 5);
 		gbc_lblAttendingNurse.gridx = 0;
 		gbc_lblAttendingNurse.gridy = 3;
-		panel_3.add(lblAttendingNurse, gbc_lblAttendingNurse);
-		
-		JLabel lblSelectTreatmentRecord_1 = new JLabel("select treatment record");
-		GridBagConstraints gbc_lblSelectTreatmentRecord_1 = new GridBagConstraints();
-		gbc_lblSelectTreatmentRecord_1.insets = new Insets(0, 0, 5, 5);
-		gbc_lblSelectTreatmentRecord_1.gridx = 1;
-		gbc_lblSelectTreatmentRecord_1.gridy = 3;
-		panel_3.add(lblSelectTreatmentRecord_1, gbc_lblSelectTreatmentRecord_1);
-		
+		TreatmentRecordsPanel.add(lblAttendingNurse, gbc_lblAttendingNurse);
+
+		JLabel lblAttendingNurseInfo = new JLabel(
+				"select treatment record");
+		GridBagConstraints gbc_lblAttendingNurseInfo = new GridBagConstraints();
+		gbc_lblAttendingNurseInfo.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAttendingNurseInfo.gridx = 1;
+		gbc_lblAttendingNurseInfo.gridy = 3;
+		TreatmentRecordsPanel.add(lblAttendingNurseInfo, gbc_lblAttendingNurseInfo);
+
 		JLabel lblDoctorsOrders = new JLabel("Doctor's Orders:");
 		GridBagConstraints gbc_lblDoctorsOrders = new GridBagConstraints();
 		gbc_lblDoctorsOrders.anchor = GridBagConstraints.WEST;
 		gbc_lblDoctorsOrders.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDoctorsOrders.gridx = 0;
 		gbc_lblDoctorsOrders.gridy = 4;
-		panel_3.add(lblDoctorsOrders, gbc_lblDoctorsOrders);
-		
-		JButton btnView = new JButton("view");
-		GridBagConstraints gbc_btnView = new GridBagConstraints();
-		gbc_btnView.insets = new Insets(0, 0, 5, 5);
-		gbc_btnView.gridx = 1;
-		gbc_btnView.gridy = 4;
-		panel_3.add(btnView, gbc_btnView);
-		
+		TreatmentRecordsPanel.add(lblDoctorsOrders, gbc_lblDoctorsOrders);
+
+		JButton btnViewDoctorsOrders = new JButton("view");
+		GridBagConstraints gbc_btnViewDoctorsOrders = new GridBagConstraints();
+		gbc_btnViewDoctorsOrders.insets = new Insets(0, 0, 5, 5);
+		gbc_btnViewDoctorsOrders.gridx = 1;
+		gbc_btnViewDoctorsOrders.gridy = 4;
+		TreatmentRecordsPanel.add(btnViewDoctorsOrders, gbc_btnViewDoctorsOrders);
+
 		JLabel lblChiefComplaint = new JLabel("Chief Complaint:");
 		GridBagConstraints gbc_lblChiefComplaint = new GridBagConstraints();
 		gbc_lblChiefComplaint.anchor = GridBagConstraints.WEST;
 		gbc_lblChiefComplaint.insets = new Insets(0, 0, 5, 5);
 		gbc_lblChiefComplaint.gridx = 0;
 		gbc_lblChiefComplaint.gridy = 5;
-		panel_3.add(lblChiefComplaint, gbc_lblChiefComplaint);
-		
-		JLabel lblSelectTreatmentRecord_2 = new JLabel("select treatment record");
-		GridBagConstraints gbc_lblSelectTreatmentRecord_2 = new GridBagConstraints();
-		gbc_lblSelectTreatmentRecord_2.insets = new Insets(0, 0, 5, 5);
-		gbc_lblSelectTreatmentRecord_2.gridx = 1;
-		gbc_lblSelectTreatmentRecord_2.gridy = 5;
-		panel_3.add(lblSelectTreatmentRecord_2, gbc_lblSelectTreatmentRecord_2);
-		
+		TreatmentRecordsPanel.add(lblChiefComplaint, gbc_lblChiefComplaint);
+
+		JLabel lblChiefComplaintInfo = new JLabel(
+				"select treatment record");
+		GridBagConstraints gbc_lblChiefComplaintInfo = new GridBagConstraints();
+		gbc_lblChiefComplaintInfo.insets = new Insets(0, 0, 5, 5);
+		gbc_lblChiefComplaintInfo.gridx = 1;
+		gbc_lblChiefComplaintInfo.gridy = 5;
+		TreatmentRecordsPanel.add(lblChiefComplaintInfo, gbc_lblChiefComplaintInfo);
+
 		JLabel lblVitalSigns = new JLabel("Vital Signs:");
 		GridBagConstraints gbc_lblVitalSigns = new GridBagConstraints();
 		gbc_lblVitalSigns.anchor = GridBagConstraints.WEST;
 		gbc_lblVitalSigns.insets = new Insets(0, 0, 5, 5);
 		gbc_lblVitalSigns.gridx = 0;
 		gbc_lblVitalSigns.gridy = 6;
-		panel_3.add(lblVitalSigns, gbc_lblVitalSigns);
-		
-		JButton btnView_1 = new JButton("view");
-		GridBagConstraints gbc_btnView_1 = new GridBagConstraints();
-		gbc_btnView_1.insets = new Insets(0, 0, 5, 5);
-		gbc_btnView_1.gridx = 1;
-		gbc_btnView_1.gridy = 6;
-		panel_3.add(btnView_1, gbc_btnView_1);
-		
+		TreatmentRecordsPanel.add(lblVitalSigns, gbc_lblVitalSigns);
+
+		JButton btnViewVitalSigns = new JButton("view");
+		GridBagConstraints gbc_btnViewVitalSigns = new GridBagConstraints();
+		gbc_btnViewVitalSigns.insets = new Insets(0, 0, 5, 5);
+		gbc_btnViewVitalSigns.gridx = 1;
+		gbc_btnViewVitalSigns.gridy = 6;
+		TreatmentRecordsPanel.add(btnViewVitalSigns, gbc_btnViewVitalSigns);
+
 		JLabel lblDiagnosis = new JLabel("Diagnosis:");
 		GridBagConstraints gbc_lblDiagnosis = new GridBagConstraints();
 		gbc_lblDiagnosis.anchor = GridBagConstraints.WEST;
 		gbc_lblDiagnosis.insets = new Insets(0, 0, 0, 5);
 		gbc_lblDiagnosis.gridx = 0;
 		gbc_lblDiagnosis.gridy = 7;
-		panel_3.add(lblDiagnosis, gbc_lblDiagnosis);
-		
-		JLabel lblSelectTreatmentRecord_3 = new JLabel("select treatment record");
-		GridBagConstraints gbc_lblSelectTreatmentRecord_3 = new GridBagConstraints();
-		gbc_lblSelectTreatmentRecord_3.insets = new Insets(0, 0, 0, 5);
-		gbc_lblSelectTreatmentRecord_3.gridx = 1;
-		gbc_lblSelectTreatmentRecord_3.gridy = 7;
-		panel_3.add(lblSelectTreatmentRecord_3, gbc_lblSelectTreatmentRecord_3);
-		
-		JPanel panel_4 = new JPanel();
-		tabbedPane_1.addTab("Doctor's Orders", null, panel_4, null);
-		GridBagLayout gbl_panel_4 = new GridBagLayout();
-		gbl_panel_4.columnWidths = new int[]{0, 0, 0};
-		gbl_panel_4.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
-		gbl_panel_4.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel_4.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel_4.setLayout(gbl_panel_4);
-		
+		TreatmentRecordsPanel.add(lblDiagnosis, gbc_lblDiagnosis);
+
+		JLabel lblDiagnosisInfo = new JLabel(
+				"select treatment record");
+		GridBagConstraints gbc_lblDiagnosisInfo = new GridBagConstraints();
+		gbc_lblDiagnosisInfo.insets = new Insets(0, 0, 0, 5);
+		gbc_lblDiagnosisInfo.gridx = 1;
+		gbc_lblDiagnosisInfo.gridy = 7;
+		TreatmentRecordsPanel.add(lblDiagnosisInfo, gbc_lblDiagnosisInfo);
+
+		JPanel DoctorsOrdersPanel = new JPanel();
+		patientsTabPane.addTab("Doctor's Orders", null, DoctorsOrdersPanel, null);
+		GridBagLayout gbl_DoctorsOrdersPanel = new GridBagLayout();
+		gbl_DoctorsOrdersPanel.columnWidths = new int[] { 0, 0, 0 };
+		gbl_DoctorsOrdersPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0 };
+		gbl_DoctorsOrdersPanel.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
+		gbl_DoctorsOrdersPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
+				Double.MIN_VALUE };
+		DoctorsOrdersPanel.setLayout(gbl_DoctorsOrdersPanel);
+
 		JLabel lblPrescription = new JLabel("Prescription:");
 		GridBagConstraints gbc_lblPrescription = new GridBagConstraints();
 		gbc_lblPrescription.anchor = GridBagConstraints.EAST;
 		gbc_lblPrescription.insets = new Insets(0, 0, 5, 5);
 		gbc_lblPrescription.gridx = 0;
 		gbc_lblPrescription.gridy = 0;
-		panel_4.add(lblPrescription, gbc_lblPrescription);
-		
-		textField = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 0);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 0;
-		panel_4.add(textField, gbc_textField);
-		textField.setColumns(10);
-		
+		DoctorsOrdersPanel.add(lblPrescription, gbc_lblPrescription);
+
+		textFieldPrescription = new JTextField();
+		GridBagConstraints gbc_textFieldPrescription = new GridBagConstraints();
+		gbc_textFieldPrescription.insets = new Insets(0, 0, 5, 0);
+		gbc_textFieldPrescription.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldPrescription.gridx = 1;
+		gbc_textFieldPrescription.gridy = 0;
+		DoctorsOrdersPanel.add(textFieldPrescription, gbc_textFieldPrescription);
+		textFieldPrescription.setColumns(10);
+
 		JLabel lblLabWorkPerformed = new JLabel("Lab Work Performed:");
 		GridBagConstraints gbc_lblLabWorkPerformed = new GridBagConstraints();
 		gbc_lblLabWorkPerformed.anchor = GridBagConstraints.EAST;
 		gbc_lblLabWorkPerformed.insets = new Insets(0, 0, 5, 5);
 		gbc_lblLabWorkPerformed.gridx = 0;
 		gbc_lblLabWorkPerformed.gridy = 1;
-		panel_4.add(lblLabWorkPerformed, gbc_lblLabWorkPerformed);
-		
-		textField_1 = new JTextField();
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridx = 1;
-		gbc_textField_1.gridy = 1;
-		panel_4.add(textField_1, gbc_textField_1);
-		textField_1.setColumns(10);
-		
+		DoctorsOrdersPanel.add(lblLabWorkPerformed, gbc_lblLabWorkPerformed);
+
+		textFieldLabWork = new JTextField();
+		GridBagConstraints gbc_textFieldLabWork = new GridBagConstraints();
+		gbc_textFieldLabWork.insets = new Insets(0, 0, 5, 0);
+		gbc_textFieldLabWork.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldLabWork.gridx = 1;
+		gbc_textFieldLabWork.gridy = 1;
+		DoctorsOrdersPanel.add(textFieldLabWork, gbc_textFieldLabWork);
+		textFieldLabWork.setColumns(10);
+
 		JLabel lblFollowUpInstructions = new JLabel("Follow Up Instructions:");
 		GridBagConstraints gbc_lblFollowUpInstructions = new GridBagConstraints();
 		gbc_lblFollowUpInstructions.anchor = GridBagConstraints.EAST;
 		gbc_lblFollowUpInstructions.insets = new Insets(0, 0, 5, 5);
 		gbc_lblFollowUpInstructions.gridx = 0;
 		gbc_lblFollowUpInstructions.gridy = 2;
-		panel_4.add(lblFollowUpInstructions, gbc_lblFollowUpInstructions);
-		
-		textField_2 = new JTextField();
-		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
-		gbc_textField_2.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_2.gridx = 1;
-		gbc_textField_2.gridy = 2;
-		panel_4.add(textField_2, gbc_textField_2);
-		textField_2.setColumns(10);
-		
+		DoctorsOrdersPanel.add(lblFollowUpInstructions, gbc_lblFollowUpInstructions);
+
+		textFieldFollowUp = new JTextField();
+		GridBagConstraints gbc_textFieldFollowUp = new GridBagConstraints();
+		gbc_textFieldFollowUp.insets = new Insets(0, 0, 5, 0);
+		gbc_textFieldFollowUp.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldFollowUp.gridx = 1;
+		gbc_textFieldFollowUp.gridy = 2;
+		DoctorsOrdersPanel.add(textFieldFollowUp, gbc_textFieldFollowUp);
+		textFieldFollowUp.setColumns(10);
+
 		JLabel lblOtherInstructions = new JLabel("Other Instructions:");
 		GridBagConstraints gbc_lblOtherInstructions = new GridBagConstraints();
 		gbc_lblOtherInstructions.anchor = GridBagConstraints.EAST;
 		gbc_lblOtherInstructions.insets = new Insets(0, 0, 5, 5);
 		gbc_lblOtherInstructions.gridx = 0;
 		gbc_lblOtherInstructions.gridy = 3;
-		panel_4.add(lblOtherInstructions, gbc_lblOtherInstructions);
-		
-		textField_3 = new JTextField();
-		GridBagConstraints gbc_textField_3 = new GridBagConstraints();
-		gbc_textField_3.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_3.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_3.gridx = 1;
-		gbc_textField_3.gridy = 3;
-		panel_4.add(textField_3, gbc_textField_3);
-		textField_3.setColumns(10);
-		
-		JButton btnCreate = new JButton("Create");
-		GridBagConstraints gbc_btnCreate = new GridBagConstraints();
-		gbc_btnCreate.gridx = 1;
-		gbc_btnCreate.gridy = 4;
-		panel_4.add(btnCreate, gbc_btnCreate);
-		
-		JPanel panel_5 = new JPanel();
-		tabbedPane_1.addTab("Reports", null, panel_5, null);
-		GridBagLayout gbl_panel_5 = new GridBagLayout();
-		gbl_panel_5.columnWidths = new int[]{0, 0};
-		gbl_panel_5.rowHeights = new int[]{0, 0, 0};
-		gbl_panel_5.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_panel_5.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		panel_5.setLayout(gbl_panel_5);
-		
+		DoctorsOrdersPanel.add(lblOtherInstructions, gbc_lblOtherInstructions);
+
+		textFieldOtherIns = new JTextField();
+		GridBagConstraints gbc_textFieldOtherIns = new GridBagConstraints();
+		gbc_textFieldOtherIns.insets = new Insets(0, 0, 5, 0);
+		gbc_textFieldOtherIns.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldOtherIns.gridx = 1;
+		gbc_textFieldOtherIns.gridy = 3;
+		DoctorsOrdersPanel.add(textFieldOtherIns, gbc_textFieldOtherIns);
+		textFieldOtherIns.setColumns(10);
+
+		JButton btnCreateDoctorsOrders = new JButton("Create");
+		GridBagConstraints gbc_btnCreateDoctorsOrders = new GridBagConstraints();
+		gbc_btnCreateDoctorsOrders.gridx = 1;
+		gbc_btnCreateDoctorsOrders.gridy = 4;
+		DoctorsOrdersPanel.add(btnCreateDoctorsOrders, gbc_btnCreateDoctorsOrders);
+
+		JPanel ReportsPanel = new JPanel();
+		patientsTabPane.addTab("Reports", null, ReportsPanel, null);
+		GridBagLayout gbl_ReportsPanel = new GridBagLayout();
+		gbl_ReportsPanel.columnWidths = new int[] { 0, 0 };
+		gbl_ReportsPanel.rowHeights = new int[] { 0, 0, 0 };
+		gbl_ReportsPanel.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
+		gbl_ReportsPanel.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
+		ReportsPanel.setLayout(gbl_ReportsPanel);
+
 		JButton btnGetHealthHistory = new JButton("Get Health History");
 		GridBagConstraints gbc_btnGetHealthHistory = new GridBagConstraints();
 		gbc_btnGetHealthHistory.insets = new Insets(0, 0, 5, 0);
 		gbc_btnGetHealthHistory.gridx = 0;
 		gbc_btnGetHealthHistory.gridy = 0;
-		panel_5.add(btnGetHealthHistory, gbc_btnGetHealthHistory);
-		
+		ReportsPanel.add(btnGetHealthHistory, gbc_btnGetHealthHistory);
+
 		JButton btnPrintIncomeStatement = new JButton("Print Income Statement");
 		GridBagConstraints gbc_btnPrintIncomeStatement = new GridBagConstraints();
 		gbc_btnPrintIncomeStatement.gridx = 0;
 		gbc_btnPrintIncomeStatement.gridy = 1;
-		panel_5.add(btnPrintIncomeStatement, gbc_btnPrintIncomeStatement);
-		
-		JPanel panel_6 = new JPanel();
-		tabbedPane_1.addTab("Invoices", null, panel_6, null);
-		GridBagLayout gbl_panel_6 = new GridBagLayout();
-		gbl_panel_6.columnWidths = new int[]{0, 0};
-		gbl_panel_6.rowHeights = new int[]{0, 0};
-		gbl_panel_6.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_panel_6.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-		panel_6.setLayout(gbl_panel_6);
-		
+		ReportsPanel.add(btnPrintIncomeStatement, gbc_btnPrintIncomeStatement);
+
+		JPanel InvoicesPanel = new JPanel();
+		patientsTabPane.addTab("Invoices", null, InvoicesPanel, null);
+		GridBagLayout gbl_InvoicesPanel = new GridBagLayout();
+		gbl_InvoicesPanel.columnWidths = new int[] { 0, 0 };
+		gbl_InvoicesPanel.rowHeights = new int[] { 0, 0 };
+		gbl_InvoicesPanel.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
+		gbl_InvoicesPanel.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
+		InvoicesPanel.setLayout(gbl_InvoicesPanel);
+
 		JLabel lblNotFunctionalYet = new JLabel("not functional yet");
 		GridBagConstraints gbc_lblNotFunctionalYet = new GridBagConstraints();
 		gbc_lblNotFunctionalYet.gridx = 0;
 		gbc_lblNotFunctionalYet.gridy = 0;
-		panel_6.add(lblNotFunctionalYet, gbc_lblNotFunctionalYet);
-		
-		JPanel panel_7 = new JPanel();
-		tabbedPane_1.addTab("Billing", null, panel_7, null);
-		
+		InvoicesPanel.add(lblNotFunctionalYet, gbc_lblNotFunctionalYet);
+
+		JPanel BillingPanel = new JPanel();
+		patientsTabPane.addTab("Billing", null, BillingPanel, null);
+
 		JLabel lblNotFunctionalYet_1 = new JLabel("not functional yet");
-		panel_7.add(lblNotFunctionalYet_1);
+		BillingPanel.add(lblNotFunctionalYet_1);
 		
-		JPanel panel_8 = new JPanel();
-		tabbedPane_1.addTab("Search", null, panel_8, null);
-		GridBagLayout gbl_panel_8 = new GridBagLayout();
-		gbl_panel_8.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_panel_8.rowHeights = new int[]{0, 0, 0, 0};
-		gbl_panel_8.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel_8.rowWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel_8.setLayout(gbl_panel_8);
+		JPanel SearchPanel = new JPanel();
+		patientsTabPane.addTab("Search", null, SearchPanel, null);
+		GridBagLayout gbl_SearchPanel = new GridBagLayout();
+		gbl_SearchPanel.columnWidths = new int[]{0, 0, 0, 0};
+		gbl_SearchPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_SearchPanel.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_SearchPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		SearchPanel.setLayout(gbl_SearchPanel);
 		
 		JLabel lblName_1 = new JLabel("Name:");
 		GridBagConstraints gbc_lblName_1 = new GridBagConstraints();
 		gbc_lblName_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblName_1.anchor = GridBagConstraints.EAST;
 		gbc_lblName_1.gridx = 0;
-		gbc_lblName_1.gridy = 0;
-		panel_8.add(lblName_1, gbc_lblName_1);
+		gbc_lblName_1.gridy = 2;
+		SearchPanel.add(lblName_1, gbc_lblName_1);
 		
-		textField_4 = new JTextField();
-		GridBagConstraints gbc_textField_4 = new GridBagConstraints();
-		gbc_textField_4.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_4.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_4.gridx = 1;
-		gbc_textField_4.gridy = 0;
-		panel_8.add(textField_4, gbc_textField_4);
-		textField_4.setColumns(10);
+		textFieldNameSearch = new JTextField();
+		GridBagConstraints gbc_textFieldNameSearch = new GridBagConstraints();
+		gbc_textFieldNameSearch.insets = new Insets(0, 0, 5, 5);
+		gbc_textFieldNameSearch.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldNameSearch.gridx = 1;
+		gbc_textFieldNameSearch.gridy = 2;
+		SearchPanel.add(textFieldNameSearch, gbc_textFieldNameSearch);
+		textFieldNameSearch.setColumns(10);
 		
-		JList list = new JList();
-		GridBagConstraints gbc_list = new GridBagConstraints();
-		gbc_list.gridheight = 3;
-		gbc_list.insets = new Insets(0, 0, 5, 0);
-		gbc_list.fill = GridBagConstraints.BOTH;
-		gbc_list.gridx = 2;
-		gbc_list.gridy = 0;
-		panel_8.add(list, gbc_list);
+		JList NameList = new JList();
+		GridBagConstraints gbc_NameList = new GridBagConstraints();
+		gbc_NameList.gridheight = 6;
+		gbc_NameList.insets = new Insets(0, 0, 5, 0);
+		gbc_NameList.fill = GridBagConstraints.BOTH;
+		gbc_NameList.gridx = 2;
+		gbc_NameList.gridy = 0;
+		SearchPanel.add(NameList, gbc_NameList);
 		
-		JLabel lblPatientId = new JLabel("Patient ID:");
-		GridBagConstraints gbc_lblPatientId = new GridBagConstraints();
-		gbc_lblPatientId.anchor = GridBagConstraints.EAST;
-		gbc_lblPatientId.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPatientId.gridx = 0;
-		gbc_lblPatientId.gridy = 1;
-		panel_8.add(lblPatientId, gbc_lblPatientId);
+		JButton btnSearch = new JButton("Search");
+		GridBagConstraints gbc_btnSearch = new GridBagConstraints();
+		gbc_btnSearch.insets = new Insets(0, 0, 5, 5);
+		gbc_btnSearch.gridx = 1;
+		gbc_btnSearch.gridy = 3;
+		SearchPanel.add(btnSearch, gbc_btnSearch);
 		
-		textField_5 = new JTextField();
-		GridBagConstraints gbc_textField_5 = new GridBagConstraints();
-		gbc_textField_5.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_5.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_5.gridx = 1;
-		gbc_textField_5.gridy = 1;
-		panel_8.add(textField_5, gbc_textField_5);
-		textField_5.setColumns(10);
+		JButton btnSelect = new JButton("Select");
+		GridBagConstraints gbc_btnSelect = new GridBagConstraints();
+		gbc_btnSelect.gridx = 2;
+		gbc_btnSelect.gridy = 6;
+		SearchPanel.add(btnSelect, gbc_btnSelect);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.insets = new Insets(0, 0, 0, 5);
-		gbc_lblNewLabel.gridx = 0;
-		gbc_lblNewLabel.gridy = 2;
-		panel_8.add(lblNewLabel, gbc_lblNewLabel);
+		JPanel NewPatientPanel = new JPanel();
+		patientsTabPane.addTab("New Patient", null, NewPatientPanel, null);
+		GridBagLayout gbl_NewPatientPanel = new GridBagLayout();
+		gbl_NewPatientPanel.columnWidths = new int[]{0, 0, 0};
+		gbl_NewPatientPanel.rowHeights = new int[]{0, 0, 0, 0, 0};
+		gbl_NewPatientPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gbl_NewPatientPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		NewPatientPanel.setLayout(gbl_NewPatientPanel);
 		
-		JPanel panel_1 = new JPanel();
-		tabbedPane.addTab("Appointments", null, panel_1, null);
-		GridBagLayout gbl_panel_1 = new GridBagLayout();
-		gbl_panel_1.columnWidths = new int[]{0, 0, 0};
-		gbl_panel_1.rowHeights = new int[]{0, 0, 0};
-		gbl_panel_1.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel_1.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		panel_1.setLayout(gbl_panel_1);
+		JLabel lblNewPatientsName = new JLabel("New Patient's Name: ");
+		GridBagConstraints gbc_lblNewPatientsName = new GridBagConstraints();
+		gbc_lblNewPatientsName.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewPatientsName.anchor = GridBagConstraints.EAST;
+		gbc_lblNewPatientsName.gridx = 0;
+		gbc_lblNewPatientsName.gridy = 2;
+		NewPatientPanel.add(lblNewPatientsName, gbc_lblNewPatientsName);
 		
+		textFieldNewPatient = new JTextField();
+		GridBagConstraints gbc_textFieldNewPatient = new GridBagConstraints();
+		gbc_textFieldNewPatient.insets = new Insets(0, 0, 5, 0);
+		gbc_textFieldNewPatient.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldNewPatient.gridx = 1;
+		gbc_textFieldNewPatient.gridy = 2;
+		NewPatientPanel.add(textFieldNewPatient, gbc_textFieldNewPatient);
+		textFieldNewPatient.setColumns(10);
+		
+		JButton btnCreate = new JButton("Create");
+		GridBagConstraints gbc_btnCreate = new GridBagConstraints();
+		gbc_btnCreate.gridx = 1;
+		gbc_btnCreate.gridy = 3;
+		NewPatientPanel.add(btnCreate, gbc_btnCreate);
+
+		JPanel AppointmentsTabPane = new JPanel();
+		tabbedPane.addTab("Appointments", null, AppointmentsTabPane, null);
+		GridBagLayout gbl_AppointmentsTabPane = new GridBagLayout();
+		gbl_AppointmentsTabPane.columnWidths = new int[] { 0, 0, 0 };
+		gbl_AppointmentsTabPane.rowHeights = new int[] { 0, 0, 0 };
+		gbl_AppointmentsTabPane.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
+		gbl_AppointmentsTabPane.rowWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
+		AppointmentsTabPane.setLayout(gbl_AppointmentsTabPane);
+
 		JButton btnScheduleAppointment = new JButton("Schedule Appointment");
 		GridBagConstraints gbc_btnScheduleAppointment = new GridBagConstraints();
 		gbc_btnScheduleAppointment.insets = new Insets(0, 0, 5, 0);
 		gbc_btnScheduleAppointment.gridx = 1;
 		gbc_btnScheduleAppointment.gridy = 0;
-		panel_1.add(btnScheduleAppointment, gbc_btnScheduleAppointment);
-		
+		AppointmentsTabPane.add(btnScheduleAppointment, gbc_btnScheduleAppointment);
+
 		JLabel lblAppointments = new JLabel("Appointments:");
 		GridBagConstraints gbc_lblAppointments = new GridBagConstraints();
 		gbc_lblAppointments.insets = new Insets(0, 0, 0, 5);
 		gbc_lblAppointments.gridx = 0;
 		gbc_lblAppointments.gridy = 1;
-		panel_1.add(lblAppointments, gbc_lblAppointments);
-		
+		AppointmentsTabPane.add(lblAppointments, gbc_lblAppointments);
+
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 1;
 		gbc_scrollPane.gridy = 1;
-		panel_1.add(scrollPane, gbc_scrollPane);
-		
-		JList list_1 = new JList();
-		scrollPane.setViewportView(list_1);
+		AppointmentsTabPane.add(scrollPane, gbc_scrollPane);
+
+		JList AppointmentsListField = new JList();
+		scrollPane.setViewportView(AppointmentsListField);
 	}
 
 }
