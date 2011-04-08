@@ -11,7 +11,7 @@ public class Invoice {
 	
 	private int dueDate, total;
 	
-	private boolean paid;
+	private String paid;
 
 	/**
 	 * Basic constructor
@@ -21,7 +21,7 @@ public class Invoice {
 		this.doctor = "N/A";
 		this.dueDate = 0;
 		this.total = 0;
-		this.paid = false;
+		this.paid = "N/A";
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class Invoice {
 	 * @param due
 	 * @param paid
 	 */
-	public Invoice(String name, String doc, int total, int due, boolean paid) {
+	public Invoice(String name, String doc, int total, int due, String paid) {
 		this.name = name;
 		this.doctor = doc;
 		this.total = total;
@@ -73,11 +73,11 @@ public class Invoice {
 		this.total = total;
 	}
 
-	public boolean isPaid() {
+	public String isPaid() {
 		return this.paid;
 	}
 
-	public void setPaid(boolean pay) {
+	public void setPaid(String pay) {
 		this.paid = pay;
 	}
 }
