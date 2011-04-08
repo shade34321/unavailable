@@ -4,16 +4,21 @@ package MedicalSoftware;
  * Represents a doctors order
  * 
  * @author Nathan Heard
- *
+ * 
  */
 public class DOrders {
 	private int date, time;
-	private String prescription;
-	private String labWork;
-	private String followUpIns;
-	private String otherIns;
-	private String name;
 	
+	private String prescription;
+	
+	private String labWork;
+	
+	private String followUpIns;
+	
+	private String otherIns;
+	
+	private String name;
+
 	/**
 	 * Constructor
 	 * 
@@ -25,8 +30,8 @@ public class DOrders {
 	 * @param followUp
 	 * @param other
 	 */
-	public DOrders(String user, int date, int time, String prescrip, String labW,
-			String followUp, String other) {
+	public DOrders(String user, int date, int time, String prescrip,
+			String labW, String followUp, String other) {
 		this.setName(user);
 		this.setDate(date);
 		this.setTime(time);
@@ -93,4 +98,3 @@ public class DOrders {
 	}
 
 }
-

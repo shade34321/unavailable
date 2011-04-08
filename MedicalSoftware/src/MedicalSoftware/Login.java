@@ -15,12 +15,18 @@ import java.io.IOException;
  */
 public class Login {
 	private static int suspended = 0;
+	
 	private SystemAdmin systemAdmin;
+	
 	private Doctor doc;
+	
 	private Nurse nur;
+	
 	private Patient person;
-	private static AVL<String, Info> information;
-	private static AVL<String, Info> informationName;
+	
+	private AVL<String, Info> information;
+	
+	private AVL<String, Info> informationName;
 
 	/**
 	 * Constructor
@@ -28,12 +34,25 @@ public class Login {
 	 * @param informationUserName
 	 * @param informationName
 	 */
-	Login(AVL<String, Info> informationUserName,
+	public Login(AVL<String, Info> informationUserName,
 			AVL<String, Info> informationName) {
-		Login.information = informationUserName;
-		Login.informationName = informationName;
+		this.information = informationUserName;
+		this.informationName = informationName;
 	}
+	
+	public Login(Login log){
 
+		this.information = log.getInformation();
+		this.informationName = log.getInformationName();
+	}
+	
+	public AVL<String,Info> getInformation(){
+		return this.information;
+	}
+	
+	public AVL<String,Info> getInformationName(){
+		return this.informationName;
+	}
 	/**
 	 * Runs the UI's and accesses the information needed
 	 * 
@@ -43,7 +62,8 @@ public class Login {
 		Info inform = information.find(user);
 		int temp = -1;
 		if (inform.getType() == 0) {
-			systemAdmin = new SystemAdmin(inform.getName(), information, informationName);
+			systemAdmin = new SystemAdmin(inform.getName(), information,
+					informationName);
 			temp = 0;
 		} else if (inform.getType() == 1) {
 			doc = new Doctor(inform.getName(), information, informationName);
@@ -78,8 +98,8 @@ public class Login {
 
 			suspended++;
 			if (password.equals(information.find(userName).getPassword())) {
-				
-				if (information.find(userName).getSusp() != true) {
+
+				if (information.find(userName).isSusp() != true) {
 					status = 1;
 					suspended = 0;
 				} else {
@@ -112,27 +132,21 @@ public class Login {
 				country, SSN, zip, birthday, type, false);
 		information.insert(userName, form);
 		informationName.insert(name, form);
-		update(information, informationName);
-	}
-
-	private void update(AVL<String, Info> information2,
-			AVL<String, Info> informationName2) {
-		// TODO Auto-generated method stub
-
+		//update(information, informationName);
 	}
 	
 	public Patient getPatient() {
 		return this.person;
 	}
-	
+
 	public Nurse getNurse() {
 		return this.nur;
 	}
-	
+
 	public Doctor getDoctor() {
 		return this.doc;
 	}
-	
+
 	public SystemAdmin getAdmin() {
 		return this.systemAdmin;
 	}

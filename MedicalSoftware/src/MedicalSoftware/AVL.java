@@ -1,7 +1,8 @@
 package MedicalSoftware;
+
 public class AVL<K extends Comparable<K>, V> {
 	private BSTNode<K, V> root;
-
+	
 	public AVL() {
 		root = null;
 	}
@@ -9,6 +10,10 @@ public class AVL<K extends Comparable<K>, V> {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public AVL(K key, V value) {
 		root = new BSTNode(key, value);
+	}
+	
+	public AVL(BSTNode<K,V> root){
+		this.root = root;
 	}
 
 	public void setRoot(BSTNode<K, V> root) {
@@ -132,12 +137,15 @@ public class AVL<K extends Comparable<K>, V> {
 	 *            is the data stored in the newly created node.
 	 */
 	private BSTNode<K, V> insert(BSTNode<K, V> t, K key, V value) {
-		if (t == null)
+		if (t == null){
 			t = new BSTNode<K, V>(key, value);
-		else if (t.getKey().compareTo(key) > 0)
+		}
+		else if (t.getKey().compareTo(key) > 0){
 			t.setLeft(insert(t.getLeft(), key, value));
-		else
+		}
+		else{
 			t.setRight(insert(t.getRight(), key, value));
+		}
 
 		calcHeightAndBF(t);
 		t = avlRotate(t);
@@ -167,25 +175,28 @@ public class AVL<K extends Comparable<K>, V> {
 	 * @return returns the new tree that is lacking the removed node
 	 */
 	private BSTNode<K, V> remove(BSTNode<K, V> t, K key) {
-		if (t == null)
+		if (t == null){
 			return null;
-		else if (t.getKey().compareTo(key) > 0)
+		}
+		else if (t.getKey().compareTo(key) > 0){
 			t.setLeft(remove(t.getLeft(), key));
-		else if (t.getKey().compareTo(key) < 0)
+		}
+		else if (t.getKey().compareTo(key) < 0){
 			t.setRight(remove(t.getRight(), key));
+		}
 		else {
 			if (t.getRight() != null) {
 				if (t.getLeft() != null) {
 					BSTNode<K, V> succ = getSucc(t);
 
-					K tempk = t.getKey();
-					V tempv = t.getValue();
+					K tempKey = t.getKey();
+					V tempValue = t.getValue();
 
 					t.setKey(succ.getKey());
 					t.setValue(succ.getValue());
 
-					succ.setKey(tempk);
-					succ.setValue(tempv);
+					succ.setKey(tempKey);
+					succ.setValue(tempValue);
 
 					t.setRight(remove(t.getRight(), key));
 				} else
@@ -365,13 +376,17 @@ public class AVL<K extends Comparable<K>, V> {
 	 * @return returns the specified node
 	 */
 	private V find(BSTNode<K, V> t, K key) {
-		if (t == null)
+		if (t == null){
 			return null;
-		else if (t.getKey().compareTo(key) > 0)
+		}
+		else if (t.getKey().compareTo(key) > 0){
 			return find(t.getLeft(), key);
-		else if (t.getKey().compareTo(key) < 0)
+		}
+		else if (t.getKey().compareTo(key) < 0){
 			return find(t.getRight(), key);
-		else
+		}
+		else{
 			return t.getValue();
+		}
 	}
 }

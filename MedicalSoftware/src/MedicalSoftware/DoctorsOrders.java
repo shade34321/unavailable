@@ -15,7 +15,7 @@ public class DoctorsOrders {
 	/**
 	 * Constructor
 	 */
-	DoctorsOrders() {
+	public DoctorsOrders() {
 		orders = new ArrayList<DOrders>();
 	}
 
@@ -30,9 +30,10 @@ public class DoctorsOrders {
 	 * @param followUp
 	 * @param other
 	 */
-	public void create(String name, int date, int time, String prescrip, String labW,
-			String followUp, String other) {
-		DOrders order = new DOrders(name, date, time, prescrip, labW, followUp, other);
+	public void create(String name, int date, int time, String prescrip,
+			String labW, String followUp, String other) {
+		DOrders order = new DOrders(name, date, time, prescrip, labW, followUp,
+				other);
 		orders.add(order);
 
 	}
@@ -61,7 +62,7 @@ public class DoctorsOrders {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Deletes a doctors order
 	 * 
@@ -84,7 +85,7 @@ public class DoctorsOrders {
 			}
 		}
 	}
-	
+
 	public ArrayList<DOrders> getOrders() {
 		return this.orders;
 	}

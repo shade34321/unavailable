@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * This class creates, finds, and deletes appointments
  * 
  * @author Kevin Zhou
- *
+ * 
  */
 public class Appointment {
 
@@ -16,7 +16,7 @@ public class Appointment {
 	/**
 	 * Constructor
 	 */
-	Appointment() {
+	public Appointment() {
 		App = new ArrayList<Appt>();
 	}
 
@@ -29,9 +29,10 @@ public class Appointment {
 	 * @param doctor
 	 * @param reason
 	 */
-	public void create(int date, int time, String name, String doctor, String reason) {
-		Appt a = new Appt(date, time, name, doctor, reason);
-		App.add(a);
+	public void create(int date, int time, String name, String doctor,
+			String reason) {
+		Appt app = new Appt(date, time, name, doctor, reason);
+		App.add(app);
 
 	}
 
@@ -59,7 +60,7 @@ public class Appointment {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Deletes an appointment
 	 * 
@@ -82,7 +83,7 @@ public class Appointment {
 			}
 		}
 	}
-	
+
 	public ArrayList<Appt> getAppt() {
 		return this.App;
 	}

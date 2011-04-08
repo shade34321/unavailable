@@ -1,15 +1,20 @@
 package MedicalSoftware;
+
 /**
  * Represents an appointment
  * 
  * @author Nathan Heard
- *
+ * 
  */
 public class Appt implements Comparable<Appt> {
 	private int date;
+	
 	private int time;
+	
 	private String doctor;
+	
 	private String reason;
+	
 	private String name;
 
 	/**
