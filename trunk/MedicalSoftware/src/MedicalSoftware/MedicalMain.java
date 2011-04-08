@@ -25,7 +25,7 @@ public class MedicalMain {
 		
 		Login log = new Login(informationUserName, informationName);
 		LoginUI logging = new LoginUI(log);
-		ser.save(informationUserName);
+		//ser.save(informationUserName);
 	}
 
 	/*

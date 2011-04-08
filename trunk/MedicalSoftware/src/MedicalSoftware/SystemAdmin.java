@@ -75,7 +75,7 @@ public class SystemAdmin {
 			AVL<String, Info> inform) {
 		this.information = i;
 		this.informationName = inform;
-		this.info = informationName.find(user);
+		this.info = information.find(user);
 		myLogger.log(Level.INFO, "Creating new System Admin: " + user);
 	}
 

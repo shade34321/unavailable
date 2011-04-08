@@ -142,7 +142,7 @@ public class LoginUI implements ActionListener {
 			} else if (userType == 1) {
 				DefaultUI currentUI = new DefaultUI();
 			} else if (userType == 0) {
-				AdminUI currentUI = new AdminUI();
+				AdminUI currentUI = new AdminUI(user, login.getInformation(), login.getInformationName());
 			}
 		}
 		return error;
