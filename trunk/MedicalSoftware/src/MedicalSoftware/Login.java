@@ -150,4 +150,32 @@ public class Login {
 	public SystemAdmin getAdmin() {
 		return this.systemAdmin;
 	}
+	
+	public void update() {
+		Server ser = new Server();
+		AVL<String, Info> tempTest = ser.load();
+		check(tempTest.getRoot(), information.getRoot());
+		ser.save(information);
+	}
+	
+	public BSTNode<String, Info> check(BSTNode<String, Info> temp, BSTNode<String, Info> main) {
+			if (temp != null && main != null) {
+				check(temp.getLeft(), main.getLeft());
+				if (temp.getKey().equals(main.getKey())) {
+			
+				} else {
+					information.insert(temp.getKey(), temp.getValue());
+				}
+				check(temp.getRight(), main.getRight());
+			} else if (temp == null && main != null) {
+				check(temp, main.getRight());
+				check(temp, main.getLeft());
+				information.remove(main.getKey());
+			} else if (main == null && temp != null) {
+				check(temp.getRight(), main);
+				check(temp.getLeft(), main);
+				information.insert(temp.getKey(), temp.getValue());
+			} 
+			return null;
+	}
 }

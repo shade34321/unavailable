@@ -191,7 +191,7 @@ public class SystemAdmin {
 	 * @param paid
 	 */
 	public void createInvoice(String name, String doc, int total, int due,
-			Boolean paid) {
+			String paid) {
 		if (informationName.find(name) != null) {
 			informationName.find(name).getInvoice()
 					.create(name, doc, total, due, paid);

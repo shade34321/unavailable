@@ -202,7 +202,7 @@ public class Doctor{
 	 * @param due
 	 * @param paid
 	 */
-	public void createInvoice(String name, String doc, int total, int due, Boolean paid){
+	public void createInvoice(String name, String doc, int total, int due, String paid){
 		if (informationName.find(name) != null) {
 			informationName.find(name).getInvoice().create(name, doc, total, due, paid);
 			myLogger.log(Level.FINE, "Creating an invoice for: " + name);

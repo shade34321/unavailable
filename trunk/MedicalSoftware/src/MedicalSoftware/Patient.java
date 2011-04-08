@@ -89,7 +89,7 @@ public class Patient {
 	 * @param paid
 	 */
 	public void addInvoice(String name, String doc, int total, int due,
-			Boolean paid) {
+			String paid) {
 		info.getInvoice().create(name, doc, total, due, paid);
 	}
 

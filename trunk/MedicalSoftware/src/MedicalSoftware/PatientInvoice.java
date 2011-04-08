@@ -28,7 +28,7 @@ public class PatientInvoice {
 	 * @param due
 	 * @param paid
 	 */
-	public void create(String name, String doc, int total, int due, Boolean paid) {
+	public void create(String name, String doc, int total, int due, String paid) {
 		Invoice in = new Invoice(name, doc, total, due, paid);
 		invoice.add(in);
 	}
