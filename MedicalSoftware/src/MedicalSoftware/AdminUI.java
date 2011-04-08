@@ -80,24 +80,19 @@ public class AdminUI extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AdminUI frame = new AdminUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * Create the frame.
 	 */
 	public AdminUI() {
 		initialize();
+	}
+	
+	public AdminUI(String username, AVL<String, Info> information, AVL<String, Info> informationName) {
+		admin = new SystemAdmin(username, information, informationName);
+		initialize();		
+		this.setVisible(true);
 	}
 	
 	public AdminUI(SystemAdmin admin){
@@ -139,7 +134,7 @@ public class AdminUI extends JFrame {
 
 		JTabbedPane patientsTabPane = new JTabbedPane(JTabbedPane.LEFT);
 		patientsTabPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		patientsTab.add(patientsTabPane);
+		patientsTab.add("Patients",patientsTabPane);
 
 		JPanel PersonalInfoPanel = new JPanel();
 		patientsTabPane.addTab("Personal Info", null, PersonalInfoPanel, null);
@@ -1483,21 +1478,21 @@ public class AdminUI extends JFrame {
 		gbc_lblApptDD.gridy = 9;
 		pnlApptsTab.add(lblApptDD, gbc_lblApptDD);
 		
-		for(int i = 0; i < patient.getInfo().getAppt().sortedAppt().size(); i++){
-		apptArray[i] = String.valueOf(patient.getInfo().getAppt().sortedAppt().get(i).getDate()) +
-					   patient.getInfo().getAppt().sortedAppt().get(i).getTime();
-		}
-		ApptList = new JList(apptArray);
+		/*for(int i = 0; i < admin.getInfo().getAppt().sortedAppt().size(); i++){
+			apptArray[i] = String.valueOf(admin.getInfo().getAppt().sortedAppt().get(i).getDate()) +
+					   admin.getInfo().getAppt().sortedAppt().get(i).getTime();
+		}*/
+		ApptList = new JList(); // apptArray
 		ApptList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		ApptList.setLayoutOrientation(JList.VERTICAL);
 		JScrollPane listScroller = new JScrollPane(ApptList);
 		ApptList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
 				int index = ApptList.getSelectedIndex();
-				lblApptDate.setText(String.valueOf(patient.getInfo().getAppt().sortedAppt().get(index).getDate()));
-				lblApptTime.setText(String.valueOf(patient.getInfo().getAppt().sortedAppt().get(index).getTime()));
-				lblApptReason.setText(patient.getInfo().getAppt().sortedAppt().get(index).getReason());
-				lblApptDD.setText(patient.getInfo().getAppt().sortedAppt().get(index).getDoctor());
+				lblApptDate.setText(String.valueOf(admin.getInfo().getAppt().sortedAppt().get(index).getDate()));
+				lblApptTime.setText(String.valueOf(admin.getInfo().getAppt().sortedAppt().get(index).getTime()));
+				lblApptReason.setText(admin.getInfo().getAppt().sortedAppt().get(index).getReason());
+				lblApptDD.setText(admin.getInfo().getAppt().sortedAppt().get(index).getDoctor());
 				
 			}
 		});
