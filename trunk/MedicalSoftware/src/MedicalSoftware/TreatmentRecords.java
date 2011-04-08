@@ -1,13 +1,13 @@
 package MedicalSoftware;
+
 import java.util.ArrayList;
 
 /**
-* This class creates a new Treatment Record.
-* A new Treatment Record needs to be created for each Doctors Orders.
-* 
-* @author Michael Sambol
-* Written: 3/6/2011
-*/
+ * This class creates a new Treatment Record. A new Treatment Record needs to be
+ * created for each Doctors Orders.
+ * 
+ * @author Michael Sambol Written: 3/6/2011
+ */
 
 public class TreatmentRecords {
 
@@ -16,7 +16,7 @@ public class TreatmentRecords {
 	/**
 	 * Constructor
 	 */
-	TreatmentRecords() {
+	public TreatmentRecords() {
 		records = new ArrayList<TRecords>();
 	}
 
@@ -33,12 +33,15 @@ public class TreatmentRecords {
 	 * @param height
 	 * @param weight
 	 */
-	public void create(String name, String doctor, int date, int time, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight) {
-		TRecords tr = new TRecords(name, doctor, date, time, symptoms, bloodPressure, pulse, temp, height, weight);
+	public void create(String name, String doctor, int date, int time,
+			String symptoms, int bloodPressure, int pulse, int temp,
+			int height, int weight) {
+		TRecords tr = new TRecords(name, doctor, date, time, symptoms,
+				bloodPressure, pulse, temp, height, weight);
 		records.add(tr);
 
 	}
-	
+
 	/**
 	 * Finds a record
 	 * 
@@ -52,13 +55,13 @@ public class TreatmentRecords {
 			if (records.get(i).getName().equals(name)) {
 				if (records.get(i).getDate() == date) {
 					if (records.get(i).getTime() == time) {
-							return records.get(i);
+						return records.get(i);
 					}
 				}
 			}
 		}
-	return null;
-}
+		return null;
+	}
 
 	/**
 	 * Deletes a record
@@ -72,13 +75,13 @@ public class TreatmentRecords {
 			if (records.get(i).getName().equals(name)) {
 				if (records.get(i).getDate() == date) {
 					if (records.get(i).getTime() == time) {
-							records.remove(i);
+						records.remove(i);
 					}
 				}
 			}
 		}
 	}
-	
+
 	public ArrayList<TRecords> getRecords() {
 		return this.records;
 	}

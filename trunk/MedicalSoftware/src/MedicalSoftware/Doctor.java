@@ -17,7 +17,9 @@ import java.util.logging.XMLFormatter;
 public class Doctor{
 
 	private Info info;
+	
 	private AVL<String, Info> information;
+	
 	private AVL<String, Info> informationName;
 	
 	private static Logger myLogger = Logger.getLogger("Doctor");
@@ -45,7 +47,6 @@ public class Doctor{
         
     }
 	
-	
 	/**
 	 * Constuctor
 	 * 
@@ -55,7 +56,7 @@ public class Doctor{
 	 * @param n
 	 * @param d
 	 */
-	Doctor(String user, AVL<String, Info> i, AVL<String, Info> informationUser) {
+	public Doctor(String user, AVL<String, Info> i, AVL<String, Info> informationUser) {
 
 		this.information = i;
 		this.informationName = informationUser;
@@ -69,15 +70,14 @@ public class Doctor{
 	 * 
 	 * @param info
 	 */
-	Doctor (Info info) {
+	public Doctor (Info info) {
 		this.information = new AVL<String, Info>();
 		this.informationName = new AVL<String, Info>();
 		this.info = info;
 		
         myLogger.log(Level.INFO, "Creating new Doctor: " + info);
 	}
-	
-	
+
 	/**
 	 * Creates a new patient
 	 * 
@@ -92,8 +92,11 @@ public class Doctor{
 	 * @param zip
 	 * @param birthday
 	 */
-	public void createPatient(String name, String password, String userName, String email, String address, String state, String country, int SSN, int zip, int birthday) {
-		Info form = new Info(name, password, userName, email, address, state, country, SSN, zip, birthday, 3, false);
+	public void createPatient(String name, String password, String userName, 
+			String email, String address, String state, String country, int SSN, 
+			int zip, int birthday) {
+		Info form = new Info(name, password, userName, email, address, state, 
+				country, SSN, zip, birthday, 3, false);
 		information.insert(userName, form);
 		informationName.insert(name, form);
 		
@@ -105,11 +108,12 @@ public class Doctor{
 	 * 
 	 * @param name
 	 */
-	public boolean deletePatient(String name){
+	public boolean canDeletePatient(String name){
 		boolean status = false;
 		String userName = informationName.find(name).getUserName();
 		if (informationName.find(name) == null) {
-			myLogger.log(Level.CONFIG, "Patient does not exist!.. Or miss typed... " + name);
+			myLogger.log(Level.CONFIG, "Patient does not exist!.. Or miss typed... " 
+					+ name);
 		} else if (informationName.find(name).getType() == 3) {
 			informationName.remove(name);
 			information.remove(userName);
@@ -128,14 +132,14 @@ public class Doctor{
 	public Info getPatient(String name){
 		Info temp = null;
 		if (informationName.find(name) == null) {
-			myLogger.log(Level.CONFIG, "Patient does not exist!.. Or miss typed... " + name);
+			myLogger.log(Level.CONFIG, "Patient does not exist!.. Or miss typed... " 
+					+ name);
 		} else if (informationName.find(name).getType() == 3) {
 			temp = informationName.find(name);
 			myLogger.log(Level.CONFIG, "Returning Patient: " + name);
 		}
 			return temp;
 	}
-	
 	
 	/**
 	 * Creates new doctors orders
@@ -148,10 +152,12 @@ public class Doctor{
 	 * @param followUp
 	 * @param other
 	 */
-	public void createOrder(String user, int date, int time, String prescrip, String labW, String followUp, String other){
+	public void createOrder(String user, int date, int time, String prescrip, 
+			String labW, String followUp, String other){
 
 		if (informationName.find(user) != null) {
-			informationName.find(user).getOrders().create(user, date, time, prescrip, labW, followUp, other);
+			informationName.find(user).getOrders().create(user, date, time, 
+					prescrip, labW, followUp, other);
 			myLogger.log(Level.FINE, "Creating Doctors Orders");
 		} else {
 			myLogger.log(Level.FINE, "User did not exist... ");
@@ -186,7 +192,6 @@ public class Doctor{
 		myLogger.log(Level.CONFIG, "Returning Doctors Orders: " + name);
 		return information.find(name).getOrders();
 	}
-	
 	
 	/**
 	 * Creates an invoice
@@ -246,9 +251,12 @@ public class Doctor{
 	 * @param height
 	 * @param weight
 	 */
-	public void createTreatmentRecords(String name, String doctor, int date, int time, String symptoms, int bloodPressure, int pulse, int temp, int height, int weight){
+	public void createTreatmentRecords(String name, String doctor, int date, 
+			int time, String symptoms, int bloodPressure, int pulse, int temp,
+			int height, int weight){
 		if (informationName.find(name) != null) {
-			informationName.find(name).getRecord().create(name, doctor, date, time, symptoms, bloodPressure, pulse, temp, height, weight);
+			informationName.find(name).getRecord().create(name, doctor, 
+					date, time, symptoms, bloodPressure, pulse, temp, height, weight);
 			myLogger.log(Level.CONFIG, "Creating a treatment record for: " + name);
 		} else {
 			myLogger.log(Level.CONFIG, "Could not find " + name);
@@ -281,8 +289,7 @@ public class Doctor{
 		myLogger.log(Level.FINER, "Getting treatment record for: " + name);
 		return informationName.find(name).getRecord();
 	}
-	
-	
+
 	/**
 	 * Creates an appointment
 	 * 
@@ -310,7 +317,7 @@ public class Doctor{
 		Appointment appt = findAppt(user);
 		appt.cancel(date, time, user, doc);
 		myLogger.log(Level.INFO, "Canceling appointment for: " + user);
-	}	
+	}
 
 	/**
 	 * Finds an appointment
@@ -323,11 +330,10 @@ public class Doctor{
 		return informationName.find(user).getAppt();
 	}
 	
-	
-	public Boolean getSusp(String name) {	
+	public Boolean getSusp(String name) {
 		myLogger.log(Level.FINE, "Getting suspensions for: " + name);
 		
-		return info.getSusp();
+		return info.isSusp();
 	}
 
 	public void setSusp(String name, Boolean susp) {
@@ -354,7 +360,6 @@ public class Doctor{
 		return this.information.find(user);
 	}
 	
-	
 	/**
 	 * Searches for a doctor
 	 * 
@@ -374,13 +379,6 @@ public class Doctor{
 		
 		return ret;
 	}
-	
-	
-	/**
-	 * Update
-	 */
-	public void update() {
 		
-		
-	}
+
 }

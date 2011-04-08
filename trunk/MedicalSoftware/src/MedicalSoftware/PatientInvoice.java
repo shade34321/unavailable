@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * PatientInvoice class designed to create a bill for patients
  * 
  * @author Nathan Heard
- *
+ * 
  */
 public class PatientInvoice {
 
@@ -15,7 +15,7 @@ public class PatientInvoice {
 	/**
 	 * Constructor
 	 */
-	PatientInvoice() {
+	public PatientInvoice() {
 		invoice = new ArrayList<Invoice>();
 	}
 
@@ -32,7 +32,7 @@ public class PatientInvoice {
 		Invoice in = new Invoice(name, doc, total, due, paid);
 		invoice.add(in);
 	}
-	
+
 	/**
 	 * Search by name and due date
 	 * 
@@ -45,13 +45,13 @@ public class PatientInvoice {
 		for (int i = 0; i < size; i++) {
 			if (invoice.get(i).getName() == name) {
 				if (invoice.get(i).getDueDate() == due) {
-						return invoice.get(i);
+					return invoice.get(i);
 				}
 			}
 		}
 		return null;
 	}
- 
+
 	/**
 	 * Search by name and due date
 	 * 
@@ -63,12 +63,12 @@ public class PatientInvoice {
 		for (int i = 0; i < size; i++) {
 			if (invoice.get(i).getName() == name) {
 				if (invoice.get(i).getDueDate() == due) {
-							invoice.remove(i);
+					invoice.remove(i);
 				}
 			}
 		}
 	}
-	
+
 	public ArrayList<Invoice> getInvoice() {
 		return this.invoice;
 	}
