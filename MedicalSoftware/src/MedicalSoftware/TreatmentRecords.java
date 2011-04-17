@@ -17,7 +17,16 @@ public class TreatmentRecords {
 	 * Constructor
 	 */
 	public TreatmentRecords() {
+		records = null;
+	}
+	
+	public TreatmentRecords(String name, String doctor, int date, int time,
+			String symptoms, int bloodPressure, int pulse, int temp,
+			int height, int weight) {
 		records = new ArrayList<TRecords>();
+		TRecords tr = new TRecords(name, doctor, date, time, symptoms,
+				bloodPressure, pulse, temp, height, weight);
+		records.add(tr);
 	}
 
 	/**
@@ -39,7 +48,6 @@ public class TreatmentRecords {
 		TRecords tr = new TRecords(name, doctor, date, time, symptoms,
 				bloodPressure, pulse, temp, height, weight);
 		records.add(tr);
-
 	}
 
 	/**

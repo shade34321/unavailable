@@ -16,9 +16,17 @@ public class DoctorsOrders {
 	 * Constructor
 	 */
 	public DoctorsOrders() {
-		orders = new ArrayList<DOrders>();
+		orders = null;
 	}
 
+	public DoctorsOrders(String name, int date, int time, String prescrip,
+			String labW, String followUp, String other) {
+		orders = new ArrayList<DOrders>();
+		DOrders order = new DOrders(name, date, time, prescrip, labW, followUp,
+				other);
+		orders.add(order);
+	}
+	
 	/**
 	 * Creates a new doctors orders
 	 * 
@@ -35,7 +43,6 @@ public class DoctorsOrders {
 		DOrders order = new DOrders(name, date, time, prescrip, labW, followUp,
 				other);
 		orders.add(order);
-
 	}
 
 	/**

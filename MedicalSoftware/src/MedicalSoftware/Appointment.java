@@ -17,7 +17,14 @@ public class Appointment {
 	 * Constructor
 	 */
 	public Appointment() {
-		App = new ArrayList<Appt>();
+		App = null;
+	}
+
+	public Appointment(int date, int time, String name, String doctor,
+			String reason) {
+			App = new ArrayList<Appt>();
+			Appt app = new Appt(date, time, name, doctor, reason);
+			App.add(app);
 	}
 
 	/**
