@@ -17,7 +17,7 @@ public class TreatmentRecords {
 	 * Constructor
 	 */
 	public TreatmentRecords() {
-		records = null;
+		records = new ArrayList<TRecords>();
 	}
 	
 	public TreatmentRecords(String name, String doctor, int date, int time,

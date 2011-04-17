@@ -33,11 +33,11 @@ public class MedicalMain {
 		
 		//Login log = new Login(informationUserName, informationName);
 		//LoginUI logging = new LoginUI(log);
-		//ser.saveAppt(informationName);
-		//ser.save(informationUserName);
-		//ser.saveTreatment(informationName);
-		//ser.saveOrders(informationName);
-		//ser.saveInvoice(informationName);
+		ser.saveAppt(informationName);
+		ser.save(informationUserName);
+		ser.saveTreatment(informationName);
+		ser.saveOrders(informationName);
+		ser.saveInvoice(informationName);
 	}
 
 	/*
