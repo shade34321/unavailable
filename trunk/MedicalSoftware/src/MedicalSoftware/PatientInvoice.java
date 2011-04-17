@@ -16,7 +16,7 @@ public class PatientInvoice {
 	 * Constructor
 	 */
 	public PatientInvoice() {
-		invoice = null;
+		invoice = new ArrayList<Invoice>();
 	}
 	
 	public PatientInvoice(String name, String doc, int total, int due, String paid) {
