@@ -24,9 +24,20 @@ import javax.swing.JScrollPane;
 import javax.swing.JRadioButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 public class AdminUI extends JFrame {
 
@@ -117,6 +128,19 @@ public class AdminUI extends JFrame {
 
 		JButton btnLogout = new JButton("logout");
 		menuBar.add(btnLogout);
+		
+		btnLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae){
+		       Server ser = new Server();
+				ser.saveAppt(admin.getTree());
+				ser.save(admin.getTree());
+				ser.saveTreatment(admin.getTree());
+				ser.saveOrders(admin.getTree());
+				ser.saveInvoice(admin.getTree());
+				System.exit(0);
+			}
+		    });
+		
 
 		JButton btnRefresh = new JButton("Refresh");
 		menuBar.add(btnRefresh);
@@ -583,7 +607,24 @@ public class AdminUI extends JFrame {
 		gbc_btnNewTreatmentRecord.gridy = 0;
 		TreatmentRecordsPanel.add(btnNewTreatmentRecord, gbc_btnNewTreatmentRecord);
 
+		btnNewTreatmentRecord.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae){
+		       
+			}
+		    });
+		
 		JButton btnGetTreatmentRecord = new JButton("Get Treatment Record");
+		btnGetTreatmentRecord.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String name = JOptionPane.showInputDialog("Enter the name of the patient you are searching for:");
+				if (admin.getTree().find(name) != null) {
+					if (admin.getTree().find(name).getRecord() != null){
+						ArrayList<TRecords> record = admin.getTree().find(name).getRecord().getRecords();
+						
+					}
+				}
+			}
+		});
 		GridBagConstraints gbc_btnGetTreatmentRecord = new GridBagConstraints();
 		gbc_btnGetTreatmentRecord.insets = new Insets(0, 0, 5, 5);
 		gbc_btnGetTreatmentRecord.fill = GridBagConstraints.HORIZONTAL;
@@ -599,7 +640,7 @@ public class AdminUI extends JFrame {
 		gbc_scrollBarTreatmentRecords.gridy = 0;
 		TreatmentRecordsPanel.add(scrollBarTreatmentRecords, gbc_scrollBarTreatmentRecords);
 
-		JLabel lblTreatingDoctor = new JLabel("Treating Doctor:");
+		JLabel lblTreatingDoctor = new JLabel("Treating Doctor:" );
 		GridBagConstraints gbc_lblTreatingDoctor = new GridBagConstraints();
 		gbc_lblTreatingDoctor.anchor = GridBagConstraints.EAST;
 		gbc_lblTreatingDoctor.insets = new Insets(0, 0, 5, 5);
@@ -992,11 +1033,22 @@ public class AdminUI extends JFrame {
 		gbc_btnPrintIncomeStatement.gridy = 1;
 		ReportsPanel.add(btnPrintIncomeStatement, gbc_btnPrintIncomeStatement);
 
-		JPanel BillingPanel = new JPanel();
-		patientsTabPane.addTab("Billing", null, BillingPanel, null);
-
-		JLabel lblNotFunctionalYet_1 = new JLabel("not functional yet");
-		BillingPanel.add(lblNotFunctionalYet_1);
+		if (admin.getInfo().getRecord() != null) {
+		ArrayList<TRecords> records = admin.getInfo().getRecord().getRecords();
+		XYSeries series = new XYSeries("Average Weight");
+		
+		
+		for(int i = 0; i<records.size();i++){			
+			series.add((double)records.get(i).getDate(), (double)records.get(i).getWeight());
+			i++;
+		}
+		XYDataset xyDataset = new XYSeriesCollection(series);
+		JFreeChart chart = ChartFactory.createXYAreaChart("Weight", "Date", "Weight", xyDataset, PlotOrientation.VERTICAL, true, true, false);
+		ChartPanel GraphPanel = new ChartPanel(chart);
+		ChartFrame frame=new ChartFrame("Weight Chart",chart);
+		patientsTabPane.addTab("Graph", null, GraphPanel, null);
+		}
+		JLabel lblNotFunctionalYet_1 = new JLabel("");
 		
 		JPanel SearchPanel = new JPanel();
 		patientsTabPane.addTab("Search/Delete", null, SearchPanel, null);
@@ -1304,6 +1356,7 @@ public class AdminUI extends JFrame {
 						textFieldNewCountry.getText(), Integer.parseInt(textFieldNewSSN.getText()), 
 						Integer.parseInt(textFieldNewZip.getText()), 
 						Integer.parseInt(textFieldNewBirthday.getText()), 0);
+						JOptionPane.showMessageDialog(null, "Created new user successfully :)");
 			}
 		});
 		GridBagConstraints gbc_btnCreate = new GridBagConstraints();
@@ -1408,6 +1461,7 @@ public class AdminUI extends JFrame {
 				admin.createAppt(patient.getInfo().getName(), Integer.parseInt(textFieldApptDate.getText()),
 				Integer.parseInt(textFieldApptTime.getText()), textFieldApptDD.getText(),
 				textFieldApptReason.getText());
+				JOptionPane.showMessageDialog(null,"Created :)");
 			}
 		});
 		GridBagConstraints gbc_btnSubmit = new GridBagConstraints();

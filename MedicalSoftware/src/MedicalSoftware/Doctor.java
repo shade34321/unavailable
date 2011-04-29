@@ -379,6 +379,11 @@ public class Doctor{
 		
 		return ret;
 	}
+
+	public AVL<String, Info> getTree() {
+		// TODO Auto-generated method stub
+		return this.informationName;
+	}
 		
 
 }

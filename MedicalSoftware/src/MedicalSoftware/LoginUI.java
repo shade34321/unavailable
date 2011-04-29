@@ -136,13 +136,17 @@ public class LoginUI implements ActionListener {
 								"Please contact your system administartor " +
 								"to resolve this issue.");
 			} else if (userType == 3) {
-				PatientUI currentUI = new PatientUI(login.getPatient());
+				this.frame.setVisible(false);
+				PatientUIv2 currentUI = new PatientUIv2(login.getInformation().find(user).getName(), login.getInformation(), login.getInformationName());;
 			} else if (userType == 2) {
-				NurseUI currentUI = new NurseUI();
+				this.frame.setVisible(false);
+				NurseUI currentUI = new NurseUI(login.getInformation().find(user).getName(), login.getInformation(), login.getInformationName());;
 			} else if (userType == 1) {
-				DefaultUI currentUI = new DefaultUI();
+				this.frame.setVisible(false);
+				DefaultUI currentUI = new DefaultUI(login.getInformation().find(user).getName(), login.getInformation(), login.getInformationName());;
 			} else if (userType == 0) {
-				AdminUI currentUI = new AdminUI(user, login.getInformation(), login.getInformationName());
+				this.frame.setVisible(false);
+				AdminUI currentUI = new AdminUI(login.getInformation().find(user).getName(), login.getInformation(), login.getInformationName());
 			}
 		}
 		return error;

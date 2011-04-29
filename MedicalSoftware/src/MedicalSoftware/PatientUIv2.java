@@ -12,7 +12,11 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import java.awt.Insets;
+import java.util.ArrayList;
+
 import javax.swing.JMenuBar;
+
+import net.miginfocom.swing.MigLayout;
 
 
 public class PatientUIv2 extends JFrame {
@@ -31,8 +35,8 @@ public class PatientUIv2 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PatientUIv2 frame = new PatientUIv2();
-					frame.setVisible(true);
+					PatientUIv2 invoice = new PatientUIv2();
+					invoice.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -41,7 +45,7 @@ public class PatientUIv2 extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the invoice.
 	 */
 	public PatientUIv2() {
 		initialize();
@@ -52,6 +56,13 @@ public class PatientUIv2 extends JFrame {
 		this.patient = patient;
 	}
 	
+	public PatientUIv2(String username, AVL<String, Info> information,
+			AVL<String, Info> informationName) {
+		patient = new Patient(username, information, informationName);
+		initialize();		
+		this.setVisible(true);
+	}
+
 	private void initialize(){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -166,5 +177,57 @@ public class PatientUIv2 extends JFrame {
 		gbc_btnRequest.gridx = 1;
 		gbc_btnRequest.gridy = 4;
 		panel_1.add(btnRequest, gbc_btnRequest);
+		
+		JPanel invoice = new JPanel();
+		tabbedPane.addTab("Invoice", null, invoice, null);
+
+		invoice.setLayout(new MigLayout("", "[][][]", "[][][][][][][][][][]"));
+
+		Invoice temp = null;
+		if (patient.getInfo().getInvoice() != null) {
+			if (patient.getInfo().getInvoice().getInvoice() != null) {
+				ArrayList<Invoice> in = patient.getInfo().getInvoice().getInvoice();
+				for (int i = 0; i < in.size(); i++) {
+						if (in.get(i).isPaid().equals("N/A")) {
+							temp = in.get(i);	
+							i = in.size();
+						}
+				}
+				
+			}
+			
+		}
+		if (temp != null) {
+		JLabel lblName = new JLabel("Name:");
+		invoice.add(lblName, "cell 0 0");
+
+		JLabel lblPatient = new JLabel(temp.getName());
+		invoice.add(lblPatient, "cell 2 0");
+
+		JLabel lblDoctor = new JLabel("Doctor:");
+		invoice.add(lblDoctor, "cell 0 1");
+
+		JLabel lblDoc = new JLabel(temp.getDoctor());
+		invoice.add(lblDoc, "cell 2 1");
+
+		JLabel lblDueDate = new JLabel("Due Date:");
+		invoice.add(lblDueDate, "cell 0 2");
+
+		JLabel lblDate1 = new JLabel(temp.getDueDate() + "");
+		invoice.add(lblDate1, "cell 2 2");
+		
+		JLabel lblTotal = new JLabel("Total");
+		invoice.add(lblTotal, "cell 0 3");
+		
+		JLabel lbltot = new JLabel(temp.getTotal() + "");
+		invoice.add(lbltot, "cell 2 3");
+		
+		JLabel lblPaid = new JLabel("Paid");
+		invoice.add(lblPaid, "cell 0 5");
+		
+		JLabel lblpay = new JLabel(temp.isPaid());
+		invoice.add(lblpay, "cell 2 5");
+		}
+	
 	}
 }

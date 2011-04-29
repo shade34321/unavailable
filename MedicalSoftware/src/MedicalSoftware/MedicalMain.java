@@ -23,21 +23,21 @@ public class MedicalMain {
 		AVL<String, Info> informationName = ser.load();
 		setup(informationName);
 		
-		informationName = ser.loadAppt(informationName);
+		//informationName = ser.loadAppt(informationName);
 		
 		informationName = ser.loadTreatment(informationName);
 		
-		informationName = ser.loadOrders(informationName);
+		//informationName = ser.loadOrders(informationName);
 		
 		informationName = ser.loadInvoice(informationName);
 		
-		//Login log = new Login(informationUserName, informationName);
-		//LoginUI logging = new LoginUI(log);
-		ser.saveAppt(informationName);
-		ser.save(informationUserName);
-		ser.saveTreatment(informationName);
-		ser.saveOrders(informationName);
-		ser.saveInvoice(informationName);
+		Login log = new Login(informationUserName, informationName);
+		LoginUI logging = new LoginUI(log);
+		//ser.saveAppt(informationName);
+		//ser.save(informationUserName);
+		//ser.saveTreatment(informationName);
+		//ser.saveOrders(informationName);
+		//ser.saveInvoice(informationName);
 	}
 
 	/*
