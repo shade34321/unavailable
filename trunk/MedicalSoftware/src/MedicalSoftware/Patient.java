@@ -73,9 +73,10 @@ public class Patient {
 	 */
 	public Patient(String user, AVL<String, Info> inform,
 			AVL<String, Info> informName) {
-		this.info = inform.find(user);
+		
 		this.information = inform;
 		this.informationName = informName;
+		this.info = informName.find(user);
 		myLogger.log(Level.INFO, "Creating new Patient: " + user);
 	}
 

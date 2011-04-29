@@ -75,7 +75,7 @@ public class SystemAdmin {
 			AVL<String, Info> inform) {
 		this.information = i;
 		this.informationName = inform;
-		this.info = information.find(user);
+		this.info = informationName.find(user);
 		myLogger.log(Level.INFO, "Creating new System Admin: " + user);
 	}
 
@@ -337,5 +337,8 @@ public class SystemAdmin {
 		myLogger.log(Level.INFO, "Setting suspensions for: " + info.getName());
 	}
 
+	public AVL<String, Info> getTree() {
+		return this.informationName;
+	}
 
 }
